@@ -1,0 +1,51 @@
+interface Config {
+  // Configuration related to the API server
+  server: {
+    // The server host or listening IP
+    host: string;
+    // The server listening port
+    port: number;
+  };
+
+  // Configuration for bitcoind's JSON-RPC server
+  bitcoinRpc: {
+    // Server host IP or domain.
+    server: string;
+    // Username credentials.
+    user: string;
+    // Password credentials.
+    password: string;
+  };
+
+  // Information about the softfork in question should be added here.
+  // Things inside here will most likely be used and shown on the webpage.
+  fork: {
+    // The common name of this softfork.
+    name: string;
+    // Information about this softfork, each array item is rendered as a paragraph.
+    info: string[];
+    // The BIP9 version bit as defined in the softfork's BIP.
+    versionBit: number;
+  };
+}
+
+const config: Config = {
+  server: {
+    host: "127.0.0.1",
+    port: 8080,
+  },
+
+  bitcoinRpc: {
+    server: "http://127.0.0.1:8332",
+    user: "",
+    password: "",
+  },
+
+  fork: {
+    name: "Taproot",
+    info: [],
+    versionBit: 2,
+  },
+};
+
+export default config;
