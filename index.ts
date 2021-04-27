@@ -3,10 +3,13 @@ import { Application, send } from "https://deno.land/x/oak@v7.3.0/mod.ts";
 import config from "./config/config.ts";
 import router from "./api.ts";
 import { bootstrapBlocks } from "./blocks.ts";
+import Pageviews from "./pageviews/index.ts";
 
 await bootstrapBlocks();
 
 const app = new Application();
+
+app.use(Pageviews);
 
 app.use(router.routes());
 
