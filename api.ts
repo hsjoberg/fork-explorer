@@ -2,8 +2,12 @@ import { Router } from "https://deno.land/x/oak/mod.ts";
 
 import { getBlocks } from "./blocks.ts";
 import { getblockchaininfo, getblockcount, getblockhash } from "./jsonrpc/index.ts";
+import Pageviews from "./pageviews/index.ts";
 
 const router = new Router();
+
+router.use(Pageviews);
+
 router
   .get("/getblockchaininfo", async (context) => {
     const info = await getblockchaininfo();
