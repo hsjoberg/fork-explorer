@@ -27,8 +27,21 @@ const Text = styled.p`
   text-align: center;
 `;
 
+const TopSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const CurrentPeriod = styled.h2`
   font-size: 24px;
+  margin-bottom: 10px;
+  color: #ff9b20;
+  text-shadow: #000 3px 3px 0px;
+`;
+
+const LockinInfo = styled.h2`
+  font-size: 16px;
   margin-bottom: 10px;
   color: #ff9b20;
   text-shadow: #000 3px 3px 0px;
@@ -76,7 +89,7 @@ function Block({ height, signals }: IBlockProps) {
 }
 
 export default function Blocks() {
-  const [blocks, setBlocks] = useState<IBlock[] | undefined>(undefined);
+  const [blocks, setBlocks] = useState<IBlock[] | undefined>([]);
 
   useEffect(() => {
     (async () => {
@@ -91,19 +104,50 @@ export default function Blocks() {
     return <></>;
   }
 
+  const forkName = config.fork.name;
+
+  const treshhold = Math.floor(2016 * 0.9);
+  const currentNumberOfSignallingBlocks = blocks.reduce(
+    (prev, currentBlock) => prev + +(currentBlock.signals ?? false),
+    0
+  );
+  const blocksLeftForActivation = treshhold - currentNumberOfSignallingBlocks;
+  const lockedIn = currentNumberOfSignallingBlocks >= treshhold;
+  const blocksLeftInThisPeriod = blocks.reduce((prev, currentBlock) => prev + +(currentBlock.signals === undefined), 0);
+  const currentPeriodFailed = blocksLeftForActivation > blocksLeftInThisPeriod;
+
   return (
     <Container>
       <head>
-        <title>{config.fork.name} activation</title>
+        <title>{forkName} activation</title>
       </head>
       <Content>
-        <Title>{config.fork.name} activation</Title>
+        <Title>{forkName} activation</Title>
         <DescriptionBlock>
           {config.fork.info.map((text, index) => (
             <Text key={index}>{text}</Text>
           ))}
         </DescriptionBlock>
-        <CurrentPeriod>Current signalling period of 2016 blocks</CurrentPeriod>
+        <TopSection>
+          <CurrentPeriod>Current signalling period of 2016 blocks</CurrentPeriod>
+          <LockinInfo>
+            {!lockedIn && (
+              <>
+                {blocksLeftForActivation} {forkName} blocks left until softfork is locked in.
+                <br />
+                {!currentPeriodFailed && <>90% of the blocks within the period has to signal.</>}
+                {currentPeriodFailed && (
+                  <>
+                    {forkName} cannot be locked in within this period
+                    <br />
+                    (90% of the blocks has to signal).
+                  </>
+                )}
+              </>
+            )}
+            {lockedIn && <>{forkName.toUpperCase()} IS LOCKED IN FOR DEPLOYMENT!</>}
+          </LockinInfo>
+        </TopSection>
         <BlockContainer>
           {blocks.map((block, i) => (
             <Block key={i} height={block.height} signals={block.signals} />
