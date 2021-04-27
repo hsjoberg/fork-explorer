@@ -27,7 +27,7 @@ const Text = styled.p`
   text-align: center;
 `;
 
-const LastXBlocks = styled.h2`
+const CurrentPeriod = styled.h2`
   font-size: 24px;
   margin-bottom: 10px;
   color: #ff9b20;
@@ -51,16 +51,27 @@ const BlockStyle = styled.div<{ signals?: boolean }>`
     props.signals
       ? "linear-gradient(45deg, rgba(18,209,0,1) 0%, rgba(9,89,0,1) 100%)"
       : "linear-gradient(45deg, rgba(209,0,0,1) 0%, rgba(89,0,0,1) 100%)"};
-  width: 20px;
-  height: 20px;
+  border: 1px solid #434343;
+  width: 18px;
+  height: 18px;
+  margin: 3px;
+  border-radius: 4px;
+`;
+const EmptyBlock = styled.div`
+  border: 1px solid #5a5a5a;
+  width: 18px;
+  height: 18px;
   margin: 3px;
   border-radius: 4px;
 `;
 interface IBlockProps {
   height: number;
-  signals: boolean;
+  signals: boolean | undefined;
 }
 function Block({ height, signals }: IBlockProps) {
+  if (signals === undefined) {
+    return <EmptyBlock title={`Coming block ${height}`} />;
+  }
   return <BlockStyle title={`Height: ${height}`} signals={signals}></BlockStyle>;
 }
 
@@ -92,7 +103,7 @@ export default function Blocks() {
             <Text key={index}>{text}</Text>
           ))}
         </DescriptionBlock>
-        <LastXBlocks>Last {Math.min(1000, blocks.length)} blocks</LastXBlocks>
+        <CurrentPeriod>Current signalling period of 2016 blocks</CurrentPeriod>
         <BlockContainer>
           {blocks.map((block, i) => (
             <Block key={i} height={block.height} signals={block.signals} />

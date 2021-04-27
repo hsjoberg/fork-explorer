@@ -5,7 +5,7 @@ import config from "./config/config.ts";
 export interface IBlock {
   height: number;
   // hash: string;
-  signals: boolean;
+  signals: boolean | undefined;
 }
 
 const blocks: IBlock[] = [];
@@ -14,10 +14,19 @@ export async function bootstrapBlocks() {
   console.log("Bootstrapping block data...");
 
   const blockCount = await getblockcount();
-  const startHeight = blockCount - 1000;
+  const difficultyPeriodStartHeight = blockCount - (blockCount % 2016);
+  const difficultyPeriodEndHeight = difficultyPeriodStartHeight + 2016;
+
   console.log(`Current block height is ${blockCount}`);
 
-  for (let i = startHeight; i < blockCount; i++) {
+  for (let i = difficultyPeriodStartHeight; i < difficultyPeriodEndHeight; i++) {
+    if (i > blockCount) {
+      blocks.push({
+        height: i,
+        signals: undefined,
+      });
+      continue;
+    }
     try {
       const blockHash = await getblockhash(i);
       const blockheader = await getblockheader(blockHash);
