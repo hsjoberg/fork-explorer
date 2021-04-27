@@ -67,7 +67,7 @@ export default function Blocks() {
 
   const forkName = config.fork.name;
 
-  const treshhold = Math.floor(2016 * 0.9);
+  const treshhold = config.fork.threshold;
   const currentNumberOfSignallingBlocks = blocks.reduce(
     (prev, currentBlock) => prev + +(currentBlock.signals ?? false),
     0

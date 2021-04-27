@@ -26,6 +26,8 @@ interface Config {
     info: string[];
     // The BIP9 version bit as defined in the softfork's BIP.
     versionBit: number;
+    // Threshold for the softfork to be locked in
+    threshold: number;
   };
 }
 
@@ -45,6 +47,7 @@ const config: Config = {
     name: "Taproot",
     info: [],
     versionBit: 2,
+    threshold: 1845,
   },
 };
 
