@@ -23,7 +23,7 @@ export function Donation() {
     <DonateContainer>
       {!showQr && <DonateText onClick={() => setShowQr(true)}>Donate via Lightning Network</DonateText>}
       {showQr && (
-        <a href={DONATION_LNURL_PAY.toLowerCase()}>
+        <a href={"lightning:" + DONATION_LNURL_PAY.toLowerCase()}>
           <QRCode
             bgColor="#FFFFFF"
             fgColor="#000000"

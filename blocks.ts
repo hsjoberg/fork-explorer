@@ -65,7 +65,7 @@ export async function bootstrapBlocks() {
         const blockHash = await getblockhash(i);
         const blockheader = await getblockheader(blockHash);
         blocks[i % 2016].signals = (blockheader.version & (config.fork.versionBit + 1)) === config.fork.versionBit + 1;
-        console.log(`Block ${i % 2016} set`);
+        console.log(`Block ${i} set`);
       }
       blockCount = newBlockCount;
     }
