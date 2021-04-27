@@ -29,6 +29,21 @@ interface Config {
     // Threshold for the softfork to be locked in
     threshold: number;
   };
+
+  // Donation configuration, right now only supports lnd
+  donation?: {
+    // Backend type, currently only supports lnd
+    type: "lnd";
+    // Data for the backend
+    data: {
+      // REST server
+      server: string;
+      // Path to tls.cert
+      cert: string;
+      // Path to invoice.macaroon
+      macaroon: string;
+    };
+  };
 }
 
 const config: Config = {
@@ -49,6 +64,15 @@ const config: Config = {
     versionBit: 2,
     threshold: 1845,
   },
+
+  // donation: {
+  //   type: "lnd",
+  //   data: {
+  //     server: "https://127.0.0.1:8080",
+  //     cert: "/path/to/tls.cert",
+  //     macaroon: "/path/to/invoice.macaroon",
+  //   },
+  // },
 };
 
 export default config;

@@ -1,9 +1,6 @@
 import React, { useState } from "https://esm.sh/react@17.0.2";
 import styled from "https://esm.sh/styled-components";
 import { QRCode } from "https://esm.sh/react-qr-svg";
-import { Link } from "https://deno.land/x/aleph@v0.2.28/mod.ts";
-
-const DONATION_LNURL_PAY = "LNURL1DP68GURN8GHJ7MRWVF5HGUEWVDHK6TMVDE6HYMRS9ASHQ6F0WCCJ7MRWW4EXCTE38Y6QYWETXD";
 
 export const DonateContainer = styled.div`
   text-align: center;
@@ -18,22 +15,27 @@ export const DonateText = styled.a`
 `;
 
 export function Donation() {
-  const [showQr, setShowQr] = useState(false);
+  const [invoice, setInvoice] = useState<string | undefined>(undefined);
+
+  const fetchInvoice = async () => {
+    const result = await fetch("/invoice");
+    setInvoice(await result.text());
+  };
 
   return (
     <DonateContainer>
-      {!showQr && <DonateText onClick={() => setShowQr(true)}>Donate via Lightning Network</DonateText>}
-      {showQr && (
+      {!invoice && <DonateText onClick={fetchInvoice}>Donate via Lightning Network</DonateText>}
+      {invoice && (
         <div
           style={{ cursor: "pointer" }}
           onClick={() => {
-            window.location.replace("lightning:" + DONATION_LNURL_PAY.toLowerCase());
+            window.location.replace("lightning:" + invoice);
           }}
         >
           <QRCode
             bgColor="#FFFFFF"
             fgColor="#000000"
-            value={DONATION_LNURL_PAY}
+            value={invoice.toUpperCase()}
             style={{ border: "8px solid #fff", width: 200 }}
           />
         </div>
