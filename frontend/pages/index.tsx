@@ -6,9 +6,11 @@ import { IBlock } from "../back/blocks.ts";
 
 import { Container } from "../components/Container.ts";
 import { Content } from "../components/Content.ts";
+import { BlockContainer, Block } from "../components/Block.tsx";
+import { Donation } from "../components/Donation.tsx";
 
 const Title = styled.h1`
-  margin-top: 85px;
+  margin-top: 40px;
   font-size: 42px;
   text-align: center;
   color: #d97b08;
@@ -47,49 +49,8 @@ const LockinInfo = styled.h2`
   text-shadow: #000 3px 3px 0px;
 `;
 
-const BlockContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 3px;
-  background-color: #434343;
-  box-shadow: #000 3px 3px 14px;
-  border-radius: 6px;
-  margin-bottom: 30px;
-`;
-
-const BlockStyle = styled.div<{ signals?: boolean }>`
-  background: ${(props) =>
-    props.signals
-      ? "linear-gradient(45deg, rgba(18,209,0,1) 0%, rgba(9,89,0,1) 100%)"
-      : "linear-gradient(45deg, rgba(209,0,0,1) 0%, rgba(89,0,0,1) 100%)"};
-  border: 1px solid #434343;
-  width: 18px;
-  height: 18px;
-  margin: 3px;
-  border-radius: 4px;
-`;
-const EmptyBlock = styled.div`
-  border: 1px solid #5a5a5a;
-  width: 18px;
-  height: 18px;
-  margin: 3px;
-  border-radius: 4px;
-`;
-interface IBlockProps {
-  height: number;
-  signals: boolean | undefined;
-}
-function Block({ height, signals }: IBlockProps) {
-  if (signals === undefined) {
-    return <EmptyBlock title={`Coming block ${height}`} />;
-  }
-  return <BlockStyle title={`Height: ${height}`} signals={signals}></BlockStyle>;
-}
-
 export default function Blocks() {
-  const [blocks, setBlocks] = useState<IBlock[] | undefined>([]);
+  const [blocks, setBlocks] = useState<IBlock[] | undefined>(undefined);
 
   useEffect(() => {
     (async () => {
@@ -153,6 +114,7 @@ export default function Blocks() {
             <Block key={i} height={block.height} signals={block.signals} />
           ))}
         </BlockContainer>
+        <Donation />
       </Content>
     </Container>
   );
