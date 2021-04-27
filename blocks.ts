@@ -41,6 +41,18 @@ export async function bootstrapBlocks() {
     }
   }
 
+  setInterval(async () => {
+    console.log("Checking for new blocks");
+    const newBlockCount = await getblockcount();
+    if (newBlockCount > blockCount) {
+      for (let i = blockCount; i < newBlockCount; i++) {
+        const blockHash = await getblockhash(i + 1);
+        const blockheader = await getblockheader(blockHash);
+        blocks[i % 2016].signals = (blockheader.version & (config.fork.versionBit + 1)) === config.fork.versionBit + 1;
+      }
+    }
+  }, 10 * 1000);
+
   console.log("Done.");
 }
 
