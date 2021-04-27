@@ -2,6 +2,8 @@
 
 Fork Explorer let's you see the status of a BIP9-style softfork. It relies on bitcoind and its JSON-RPC server.
 
+<img width="1000" src="fork-explorer-screenshot.png" />
+
 # Build and run
 
 You need [Deno](https://deno.land) to build and run this project. Deno is a new
