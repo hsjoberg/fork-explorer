@@ -39,14 +39,14 @@ const CurrentPeriod = styled.h2`
   font-size: 24px;
   margin-bottom: 10px;
   color: #ff9b20;
-  text-shadow: #000 3px 3px 0px;
+  text-shadow: #000 2px 2px 0px;
 `;
 
 const LockinInfo = styled.h2`
   font-size: 16px;
   margin-bottom: 10px;
   color: #ff9b20;
-  text-shadow: #000 3px 3px 0px;
+  text-shadow: #000 2px 2px 0px;
 `;
 
 export default function Blocks() {

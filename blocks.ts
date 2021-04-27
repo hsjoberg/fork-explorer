@@ -8,18 +8,11 @@ export interface IBlock {
   signals: boolean | undefined;
 }
 
-const blocks: IBlock[] = [];
+let blocks: IBlock[] = [];
 
-export async function bootstrapBlocks() {
-  console.log("Bootstrapping block data...");
-
-  const blockCount = await getblockcount();
-  const difficultyPeriodStartHeight = blockCount - (blockCount % 2016);
-  const difficultyPeriodEndHeight = difficultyPeriodStartHeight + 2016;
-
-  console.log(`Current block height is ${blockCount}`);
-
-  for (let i = difficultyPeriodStartHeight; i < difficultyPeriodEndHeight; i++) {
+async function setupPeriod(blockCount: number, startHeight: number, endHeight: number): Promise<IBlock[]> {
+  const blocks: IBlock[] = [];
+  for (let i = startHeight; i < endHeight; i++) {
     if (i > blockCount) {
       blocks.push({
         height: i,
@@ -41,15 +34,40 @@ export async function bootstrapBlocks() {
     }
   }
 
+  return blocks;
+}
+
+export async function bootstrapBlocks() {
+  console.log("Bootstrapping block data...");
+
+  let blockCount = await getblockcount();
+  const difficultyPeriodStartHeight = blockCount - (blockCount % 2016);
+  const difficultyPeriodEndHeight = difficultyPeriodStartHeight + 2016;
+  console.log(`Current block height is ${blockCount}`);
+  blocks = await setupPeriod(blockCount, difficultyPeriodStartHeight, difficultyPeriodEndHeight);
+
   setInterval(async () => {
-    console.log("Checking for new blocks");
     const newBlockCount = await getblockcount();
     if (newBlockCount > blockCount) {
-      for (let i = blockCount; i < newBlockCount; i++) {
-        const blockHash = await getblockhash(i + 1);
+      console.log("Found new block");
+      if (newBlockCount % 2016 === 0) {
+        blockCount = newBlockCount;
+        console.log("New block period!");
+        const difficultyPeriodStartHeight = blockCount - (blockCount % 2016);
+        const difficultyPeriodEndHeight = difficultyPeriodStartHeight + 2016;
+
+        console.log(`Current block height is ${blockCount}`);
+        blocks = await setupPeriod(blockCount, difficultyPeriodStartHeight, difficultyPeriodEndHeight);
+        return;
+      }
+
+      for (let i = blockCount + 1; i <= newBlockCount; i++) {
+        const blockHash = await getblockhash(i);
         const blockheader = await getblockheader(blockHash);
         blocks[i % 2016].signals = (blockheader.version & (config.fork.versionBit + 1)) === config.fork.versionBit + 1;
+        console.log(`Block ${i % 2016} set`);
       }
+      blockCount = newBlockCount;
     }
   }, 10 * 1000);
 
