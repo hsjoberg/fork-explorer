@@ -10,6 +10,16 @@ export interface IBlock {
 
 let blocks: IBlock[] = [];
 
+async function createBlock(height: number): Promise<IBlock> {
+  const blockHash = await getblockhash(height);
+  const blockheader = await getblockheader(blockHash);
+  return {
+    height: blockheader.height,
+    // hash: blockheader.hash,
+    signals: (blockheader.version & (config.fork.versionBit + 1)) === config.fork.versionBit + 1,
+  };
+}
+
 async function setupPeriod(blockCount: number, startHeight: number, endHeight: number): Promise<IBlock[]> {
   const blocks: IBlock[] = [];
   for (let i = startHeight; i < endHeight; i++) {
@@ -21,13 +31,7 @@ async function setupPeriod(blockCount: number, startHeight: number, endHeight: n
       continue;
     }
     try {
-      const blockHash = await getblockhash(i);
-      const blockheader = await getblockheader(blockHash);
-      blocks.push({
-        height: blockheader.height,
-        // hash: blockheader.hash,
-        signals: (blockheader.version & (config.fork.versionBit + 1)) === config.fork.versionBit + 1,
-      });
+      blocks.push(await createBlock(i));
     } catch (error) {
       console.error("Block boostrapping failed");
       throw error;
@@ -62,9 +66,8 @@ export async function bootstrapBlocks() {
       }
 
       for (let i = blockCount + 1; i <= newBlockCount; i++) {
-        const blockHash = await getblockhash(i);
-        const blockheader = await getblockheader(blockHash);
-        blocks[i % 2016].signals = (blockheader.version & (config.fork.versionBit + 1)) === config.fork.versionBit + 1;
+        const block = await createBlock(i);
+        blocks[i % 2016] = block;
         console.log(`Block ${i} set`);
       }
       blockCount = newBlockCount;
