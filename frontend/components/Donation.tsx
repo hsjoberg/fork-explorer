@@ -8,7 +8,7 @@ import { bytesToString } from "../back/utils.ts";
 
 export const DonateContainer = styled.div`
   margin: 0 auto 100px;
-  width: 400px;
+  max-width: 400px;
   text-align: center;
 `;
 
