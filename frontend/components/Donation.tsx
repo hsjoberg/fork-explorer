@@ -73,9 +73,11 @@ export function Donation() {
       resultJson.minSendable
     );
 
+    const amountNumber = Number.parseInt(amount || "0") * 1000;
+
     const callback = resultJson.callback;
 
-    const resultCallback = await fetch(callback + "?amount=" + amount);
+    const resultCallback = await fetch(callback + "?amount=" + amountNumber);
     const resultCallbackJson = await resultCallback.json();
 
     setType("bolt11");
