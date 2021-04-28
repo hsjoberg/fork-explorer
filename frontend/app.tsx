@@ -1,4 +1,19 @@
-import React, { ComponentType } from "https://esm.sh/react@17.0.2";
+import React, { ComponentType, useEffect } from "https://esm.sh/react@17.0.2";
+import { StoreProvider } from "https://esm.sh/easy-peasy";
+
+import store, { useStoreActions } from "./state/index.ts";
+
+function StoreStarter({ Page, pageProps }: { Page: ComponentType<any>; pageProps: any }) {
+  const getBlocks = useStoreActions((store) => store.getBlocks);
+
+  useEffect(() => {
+    (async () => {
+      await getBlocks();
+    })();
+  });
+
+  return <Page {...pageProps} />;
+}
 
 export default function App({ Page, pageProps }: { Page: ComponentType<any>; pageProps: any }) {
   return (
@@ -24,7 +39,9 @@ export default function App({ Page, pageProps }: { Page: ComponentType<any>; pag
           ></path>
         </svg>
       </a>
-      <Page {...pageProps} />
+      <StoreProvider store={store}>
+        <StoreStarter Page={Page} pageProps={pageProps} />
+      </StoreProvider>
     </main>
   );
 }

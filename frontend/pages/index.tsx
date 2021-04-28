@@ -8,14 +8,8 @@ import { Container } from "../components/Container.ts";
 import { Content } from "../components/Content.ts";
 import { BlockContainer, Block } from "../components/Block.tsx";
 import { Donation } from "../components/Donation.tsx";
-
-const Title = styled.h1`
-  margin-top: 40px;
-  font-size: 42px;
-  text-align: center;
-  color: #d97b08;
-  text-shadow: #000 3px 3px 0px;
-`;
+import SiteTitle from "../components/SiteTitle.tsx";
+import { useStoreState } from "../state/index.ts";
 
 const DescriptionBlock = styled.div`
   max-width: 600px;
@@ -55,20 +49,7 @@ const BootstrappingInProgress = styled.p`
 `;
 
 export default function Blocks() {
-  const [blocks, setBlocks] = useState<IBlock[] | undefined>(undefined);
-
-  useEffect(() => {
-    (async () => {
-      const result = await fetch("/blocks");
-      const json = (await result.json()) as IBlock[];
-      console.log(json);
-      setBlocks(json);
-    })();
-  }, []);
-
-  if (blocks === undefined) {
-    return <></>;
-  }
+  const blocks = useStoreState((store) => store.blocks);
 
   const forkName = config.fork.name;
 
@@ -88,7 +69,7 @@ export default function Blocks() {
         <title>{forkName} activation</title>
       </head>
       <Content>
-        <Title>{forkName} activation</Title>
+        <SiteTitle />
         <DescriptionBlock>
           {config.fork.info.map((text, index) => (
             <Text key={index}>{text}</Text>

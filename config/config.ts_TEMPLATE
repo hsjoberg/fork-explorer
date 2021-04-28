@@ -1,4 +1,7 @@
 interface Config {
+  // Whether to load real data or fake
+  mode: "real" | "fake";
+
   // Configuration related to the API server
   server: {
     // The server host or listening IP
@@ -49,6 +52,8 @@ interface Config {
 }
 
 const config: Config = {
+  mode: "real",
+
   server: {
     host: "127.0.0.1",
     port: 8080,
