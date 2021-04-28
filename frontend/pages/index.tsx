@@ -114,7 +114,7 @@ export default function Blocks() {
             <Block key={i} height={block.height} signals={block.signals} />
           ))}
         </BlockContainer>
-        <Donation />
+        {config.donation && <Donation />}
       </Content>
     </Container>
   );

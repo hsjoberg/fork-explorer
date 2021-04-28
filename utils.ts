@@ -3,3 +3,7 @@ export const bytesToHexString = (bytes: Uint8Array) => {
     return memo + ("0" + i.toString(16)).slice(-2); //padd with leading 0 if <16
   }, "");
 };
+
+export const bytesToString = (bytes: number[]) => {
+  return String.fromCharCode.apply(null, bytes);
+};

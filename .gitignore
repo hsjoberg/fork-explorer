@@ -2,6 +2,7 @@
 .vscode
 .aleph
 dist
+addinvoice_payload.json
 
 config/config.ts
 pageviews.json

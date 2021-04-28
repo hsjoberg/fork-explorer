@@ -43,6 +43,8 @@ interface Config {
       // Path to invoice.macaroon
       macaroon: string;
     };
+    // URL to the LNURL-pay endpoint
+    lnurlPayUrl: string;
   };
 }
 
@@ -73,6 +75,7 @@ const config: Config = {
   //     macaroon: "/path/to/invoice.macaroon",
   //   },
   // },
+  // lnurlPayUrl: "https://domain.com/invoice",
 };
 
 export default config;
