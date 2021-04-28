@@ -1,7 +1,7 @@
 import { Application, send } from "https://deno.land/x/oak@v7.3.0/mod.ts";
 
 import config from "./config/config.ts";
-import router from "./api.ts";
+import router from "./api/index.ts";
 import { bootstrapBlocks } from "./blocks.ts";
 
 await bootstrapBlocks();
