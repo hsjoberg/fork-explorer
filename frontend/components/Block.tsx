@@ -36,15 +36,20 @@ export const EmptyBlock = styled.div`
 export interface IBlockProps {
   height: number;
   signals: boolean | undefined;
+  miner: string | undefined;
 }
 
-export function Block({ height, signals }: IBlockProps) {
+export function Block({ height, signals, miner }: IBlockProps) {
   if (signals === undefined) {
     return <EmptyBlock title={`Coming block ${height}`} />;
   }
+
+  const hover = `Height: ${height}
+Miner: ${miner ?? "Unknown"}`;
+
   return (
     <a href={`https://mempool.space/block/${height}`} target="_blank">
-      <BlockStyle title={`Height: ${height}`} signals={signals}></BlockStyle>
+      <BlockStyle title={hover} signals={signals}></BlockStyle>
     </a>
   );
 }

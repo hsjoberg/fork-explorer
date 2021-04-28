@@ -111,7 +111,7 @@ export default function Blocks() {
         </TopSection>
         <BlockContainer>
           {blocks.map((block, i) => (
-            <Block key={i} height={block.height} signals={block.signals} />
+            <Block key={i} height={block.height} signals={block.signals} miner={block.miner} />
           ))}
         </BlockContainer>
         {config.donation && <Donation />}
