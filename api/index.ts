@@ -7,9 +7,7 @@ import { GetBlockchainInfo, GetBlockCount, GetBlockHash } from "./misc.ts";
 
 const router = new Router();
 
-router.use(Pageviews);
-
-router.get("/blocks", GetBlocks);
+router.get("/blocks", Pageviews, GetBlocks);
 
 router.get("/invoice", LnurlPayRequest);
 
