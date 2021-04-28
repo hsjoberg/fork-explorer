@@ -44,7 +44,7 @@ router.get("/blocks", (context) => {
   context.response.body = blocks;
 });
 
-const responseMetadata = JSON.stringify([["text/plain", "Donation on taproot.watch"]]);
+const responseMetadata = JSON.stringify([["text/plain", "Donation to taproot.watch"]]);
 router.get("/invoice", (context) => {
   if (!config.donation) {
     context.response.status = 400;
@@ -89,8 +89,8 @@ router.get("/invoice/callback", async (context) => {
   await Deno.writeTextFile(
     "./addinvoice_payload.json",
     JSON.stringify({
-      memo: "Donation",
       value_msat: amount,
+      memo: "Donation to taproot.watch",
       description_hash: sha256(responseMetadata, "utf8", "base64"),
     })
   );
