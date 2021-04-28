@@ -42,5 +42,9 @@ export function Block({ height, signals }: IBlockProps) {
   if (signals === undefined) {
     return <EmptyBlock title={`Coming block ${height}`} />;
   }
-  return <BlockStyle title={`Height: ${height}`} signals={signals}></BlockStyle>;
+  return (
+    <a href={`https://mempool.space/block/${height}`} target="_blank">
+      <BlockStyle title={`Height: ${height}`} signals={signals}></BlockStyle>
+    </a>
+  );
 }
