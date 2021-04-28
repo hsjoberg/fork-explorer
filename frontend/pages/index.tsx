@@ -49,6 +49,11 @@ const LockinInfo = styled.h2`
   text-shadow: #000 2px 2px 0px;
 `;
 
+const BootstrappingInProgress = styled.p`
+  color: #efefef;
+  text-align: center;
+`;
+
 export default function Blocks() {
   const [blocks, setBlocks] = useState<IBlock[] | undefined>(undefined);
 
@@ -110,6 +115,11 @@ export default function Blocks() {
           </LockinInfo>
         </TopSection>
         <BlockContainer>
+          {blocks.length === 0 && (
+            <BootstrappingInProgress>
+              Server is currently loading blocks, please try soon again.
+            </BootstrappingInProgress>
+          )}
           {blocks.map((block, i) => (
             <Block key={i} height={block.height} signals={block.signals} miner={block.miner} />
           ))}
