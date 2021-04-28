@@ -1,22 +1,42 @@
-import { getblockcount, getblockhash, getblockheader } from "./jsonrpc/index.ts";
+import { getblock, getblockcount, getblockhash, getrawtransaction } from "../jsonrpc/index.ts";
 
-import config from "./config/config.ts";
+import config from "../config/config.ts";
+import miners from "./miners.ts";
+import { hexToAscii } from "../utils.ts";
 
 export interface IBlock {
   height: number;
   // hash: string;
   signals: boolean | undefined;
+  coinbase: string | undefined;
+  miner: string | undefined;
 }
 
 let blocks: IBlock[] = [];
 
 async function createBlock(height: number): Promise<IBlock> {
   const blockHash = await getblockhash(height);
-  const blockheader = await getblockheader(blockHash);
+  const block = await getblock(blockHash);
+
+  const generationTransactionTxId = block.tx[0];
+  const generationTransaction = await getrawtransaction(generationTransactionTxId, block.hash);
+  const coinbase = hexToAscii(generationTransaction.vin[0].coinbase ?? "");
+
+  const miner = (() => {
+    for (const [tag, minerInfo] of Object.entries(miners.coinbase_tags)) {
+      if (coinbase.includes(tag)) {
+        return minerInfo.name;
+      }
+    }
+    return undefined;
+  })();
+
   return {
-    height: blockheader.height,
+    coinbase,
+    miner,
+    height: block.height,
     // hash: blockheader.hash,
-    signals: (blockheader.version & (config.fork.versionBit + 1)) === config.fork.versionBit + 1,
+    signals: (block.version & (config.fork.versionBit + 1)) === config.fork.versionBit + 1,
   };
 }
 
@@ -27,6 +47,8 @@ async function setupPeriod(blockCount: number, startHeight: number, endHeight: n
       blocks.push({
         height: i,
         signals: undefined,
+        coinbase: undefined,
+        miner: undefined,
       });
       continue;
     }

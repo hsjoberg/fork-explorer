@@ -7,3 +7,13 @@ export const bytesToHexString = (bytes: Uint8Array) => {
 export const bytesToString = (bytes: number[]) => {
   return String.fromCharCode.apply(null, bytes);
 };
+
+// Copied from mempool.space
+// https://github.com/mempool/mempool/blob/0d03a9e6cc3e846b2f968ef15d78ffbb29e46d28/frontend/src/app/components/miner/miner.component.ts
+export function hexToAscii(hex: string) {
+  let str = "";
+  for (let i = 0; i < hex.length; i += 2) {
+    str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+  }
+  return str;
+}

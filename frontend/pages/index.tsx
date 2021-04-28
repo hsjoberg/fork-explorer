@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "https://esm.sh/react@17.0.2";
 import styled from "https://esm.sh/styled-components";
 
 import config from "../back/config/config.ts";
-import { IBlock } from "../back/blocks.ts";
+import { IBlock } from "../back/blocks/index.ts";
 
 import { Container } from "../components/Container.ts";
 import { Content } from "../components/Content.ts";
