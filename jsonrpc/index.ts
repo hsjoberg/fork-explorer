@@ -103,7 +103,7 @@ interface IGetrawtransaction {
     {
       value: number;
       n: number;
-      scriptPubKey: {
+      scriptPubKey?: {
         asm: string;
         hex: string;
         reqSigs: number;

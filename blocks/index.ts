@@ -20,7 +20,8 @@ async function createBlock(height: number): Promise<IBlock> {
 
   const generationTransactionTxId = block.tx[0];
   const generationTransaction = await getrawtransaction(generationTransactionTxId, block.hash);
-  const coinbase = hexToAscii(generationTransaction.vin[0].coinbase ?? "");
+  const payoutAddress = generationTransaction.vout[0]?.scriptPubKey?.addresses?.[0] ?? "";
+  const coinbase = hexToAscii(generationTransaction.vin?.[0]?.coinbase ?? "");
 
   const miner = (() => {
     for (const [tag, minerInfo] of Object.entries(miners.coinbase_tags)) {
@@ -28,6 +29,13 @@ async function createBlock(height: number): Promise<IBlock> {
         return minerInfo.name;
       }
     }
+
+    for (const [tag, minerInfo] of Object.entries(miners.payout_addresses)) {
+      if (payoutAddress == tag) {
+        return minerInfo.name;
+      }
+    }
+
     return undefined;
   })();
 
@@ -43,6 +51,7 @@ async function createBlock(height: number): Promise<IBlock> {
 async function setupPeriod(blockCount: number, startHeight: number, endHeight: number): Promise<IBlock[]> {
   const blocks: IBlock[] = [];
   for (let i = startHeight; i < endHeight; i++) {
+    console.log(`Fetching: ${i}`);
     if (i > blockCount) {
       blocks.push({
         height: i,
@@ -78,7 +87,6 @@ export async function bootstrapBlocks() {
       console.log("Found new block");
       if (newBlockCount % 2016 === 0) {
         blockCount = newBlockCount;
-        console.log("New block period!");
         const difficultyPeriodStartHeight = blockCount - (blockCount % 2016);
         const difficultyPeriodEndHeight = difficultyPeriodStartHeight + 2016;
 
@@ -96,7 +104,7 @@ export async function bootstrapBlocks() {
     }
   }, 10 * 1000);
 
-  console.log("Done.");
+  console.log("Bootstrapping done.");
 }
 
 export function getBlocks() {
