@@ -46,6 +46,23 @@ export const ChangeToBolt11 = styled.a`
   font-size: 14px;
 `;
 
+export const ConnectToNodeTitle = styled.p`
+  display: block;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 17px;
+  margin-bottom: 4px;
+`;
+
+export const ConnectToNodeData = styled.p`
+  display: block;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 0;
+`;
+
 const lnurlPayBech32 = bech32.encode(
   "lnurl",
   bech32.toWords(new TextEncoder().encode(config.donation?.lnurlPayUrl)),
@@ -114,6 +131,12 @@ export function Donation() {
             <ChangeToBolt11 onClick={decodeLnUrlPay}>
               Unsupported wallet? Click to change to normal BOLT11 invoice
             </ChangeToBolt11>
+          )}
+          {config.donation?.data.lightningNodeUri && (
+            <>
+              <ConnectToNodeTitle>The Lightning Node:</ConnectToNodeTitle>
+              <ConnectToNodeData>{config.donation.data.lightningNodeUri}</ConnectToNodeData>
+            </>
           )}
         </>
       )}

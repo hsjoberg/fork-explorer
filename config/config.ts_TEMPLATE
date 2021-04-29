@@ -45,6 +45,8 @@ interface Config {
       cert: string;
       // Path to invoice.macaroon
       macaroon: string;
+      // Lightning Node URI <pubkey>@<ip:port>
+      lightningNodeUri?: string;
     };
     // URL to the LNURL-pay endpoint
     lnurlPayUrl: string;
@@ -78,6 +80,7 @@ const config: Config = {
   //     server: "https://127.0.0.1:8080",
   //     cert: "/path/to/tls.cert",
   //     macaroon: "/path/to/invoice.macaroon",
+  //     lightningNodeUri: "pubkey@ip:port"
   //   },
   // },
   // lnurlPayUrl: "https://domain.com/invoice",
