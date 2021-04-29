@@ -73,7 +73,7 @@ export function Donation() {
       resultJson.minSendable
     );
 
-    const amountNumber = Number.parseInt(amount || "0") * 1000;
+    const amountNumber = Number.parseInt(amount!) * 1000;
 
     if (Number.isNaN(amountNumber)) {
       return;
