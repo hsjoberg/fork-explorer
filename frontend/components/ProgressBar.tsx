@@ -156,7 +156,7 @@ function ProgressBar() {
           width: "15px",
           position: "absolute",
           top: "10px",
-          left: "calc(90% - 0px)",
+          left: "calc(90% - 7px)",
           fontSize: "12px",
         }}
       >
