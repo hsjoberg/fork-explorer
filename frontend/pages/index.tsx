@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "https://esm.sh/react@17.0.2";
+import React from "https://esm.sh/react@17.0.2";
 import styled from "https://esm.sh/styled-components";
 
 import config from "../back/config/config.ts";
-import { IBlock } from "../back/blocks/index.ts";
 
 import { Container } from "../components/Container.ts";
 import { Content } from "../components/Content.ts";
 import { BlockContainer, Block } from "../components/Block.tsx";
 import { Donation } from "../components/Donation.tsx";
 import SiteTitle from "../components/SiteTitle.tsx";
+import SiteMenu from "../components/SiteMenu.tsx";
 import { useStoreState } from "../state/index.ts";
 
 const DescriptionBlock = styled.div`
@@ -70,6 +70,7 @@ export default function Blocks() {
       </head>
       <Content>
         <SiteTitle />
+        <SiteMenu />
         <DescriptionBlock>
           {config.fork.info.map((text, index) => (
             <Text key={index}>{text}</Text>

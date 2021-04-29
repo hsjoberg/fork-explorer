@@ -4,7 +4,7 @@ import styled from "https://esm.sh/styled-components";
 import config from "../back/config/config.ts";
 
 const Title = styled.h1`
-  margin-top: 40px;
+  margin: 40px 0 20px;
   font-size: 42px;
   text-align: center;
   color: #d97b08;
