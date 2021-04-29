@@ -11,8 +11,9 @@ Javascript environment, similar to Node.
 
 0. Fix config file by duplicating `config/config.ts_TEMPLATE` to `config/config.ts` and setting
    bitcoind's JSON-RPC credentials up.
-1. `./run-server`.
-2. Done.
+1. `./build-frontend`.
+2. `./run-server`.
+3. Done.
 
 # License
 
