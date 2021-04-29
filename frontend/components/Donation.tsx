@@ -75,6 +75,10 @@ export function Donation() {
 
     const amountNumber = Number.parseInt(amount || "0") * 1000;
 
+    if (Number.isNaN(amountNumber)) {
+      return;
+    }
+
     const callback = resultJson.callback;
 
     const resultCallback = await fetch(callback + "?amount=" + amountNumber);
