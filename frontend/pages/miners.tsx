@@ -15,7 +15,7 @@ const Table = styled.table`
 
   box-shadow: #000 3px 3px 14px;
   border-radius: 6px;
-  margin: auto;
+  margin: 0 auto 100px;
   border: 0;
   border-collapse: collapse;
   border-radius: 8px;
@@ -120,10 +120,6 @@ export default function Miners() {
                 </TableRow>
               );
             })}
-            <TableRow>
-              <Cell>AntMiner</Cell>
-              <SignallingCell>🚫</SignallingCell>
-            </TableRow>
           </TableBody>
         </Table>
       </Content>

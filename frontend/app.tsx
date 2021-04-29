@@ -1,17 +1,22 @@
-import React, { ComponentType, useEffect } from "https://esm.sh/react@17.0.2";
+import React, { ComponentType, useEffect, useState } from "https://esm.sh/react@17.0.2";
 import { StoreProvider } from "https://esm.sh/easy-peasy";
 
 import store, { useStoreActions } from "./state/index.ts";
 
 function StoreStarter({ Page, pageProps }: { Page: ComponentType<any>; pageProps: any }) {
+  const [gotBlocks, setGotBlocks] = useState(false);
   const getBlocks = useStoreActions((store) => store.getBlocks);
 
   useEffect(() => {
     (async () => {
       await getBlocks();
+      setGotBlocks(true);
     })();
-  });
+  }, []);
 
+  if (!gotBlocks) {
+    return null;
+  }
   return <Page {...pageProps} />;
 }
 
