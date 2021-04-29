@@ -10,8 +10,8 @@ import { useStoreState } from "../state/index.ts";
 import SiteMenu from "../components/SiteMenu.tsx";
 
 const Table = styled.table`
-  max-width: 100%;
-  width: 1000px;
+  width: 100%;
+  max-width: 1000px;
 
   box-shadow: #000 3px 3px 14px;
   border-radius: 6px;
@@ -50,7 +50,7 @@ const TableHeader = styled.th`
 
 const Cell = styled.td`
   color: #f0f0f0;
-  padding: 19px;
+  padding: 17px;
 `;
 
 const SignallingCell = styled.td`
