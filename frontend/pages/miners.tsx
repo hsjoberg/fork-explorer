@@ -50,6 +50,9 @@ const TableHeader = styled.th`
 
 const Cell = styled.td`
   color: #f0f0f0;
+  > a {
+    color: #f0f0f0;
+  }
   padding: 17px;
 `;
 
@@ -62,6 +65,8 @@ interface IMinerData {
   [key: string]: {
     name: string;
     signals: boolean;
+    website: string | undefined;
+    numBlocks: number;
   };
 }
 
@@ -86,8 +91,11 @@ export default function Miners() {
         prev[currBlock.miner] = {
           name: currBlock.miner,
           signals: currBlock.signals ?? false,
+          website: currBlock.minerWebsite,
+          numBlocks: 1,
         };
       }
+      prev[currBlock.miner].numBlocks++;
       return prev;
     }, {} as IMinerData);
   }, [blocks]);
@@ -104,15 +112,25 @@ export default function Miners() {
           <TableHead>
             <TableRow>
               <TableHeader>Miner name</TableHeader>
+              <TableHeader>Share</TableHeader>
               <TableHeader>Signals</TableHeader>
             </TableRow>
           </TableHead>
 
           <TableBody>
             {Object.entries(miners).map(([_, miner]) => {
+              console.log(miner.numBlocks / 2016);
               return (
                 <TableRow>
-                  <Cell>{miner.name}</Cell>
+                  <Cell>
+                    {miner.website && (
+                      <a href={miner.website} target="_blank">
+                        {miner.name}
+                      </a>
+                    )}
+                    {!miner.website && miner.name}
+                  </Cell>
+                  <Cell>{((miner.numBlocks / 2016) * 100).toFixed(1)}%</Cell>
                   <SignallingCell>
                     {miner.signals && <>✅</>}
                     {!miner.signals && <>🚫</>}

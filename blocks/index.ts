@@ -6,10 +6,9 @@ import { hexToAscii } from "../utils.ts";
 
 export interface IBlock {
   height: number;
-  // hash: string;
   signals: boolean | undefined;
-  coinbase: string | undefined;
   miner: string | undefined;
+  minerWebsite: string | undefined;
 }
 
 let blocks: IBlock[] = [];
@@ -23,16 +22,16 @@ async function createBlock(height: number): Promise<IBlock> {
   const payoutAddress = generationTransaction.vout[0]?.scriptPubKey?.addresses?.[0] ?? "";
   const coinbase = hexToAscii(generationTransaction.vin?.[0]?.coinbase ?? "");
 
-  const miner = (() => {
+  const minerData = (() => {
     for (const [tag, minerInfo] of Object.entries(miners.coinbase_tags)) {
       if (coinbase.includes(tag)) {
-        return minerInfo.name;
+        return { name: minerInfo.name, website: minerInfo.link };
       }
     }
 
     for (const [tag, minerInfo] of Object.entries(miners.payout_addresses)) {
       if (payoutAddress == tag) {
-        return minerInfo.name;
+        return { name: minerInfo.name, website: minerInfo.link };
       }
     }
 
@@ -40,10 +39,9 @@ async function createBlock(height: number): Promise<IBlock> {
   })();
 
   return {
-    coinbase,
-    miner,
+    miner: minerData?.name,
+    minerWebsite: minerData?.website,
     height: block.height,
-    // hash: blockheader.hash,
     signals: (block.version & (config.fork.versionBit + 1)) === config.fork.versionBit + 1,
   };
 }
@@ -56,8 +54,8 @@ async function setupPeriod(blockCount: number, startHeight: number, endHeight: n
       blocks.push({
         height: i,
         signals: undefined,
-        coinbase: undefined,
         miner: undefined,
+        minerWebsite: undefined,
       });
       continue;
     }
