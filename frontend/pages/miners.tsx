@@ -82,7 +82,7 @@ export default function Miners() {
     const blocksReversed = blocks.slice(0);
     blocksReversed.reverse();
 
-    return blocksReversed.reduce((prev, currBlock) => {
+    const miners = blocksReversed.reduce((prev, currBlock) => {
       if (!currBlock.miner) {
         return prev;
       }
@@ -99,6 +99,11 @@ export default function Miners() {
       prev[currBlock.miner].numBlocks++;
       return prev;
     }, {} as IMinerData);
+
+    // Sort the miners by share
+    return Object.entries(miners).sort(([_, a], [_2, b]) => {
+      return b.numBlocks - a.numBlocks;
+    });
   }, [blocks]);
 
   return (
@@ -119,9 +124,9 @@ export default function Miners() {
           </TableHead>
 
           <TableBody>
-            {Object.entries(miners).map(([_, miner]) => {
+            {miners.map(([_, miner]) => {
               return (
-                <TableRow>
+                <TableRow key={miner.name}>
                   <Cell>
                     {miner.website && (
                       <a href={miner.website} target="_blank">
