@@ -11,10 +11,17 @@ const app = new Application();
 app.use(router.routes());
 
 app.use(async (context) => {
-  await send(context, context.request.url.pathname, {
-    root: `${Deno.cwd()}/frontend/dist`,
-    index: "index.html",
-  });
+  if ([".js", ".css", ".json", ".ico"].some((extension) => context.request.url.pathname.endsWith(extension))) {
+    await context.send({
+      root: `${Deno.cwd()}/frontend/dist`,
+      index: "index.html",
+    });
+  } else {
+    await context.send({
+      root: `${Deno.cwd()}/frontend/dist`,
+      path: `index.html`,
+    });
+  }
 });
 
 app.addEventListener("listen", ({ hostname, port, secure }) => {
