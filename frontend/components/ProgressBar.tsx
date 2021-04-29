@@ -36,26 +36,33 @@ const ProgressBarContainer = styled.div`
   height: 44px;
 `;
 
-const Green = styled.div`
+const Green = styled.div<{ roundedRightBorder?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
   background: linear-gradient(45deg, #217f35 0%, rgba(9, 89, 0, 1) 100%);
   border: 1px solid #1ed947;
-  border-radius: 6px 0px 0px 6px;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  border-top-right-radius: ${(props) => (props.roundedRightBorder ? "6px" : "0px")};
+  border-bottom-right-radius: ${(props) => (props.roundedRightBorder ? "6px" : "0px")};
   color: #f7f7f7;
 `;
 
-const White = styled.div`
+const White = styled.div<{ roundedLeftBorder?: boolean; roundedRightBorder?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
   background: linear-gradient(45deg, #8e8e8e 0%, #afafaf 100%);
   border: 1px solid #f7f7f7;
+  border-top-left-radius: ${(props) => (props.roundedLeftBorder ? "6px" : "0px")};
+  border-bottom-left-radius: ${(props) => (props.roundedLeftBorder ? "6px" : "0px")};
+  border-top-right-radius: ${(props) => (props.roundedRightBorder ? "6px" : "0px")};
+  border-bottom-right-radius: ${(props) => (props.roundedRightBorder ? "6px" : "0px")};
   color: #f7f7f7;
 `;
 
-const Red = styled.div`
+const Red = styled.div<{ roundedLeftBorder?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,6 +70,10 @@ const Red = styled.div`
   border: 1px solid #c30000;
   box-sizing: border-box;
   border-radius: 0px 6px 6px 0px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-top-left-radius: ${(props) => (props.roundedLeftBorder ? "6px" : "0px")};
+  border-bottom-left-radius: ${(props) => (props.roundedLeftBorder ? "6px" : "0px")};
   color: #f7f7f7;
 `;
 
@@ -70,23 +81,17 @@ function ProgressBar() {
   const blocks = useStoreState((store) => store.blocks);
 
   const blocksLeftInThisPeriod = blocks.reduce((prev, currentBlock) => prev + +(currentBlock.signals === undefined), 0);
-  const currentNumberOfBlocks = blocks.reduce((prev, currentBlock) => prev + +(currentBlock.signals !== undefined), 0);
-  const currentNumberOfSignallingBlocks = blocks.reduce(
-    (prev, currentBlock) => prev + +(currentBlock.signals ?? false),
-    0
-  );
-  const currentNumberOfNonSignallingBlocks = blocks.reduce(
+  const numberOfSignallingBlocks = blocks.reduce((prev, currentBlock) => prev + +(currentBlock.signals ?? false), 0);
+  const numberOfNonSignallingBlocks = blocks.reduce(
     (prev, currentBlock) => prev + +(currentBlock.signals === false),
     0
   );
 
-  const numberOfDecimals = currentNumberOfBlocks < 100 ? 2 : 0;
+  const signallingRatio = numberOfSignallingBlocks / 2016;
+  const signallingPercentage = (signallingRatio * 100).toFixed(numberOfSignallingBlocks < 20 ? 2 : 0);
 
-  const signallingRatio = currentNumberOfSignallingBlocks / 2016;
-  const signallingPercentage = (signallingRatio * 100).toFixed(currentNumberOfSignallingBlocks < 20 ? 2 : 0);
-
-  const nonSignallingRatio = currentNumberOfNonSignallingBlocks / 2016;
-  const nonSignallingPercentage = (nonSignallingRatio * 100).toFixed(currentNumberOfNonSignallingBlocks < 20 ? 2 : 0);
+  const nonSignallingRatio = numberOfNonSignallingBlocks / 2016;
+  const nonSignallingPercentage = (nonSignallingRatio * 100).toFixed(numberOfNonSignallingBlocks < 20 ? 2 : 0);
 
   const blocksLeftRatio = blocksLeftInThisPeriod / 2016;
   let blocksLeftPercentage = (blocksLeftRatio * 100).toFixed(blocksLeftInThisPeriod < 20 ? 2 : 0);
@@ -100,7 +105,6 @@ function ProgressBar() {
   if (leftOver != 0) {
     blocksLeftPercentage = (Number.parseFloat(blocksLeftPercentage) + leftOver).toFixed(2);
     if (blocksLeftPercentage.endsWith(".00")) {
-      console.log("END");
       blocksLeftPercentage = blocksLeftPercentage.slice(0, -3);
     }
   }
@@ -108,24 +112,40 @@ function ProgressBar() {
   return (
     <Container>
       <ProgressBarContainer>
-        {signallingRatio > 0 && <Green style={{ flex: signallingRatio }}>{signallingPercentage}%</Green>}
-        {blocksLeftRatio > 0 && <White style={{ flex: blocksLeftRatio }}>{blocksLeftPercentage}%</White>}
-        {nonSignallingRatio > 0 && <Red style={{ flex: nonSignallingRatio }}>{nonSignallingPercentage}%</Red>}
+        {signallingRatio > 0 && (
+          <Green roundedRightBorder={numberOfSignallingBlocks === 2016} style={{ flex: signallingRatio }}>
+            {signallingPercentage}%
+          </Green>
+        )}
+        {blocksLeftRatio > 0 && (
+          <White
+            roundedLeftBorder={numberOfSignallingBlocks === 0}
+            roundedRightBorder={numberOfNonSignallingBlocks === 0}
+            style={{ flex: blocksLeftRatio }}
+          >
+            {blocksLeftPercentage}%
+          </White>
+        )}
+        {nonSignallingRatio > 0 && (
+          <Red roundedLeftBorder={numberOfNonSignallingBlocks === 2016} style={{ flex: nonSignallingRatio }}>
+            {nonSignallingPercentage}%
+          </Red>
+        )}
       </ProgressBarContainer>
       <ProgressBarInfoContainer>
         {signallingRatio > 0 && (
           <ProgressBarInfoText style={{ flex: signallingRatio }}>
-            {currentNumberOfSignallingBlocks} signalling blocks
+            {numberOfSignallingBlocks} signalling block{numberOfSignallingBlocks > 1 && <>s</>}
           </ProgressBarInfoText>
         )}
         {blocksLeftRatio > 0 && (
           <ProgressBarInfoText style={{ flex: blocksLeftRatio }}>
-            {blocksLeftInThisPeriod} upcoming blocks
+            {blocksLeftInThisPeriod} upcoming block{blocksLeftInThisPeriod > 1 && <>s</>}
           </ProgressBarInfoText>
         )}
         {nonSignallingRatio > 0 && (
           <ProgressBarInfoText style={{ flex: nonSignallingRatio }}>
-            {currentNumberOfNonSignallingBlocks} non-signalling blocks
+            {numberOfNonSignallingBlocks} non-signalling block{numberOfNonSignallingBlocks > 1 && <>s</>}
           </ProgressBarInfoText>
         )}
       </ProgressBarInfoContainer>
