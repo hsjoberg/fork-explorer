@@ -83,20 +83,21 @@ export default function Miners() {
     blocksReversed.reverse();
 
     const miners = blocksReversed.reduce((prev, currBlock) => {
-      if (!currBlock.miner) {
+      if (currBlock.signals === undefined) {
         return prev;
       }
 
-      if (!prev[currBlock.miner]) {
-        prev[currBlock.miner] = {
-          name: currBlock.miner,
+      const key = currBlock.miner ?? "unknown";
+      if (!prev[key]) {
+        prev[key] = {
+          name: currBlock.miner ?? "Unrecognized miners",
           signals: currBlock.signals ?? false,
           website: currBlock.minerWebsite,
           numBlocks: 1,
         };
         return prev;
       }
-      prev[currBlock.miner].numBlocks++;
+      prev[key].numBlocks++;
       return prev;
     }, {} as IMinerData);
 
