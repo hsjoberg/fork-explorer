@@ -18,22 +18,31 @@ export const model: IStoreModel = {
       actions.setBlocks(json);
     } else {
       const start = 0;
-      const end = 1800;
+      const end = 1500;
       const blocks: IBlock[] = [];
       for (let i = start; i < 2016; i++) {
         if (i < end) {
-          blocks.push({
-            height: i,
-            signals: Math.floor(Math.random() * 100 + 1) > 35,
-            coinbase: undefined,
-            miner: undefined,
-          });
+          if (Math.floor(Math.random() * 100 + 1) > 20) {
+            blocks.push({
+              height: i,
+              signals: true,
+              miner: "abc",
+              minerWebsite: undefined,
+            });
+          } else {
+            blocks.push({
+              height: i,
+              signals: false,
+              miner: "def",
+              minerWebsite: undefined,
+            });
+          }
         } else {
           blocks.push({
             height: i,
             signals: undefined,
-            coinbase: undefined,
             miner: undefined,
+            minerWebsite: undefined,
           });
         }
       }

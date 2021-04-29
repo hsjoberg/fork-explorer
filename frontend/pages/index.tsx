@@ -11,6 +11,8 @@ import SiteTitle from "../components/SiteTitle.tsx";
 import SiteMenu from "../components/SiteMenu.tsx";
 import { useStoreState } from "../state/index.ts";
 
+const forkName = config.fork.name;
+
 const DescriptionBlock = styled.div`
   max-width: 600px;
   margin: auto;
@@ -38,6 +40,7 @@ const CurrentPeriod = styled.h2`
 
 const LockinInfo = styled.h2`
   font-size: 16px;
+  text-align: right;
   margin-bottom: 10px;
   color: #ff9b20;
   text-shadow: #000 2px 2px 0px;
@@ -51,9 +54,8 @@ const BootstrappingInProgress = styled.p`
 export default function Blocks() {
   const blocks = useStoreState((store) => store.blocks);
 
-  const forkName = config.fork.name;
-
   const treshhold = config.fork.threshold;
+  const currentNumberOfBlocks = blocks.reduce((prev, currentBlock) => prev + +(currentBlock.signals !== undefined), 0);
   const currentNumberOfSignallingBlocks = blocks.reduce(
     (prev, currentBlock) => prev + +(currentBlock.signals ?? false),
     0
@@ -62,6 +64,14 @@ export default function Blocks() {
   const lockedIn = currentNumberOfSignallingBlocks >= treshhold;
   const blocksLeftInThisPeriod = blocks.reduce((prev, currentBlock) => prev + +(currentBlock.signals === undefined), 0);
   const currentPeriodFailed = blocksLeftForActivation > blocksLeftInThisPeriod;
+
+  const currentSignallingRatio = currentNumberOfSignallingBlocks / currentNumberOfBlocks;
+  const currentSignallingPercentage = (currentSignallingRatio * 100).toFixed(2);
+  let willProbablyActivate: boolean | undefined = undefined;
+  if (currentNumberOfBlocks >= 144) {
+    const estimatedSignallingBlocksLeft = Math.floor(currentSignallingRatio * blocksLeftInThisPeriod);
+    willProbablyActivate = estimatedSignallingBlocksLeft <= blocksLeftInThisPeriod && currentSignallingRatio >= 0.9;
+  }
 
   return (
     <Container>
@@ -78,22 +88,33 @@ export default function Blocks() {
         </DescriptionBlock>
         <TopSection>
           <CurrentPeriod>Current signalling period of 2016 blocks</CurrentPeriod>
+          {/* <LockinInfo>90% of blocks within the period has to signal.</LockinInfo> */}
           <LockinInfo>
+            {lockedIn && <>{forkName.toUpperCase()} IS LOCKED IN FOR DEPLOYMENT!</>}
             {!lockedIn && (
               <>
-                {blocksLeftForActivation} {forkName} blocks left until softfork is locked in.
-                <br />
-                {!currentPeriodFailed && <>90% of the blocks within the period has to signal.</>}
+                {!currentPeriodFailed && (
+                  <>
+                    {blocksLeftForActivation} {forkName} blocks left until softfork is locked in.
+                    <br />
+                    {willProbablyActivate && (
+                      <>Taproot will lock in with the current signalling ratio ({currentSignallingPercentage}%)!</>
+                    )}
+                    {!willProbablyActivate && (
+                      <>Taproot will not lock in with the current signalling ratio ({currentSignallingPercentage}%)</>
+                    )}
+                  </>
+                )}
                 {currentPeriodFailed && (
                   <>
-                    {forkName} cannot be locked in within this period
+                    {forkName} cannot be locked in within this period.
                     <br />
-                    (90% of the blocks has to signal).
+                    {blocksLeftForActivation} more blocks required to reach 90%, only {blocksLeftInThisPeriod} blocks
+                    left.
                   </>
                 )}
               </>
             )}
-            {lockedIn && <>{forkName.toUpperCase()} IS LOCKED IN FOR DEPLOYMENT!</>}
           </LockinInfo>
         </TopSection>
         <BlockContainer>
