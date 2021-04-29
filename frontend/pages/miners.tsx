@@ -8,14 +8,14 @@ import { Content } from "../components/Content.ts";
 import SiteTitle from "../components/SiteTitle.tsx";
 import { useStoreState } from "../state/index.ts";
 import SiteMenu from "../components/SiteMenu.tsx";
+import { Donation } from "../components/Donation.tsx";
 
 const Table = styled.table`
   width: 100%;
   max-width: 1000px;
-
   box-shadow: #000 3px 3px 14px;
   border-radius: 6px;
-  margin: 0 auto 100px;
+  margin: 0 auto 30px;
   border: 0;
   border-collapse: collapse;
   border-radius: 8px;
@@ -72,8 +72,8 @@ interface IMinerData {
 
 export default function Miners() {
   const blocks = useStoreState((store) => store.blocks);
-
   const forkName = config.fork.name;
+  const currentNumberOfBlocks = blocks.reduce((prev, currentBlock) => prev + +(currentBlock.signals !== undefined), 0);
 
   const miners = useMemo(() => {
     // We have to reverse the array as we have to check
@@ -94,6 +94,7 @@ export default function Miners() {
           website: currBlock.minerWebsite,
           numBlocks: 1,
         };
+        return prev;
       }
       prev[currBlock.miner].numBlocks++;
       return prev;
@@ -119,7 +120,6 @@ export default function Miners() {
 
           <TableBody>
             {Object.entries(miners).map(([_, miner]) => {
-              console.log(miner.numBlocks / 2016);
               return (
                 <TableRow>
                   <Cell>
@@ -130,7 +130,7 @@ export default function Miners() {
                     )}
                     {!miner.website && miner.name}
                   </Cell>
-                  <Cell>{((miner.numBlocks / 2016) * 100).toFixed(1)}%</Cell>
+                  <Cell>{((miner.numBlocks / currentNumberOfBlocks) * 100).toFixed(1)}%</Cell>
                   <SignallingCell>
                     {miner.signals && <>✅</>}
                     {!miner.signals && <>🚫</>}
@@ -140,6 +140,7 @@ export default function Miners() {
             })}
           </TableBody>
         </Table>
+        {config.donation && <Donation />}
       </Content>
     </Container>
   );
