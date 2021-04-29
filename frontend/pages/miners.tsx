@@ -87,7 +87,7 @@ export default function Miners() {
         return prev;
       }
 
-      const key = currBlock.miner ?? "unknown";
+      const key = currBlock.miner ?? (currBlock.signals ? "unknown_signalling" : "unknown_nonsignalling");
       if (!prev[key]) {
         prev[key] = {
           name: currBlock.miner ?? "Unrecognized miners",
