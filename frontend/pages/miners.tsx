@@ -125,9 +125,9 @@ export default function Miners() {
           </TableHead>
 
           <TableBody>
-            {miners.map(([_, miner]) => {
+            {miners.map(([key, miner]) => {
               return (
-                <TableRow key={miner.name}>
+                <TableRow key={key}>
                   <Cell>
                     {miner.website && (
                       <a href={miner.website} target="_blank">
@@ -136,7 +136,7 @@ export default function Miners() {
                     )}
                     {!miner.website && miner.name}
                   </Cell>
-                  <Cell>{((miner.numBlocks / currentNumberOfBlocks) * 100).toFixed(1)}%</Cell>
+                  <Cell>{((miner.numBlocks / currentNumberOfBlocks) * 100).toFixed(2)}%</Cell>
                   <SignallingCell>
                     {miner.signals && <>✅</>}
                     {!miner.signals && <>🚫</>}
