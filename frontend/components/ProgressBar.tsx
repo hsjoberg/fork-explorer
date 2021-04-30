@@ -77,6 +77,29 @@ const Red = styled.div<{ roundedLeftBorder?: boolean }>`
   color: #f7f7f7;
 `;
 
+const NinetyPercentHolder = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 15px;
+  position: absolute;
+  top: 10px;
+  left: calc(90% - 2px);
+  font-size: 12px;
+`;
+
+const NinetyPercentIndicator = styled.div`
+  width: 3px;
+  height: 44px;
+  background: #f7f7f7;
+`;
+
+const NinetyPercentText = styled.div`
+  color: #fff;
+  height: 20px;
+  margin-top: -20px;
+  margin-left: -9px;
+`;
+
 function ProgressBar() {
   const blocks = useStoreState((store) => store.blocks);
 
@@ -88,7 +111,10 @@ function ProgressBar() {
   );
 
   const signallingRatio = numberOfSignallingBlocks / 2016;
-  const signallingPercentage = (signallingRatio * 100).toFixed(numberOfSignallingBlocks < 20 ? 2 : 0);
+  let signallingPercentage = (signallingRatio * 100).toFixed(numberOfSignallingBlocks < 20 ? 2 : 0);
+  if (signallingPercentage === "90") {
+    signallingPercentage = (signallingRatio * 100).toFixed(2);
+  }
 
   const nonSignallingRatio = numberOfNonSignallingBlocks / 2016;
   const nonSignallingPercentage = (nonSignallingRatio * 100).toFixed(numberOfNonSignallingBlocks < 20 ? 2 : 0);
@@ -149,26 +175,10 @@ function ProgressBar() {
           </ProgressBarInfoText>
         )}
       </ProgressBarInfoContainer>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "15px",
-          position: "absolute",
-          top: "10px",
-          left: "calc(90% - 7px)",
-          fontSize: "12px",
-        }}
-      >
-        <div
-          style={{
-            width: "4px",
-            height: "44px",
-            background: "#f7f7f7",
-          }}
-        ></div>
-        {/* <div style={{}}>90%</div> */}
-      </div>
+      <NinetyPercentHolder>
+        <NinetyPercentText>90%</NinetyPercentText>
+        <NinetyPercentIndicator />
+      </NinetyPercentHolder>
     </Container>
   );
 }
