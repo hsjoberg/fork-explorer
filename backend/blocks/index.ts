@@ -1,15 +1,9 @@
 import { getblock, getblockcount, getblockhash, getrawtransaction } from "../jsonrpc/index.ts";
 
-import config from "../config/config.ts";
-import miners from "./miners.ts";
-import { hexToAscii } from "../utils.ts";
-
-export interface IBlock {
-  height: number;
-  signals: boolean | undefined;
-  miner: string | undefined;
-  minerWebsite: string | undefined;
-}
+import config from "../../config/config.ts";
+import miners from "../../common/miners.ts";
+import { hexToAscii } from "../../common/utils.ts";
+import { IBlock } from "../../common/interfaces.ts";
 
 let blocks: IBlock[] = [];
 

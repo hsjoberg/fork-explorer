@@ -2,7 +2,6 @@ import React, { useMemo } from "https://esm.sh/react@17.0.2";
 import styled from "https://esm.sh/styled-components";
 
 import config from "../back/config/config.ts";
-
 import { Container } from "../components/Container.ts";
 import { Content } from "../components/Content.ts";
 import SiteTitle from "../components/SiteTitle.tsx";

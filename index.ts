@@ -1,8 +1,8 @@
-import { Application, send } from "https://deno.land/x/oak@v7.3.0/mod.ts";
+import { Application } from "https://deno.land/x/oak@v7.3.0/mod.ts";
 
 import config from "./config/config.ts";
-import router from "./api/index.ts";
-import { bootstrapBlocks } from "./blocks/index.ts";
+import router from "./backend/api/index.ts";
+import { bootstrapBlocks } from "./backend/blocks/index.ts";
 
 bootstrapBlocks();
 

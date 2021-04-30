@@ -1,7 +1,6 @@
 import React from "https://esm.sh/react@17.0.2";
 import styled from "https://esm.sh/styled-components";
 
-import config from "../back/config/config.ts";
 import { useStoreState } from "../state/index.ts";
 
 export const DonateContainer = styled.div`

@@ -11,8 +11,7 @@ const pageViews: IPageViews = JSON.parse((await Deno.readTextFile("./pageviews.j
 const PageviewsMiddleware: Middleware = async function (_, next) {
   try {
     const date = format(new Date(), "yyyy-MM-dd", {});
-    pageViews[date] = pageViews[date] ?? 0;
-    pageViews[date] = pageViews[date] + 1;
+    pageViews[date] = (pageViews[date] ?? 0) + 1;
     await Deno.writeTextFile("./pageviews.json", JSON.stringify(pageViews, null, 2));
   } catch (e) {
     console.log(e.message);
