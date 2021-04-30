@@ -2,6 +2,7 @@ import React, { useMemo } from "https://esm.sh/react@17.0.2";
 import styled from "https://esm.sh/styled-components";
 
 import config from "../back/config/config.ts";
+import { computeStats, computeMiners } from "../back/utils.ts";
 
 import { Container } from "../components/Container.ts";
 import { Content } from "../components/Content.ts";
@@ -61,51 +62,11 @@ const SignallingCell = styled.td`
   text-align: center;
 `;
 
-interface IMinerData {
-  [key: string]: {
-    name: string;
-    signals: boolean;
-    website: string | undefined;
-    numBlocks: number;
-  };
-}
-
 export default function Miners() {
   const blocks = useStoreState((store) => store.blocks);
   const forkName = config.fork.name;
-  const currentNumberOfBlocks = blocks.reduce((prev, currentBlock) => prev + +(currentBlock.signals !== undefined), 0);
-
-  const miners = useMemo(() => {
-    // We have to reverse the array as we have to check
-    // for the latest block by a miner to decide whether they
-    // are signalling or not.
-    const blocksReversed = blocks.slice(0);
-    blocksReversed.reverse();
-
-    const miners = blocksReversed.reduce((prev, currBlock) => {
-      if (currBlock.signals === undefined) {
-        return prev;
-      }
-
-      const key = currBlock.miner ?? (currBlock.signals ? "unknown_signalling" : "unknown_nonsignalling");
-      if (!prev[key]) {
-        prev[key] = {
-          name: currBlock.miner ?? "Unrecognized miners",
-          signals: currBlock.signals ?? false,
-          website: currBlock.minerWebsite,
-          numBlocks: 1,
-        };
-        return prev;
-      }
-      prev[key].numBlocks++;
-      return prev;
-    }, {} as IMinerData);
-
-    // Sort the miners by share
-    return Object.entries(miners).sort(([_, a], [_2, b]) => {
-      return b.numBlocks - a.numBlocks;
-    });
-  }, [blocks]);
+  const { currentNumberOfBlocks } = computeStats(blocks);
+  const miners = useMemo(() => computeMiners(blocks), [blocks]);
 
   return (
     <Container>
