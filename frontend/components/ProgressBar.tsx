@@ -1,7 +1,7 @@
 import React from "https://esm.sh/react@17.0.2";
 import styled from "https://esm.sh/styled-components";
 
-import config from "../back/config/config.ts";
+import { computeStats } from "../back/common/data.ts";
 import { useStoreState } from "../state/index.ts";
 
 export const DonateContainer = styled.div`
@@ -103,21 +103,17 @@ const NinetyPercentText = styled.div`
 function ProgressBar() {
   const blocks = useStoreState((store) => store.blocks);
 
-  const blocksLeftInThisPeriod = blocks.reduce((prev, currentBlock) => prev + +(currentBlock.signals === undefined), 0);
-  const numberOfSignallingBlocks = blocks.reduce((prev, currentBlock) => prev + +(currentBlock.signals ?? false), 0);
-  const numberOfNonSignallingBlocks = blocks.reduce(
-    (prev, currentBlock) => prev + +(currentBlock.signals === false),
-    0
-  );
+  const {
+    currentNumberOfBlocks,
+    blocksLeftInThisPeriod,
+    currentNumberOfSignallingBlocks,
+    currentSignallingRatio,
+    currentSignallingPercentage,
+    currentNumberOfNonSignallingBlocks,
+  } = computeStats(blocks);
 
-  const signallingRatio = numberOfSignallingBlocks / 2016;
-  let signallingPercentage = (signallingRatio * 100).toFixed(numberOfSignallingBlocks < 20 ? 2 : 0);
-  if (signallingPercentage === "90") {
-    signallingPercentage = (signallingRatio * 100).toFixed(2);
-  }
-
-  const nonSignallingRatio = numberOfNonSignallingBlocks / 2016;
-  const nonSignallingPercentage = (nonSignallingRatio * 100).toFixed(numberOfNonSignallingBlocks < 20 ? 2 : 0);
+  const nonSignallingRatio = currentNumberOfNonSignallingBlocks / 2016;
+  const nonSignallingPercentage = (nonSignallingRatio * 100).toFixed(currentNumberOfNonSignallingBlocks < 20 ? 2 : 0);
 
   const blocksLeftRatio = blocksLeftInThisPeriod / 2016;
   let blocksLeftPercentage = (blocksLeftRatio * 100).toFixed(blocksLeftInThisPeriod < 20 ? 2 : 0);
@@ -125,7 +121,7 @@ function ProgressBar() {
   // Add rounding error leftovers to blocks left percentage
   const leftOver =
     100 -
-    (Number.parseFloat(signallingPercentage) +
+    (Number.parseFloat(currentSignallingPercentage) +
       Number.parseFloat(nonSignallingPercentage) +
       Number.parseFloat(blocksLeftPercentage));
   if (leftOver != 0) {
@@ -141,30 +137,30 @@ function ProgressBar() {
   return (
     <Container>
       <ProgressBarContainer>
-        {signallingRatio > 0 && (
-          <Green roundedRightBorder={numberOfSignallingBlocks === 2016} style={{ flex: signallingRatio }}>
-            {signallingPercentage}%
+        {currentSignallingRatio > 0 && (
+          <Green roundedRightBorder={currentNumberOfSignallingBlocks === 2016} style={{ flex: currentSignallingRatio }}>
+            {currentSignallingPercentage}%
           </Green>
         )}
         {blocksLeftRatio > 0 && (
           <White
-            roundedLeftBorder={numberOfSignallingBlocks === 0}
-            roundedRightBorder={numberOfNonSignallingBlocks === 0}
+            roundedLeftBorder={currentNumberOfSignallingBlocks === 0}
+            roundedRightBorder={currentNumberOfNonSignallingBlocks === 0}
             style={{ flex: blocksLeftRatio }}
           >
             {blocksLeftPercentage}%
           </White>
         )}
         {nonSignallingRatio > 0 && (
-          <Red roundedLeftBorder={numberOfNonSignallingBlocks === 2016} style={{ flex: nonSignallingRatio }}>
+          <Red roundedLeftBorder={currentNumberOfNonSignallingBlocks === 2016} style={{ flex: nonSignallingRatio }}>
             {nonSignallingPercentage}%
           </Red>
         )}
       </ProgressBarContainer>
       <ProgressBarInfoContainer>
-        {signallingRatio > 0 && (
-          <ProgressBarInfoText style={{ flex: signallingRatio }}>
-            {numberOfSignallingBlocks} signalling block{numberOfSignallingBlocks > 1 && <>s</>}
+        {currentSignallingRatio > 0 && (
+          <ProgressBarInfoText style={{ flex: currentSignallingRatio }}>
+            {currentNumberOfSignallingBlocks} signalling block{currentNumberOfSignallingBlocks > 1 && <>s</>}
           </ProgressBarInfoText>
         )}
         {blocksLeftRatio > 0 && (
@@ -174,7 +170,7 @@ function ProgressBar() {
         )}
         {nonSignallingRatio > 0 && (
           <ProgressBarInfoText style={{ flex: nonSignallingRatio }}>
-            {numberOfNonSignallingBlocks} non-signalling block{numberOfNonSignallingBlocks > 1 && <>s</>}
+            {currentNumberOfNonSignallingBlocks} non-signalling block{currentNumberOfNonSignallingBlocks > 1 && <>s</>}
           </ProgressBarInfoText>
         )}
       </ProgressBarInfoContainer>
