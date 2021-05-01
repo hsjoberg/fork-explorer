@@ -42,7 +42,7 @@ async function createBlock(height: number): Promise<IBlock> {
     miner: minerData?.name,
     minerWebsite: minerData?.website,
     height: block.height,
-    signals: (block.version & (config.fork.versionBit + 1)) === config.fork.versionBit + 1,
+    signals: (block.version & (1 << config.fork.versionBit)) === 1 << config.fork.versionBit,
   };
 }
 
