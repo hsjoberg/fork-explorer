@@ -6,10 +6,12 @@ import store, { useStoreActions } from "./state/index.ts";
 function StoreStarter({ Page, pageProps }: { Page: ComponentType<any>; pageProps: any }) {
   const [gotBlocks, setGotBlocks] = useState(false);
   const getBlocks = useStoreActions((store) => store.getBlocks);
+  const autoRefresh = useStoreActions((store) => store.autoRefresh);
 
   useEffect(() => {
     (async () => {
       await getBlocks();
+      autoRefresh();
       setGotBlocks(true);
     })();
   }, []);

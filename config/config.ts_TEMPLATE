@@ -33,6 +33,12 @@ interface Config {
     threshold: number;
   };
 
+  // Configuration specifically for the frontend site
+  frontend: {
+    // How often to autrefresh, in seconds. Set to null to disable
+    autoRefreshInterval: number | null;
+  };
+
   // Donation configuration, right now only supports lnd
   donation?: {
     // Backend type, currently only supports lnd
@@ -72,6 +78,10 @@ const config: Config = {
     info: [],
     versionBit: 2,
     threshold: 1845,
+  },
+
+  frontend: {
+    autoRefreshInterval: 120,
   },
 
   // donation: {

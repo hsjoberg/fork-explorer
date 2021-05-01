@@ -6,6 +6,7 @@ import config from "../back/config/config.ts";
 export interface IStoreModel {
   getBlocks: Thunk<IStoreModel>;
   setBlocks: Action<IStoreModel, IBlock[]>;
+  autoRefresh: Thunk<IStoreModel>;
   blocks: IBlock[];
 }
 
@@ -48,6 +49,24 @@ export const model: IStoreModel = {
       }
       actions.setBlocks(blocks);
     }
+  }),
+
+  autoRefresh: thunk((actions) => {
+    if (!config.frontend.autoRefreshInterval) {
+      return;
+    }
+
+    setInterval(async () => {
+      try {
+        console.log("Fetching blocks");
+        const result = await fetch("/blocks");
+        const json = (await result.json()) as IBlock[];
+        console.log(json);
+        actions.setBlocks(json);
+      } catch (error) {
+        console.log("Couldn't fetch /blocks", error.message);
+      }
+    }, config.frontend.autoRefreshInterval * 1000);
   }),
 
   setBlocks: action((state, payload) => {
