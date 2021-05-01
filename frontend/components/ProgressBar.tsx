@@ -133,6 +133,9 @@ function ProgressBar() {
     if (blocksLeftPercentage.endsWith(".00")) {
       blocksLeftPercentage = blocksLeftPercentage.slice(0, -3);
     }
+    if (blocksLeftPercentage.startsWith("-")) {
+      blocksLeftPercentage = blocksLeftPercentage.slice(1);
+    }
   }
 
   return (
