@@ -1,13 +1,12 @@
 import { Router } from "https://deno.land/x/oak/mod.ts";
 
-import Pageviews from "../pageviews/index.ts";
 import { GetBlocks } from "./blocks.ts";
 import { LnurlPayRequest, LnurlPayRequestCallback } from "./donate.ts";
 import { GetBlockchainInfo, GetBlockCount, GetBlockHash } from "./misc.ts";
 
 const router = new Router();
 
-router.get("/blocks", Pageviews, GetBlocks);
+router.get("/blocks", GetBlocks);
 
 router.get("/invoice", LnurlPayRequest);
 

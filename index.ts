@@ -1,8 +1,9 @@
-import { Application, send } from "https://deno.land/x/oak@v7.3.0/mod.ts";
+import { Application } from "https://deno.land/x/oak@v7.3.0/mod.ts";
 
 import config from "./config/config.ts";
 import router from "./api/index.ts";
 import { bootstrapBlocks } from "./blocks/index.ts";
+import pageviews from "./pageviews/index.ts";
 
 bootstrapBlocks();
 
@@ -17,6 +18,7 @@ app.use(async (context) => {
       index: "index.html",
     });
   } else {
+    await pageviews();
     await context.send({
       root: `${Deno.cwd()}/frontend/dist`,
       path: `index.html`,
