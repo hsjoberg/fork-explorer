@@ -23,23 +23,19 @@ export function homeTXT() {
   } = computeStats(blocks);
   const miners = computeMiners(blocks);
   const forkName = config.fork.name;
-  const lnurlPayBech32 = bech32.encode(
-    "lnurl",
-    bech32.toWords(new TextEncoder().encode(config.donation?.lnurlPayUrl)),
-    1024
-  );
 
   let blocksTable = "";
   blocksTable += `${blocks[0].height}`;
-  let i = 0;
-  for (i; i < blocks.length; i++) {
+  for (let i = 0; i < blocks.length; i++) {
     if (i % 28 === 0) blocksTable += "\n";
 
     const block = blocks[i];
     blocksTable += typeof block.signals === "undefined" ? UPCOMING : block.signals ? SIGNALING : NONSIGNALING;
     blocksTable += " ";
   }
-  blocksTable += " ".repeat(28 - String(blocks[i].height).length) + blocks[i].height;
+  const last = blocks[blocks.length - 1];
+  blocksTable += "\n";
+  blocksTable += " ".repeat(56 - String(last.height).length - 1) + String(last.height);
 
   const notes = [];
   if (lockedIn) notes.push(`${forkName.toUpperCase()} IS LOCKED IN FOR DEPLOYMENT!`);
@@ -51,9 +47,16 @@ export function homeTXT() {
       if (willProbablyActivate)
         notes.push(`Taproot will lock in with the current signalling ratio (${currentSignallingPercentage}%)!`);
       else notes.push(`Taproot will not lock in with the current signalling ratio (${currentSignallingPercentage}%)`);
-      notes.push(``);
     }
   }
+
+  const donation = config.donation
+    ? `
+---
+
+Donate via Lightning Network:
+${bech32.encode("lnurl", bech32.toWords(new TextEncoder().encode(config.donation?.lnurlPayUrl)), 1024)}`
+    : "";
 
   return `
 ###
@@ -66,12 +69,13 @@ ${config.fork.info.join("\n\n")}
 
 Current signalling period of 2016 blocks
 
-${">".repeat(currentNumberOfSignallingBlocks)}|${"-".repeat(blocksLeftInThisPeriod)}|${"<".repeat(
-    currentNumberOfNonSignallingBlocks
-  )}
+${">".repeat(Math.ceil(currentNumberOfSignallingBlocks / 25))}${"-".repeat(
+    Math.ceil(blocksLeftInThisPeriod / 25)
+  )}${"<".repeat(Math.ceil(currentNumberOfNonSignallingBlocks / 25))}
 blocks: ${currentNumberOfSignallingBlocks} signalling | ${blocksLeftInThisPeriod} upcoming | ${currentNumberOfNonSignallingBlocks} non-signalling
 
 ${notes.map((n) => "- " + n).join("\n")}
+
 ${blocksTable}
 
 ---
@@ -87,10 +91,6 @@ ${miners
   )
   .join("\n")}
 
----
-
-Donate via Lightning Network:
-${lnurlPayBech32}
-
+${donation}
   `;
 }

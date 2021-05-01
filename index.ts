@@ -25,7 +25,7 @@ app.use(async (context) => {
       accepts.includes("text/plain") ||
       context.request.url.pathname === "/index.txt")
   ) {
-    context.response.body = await homeTXT();
+    context.response.body = homeTXT();
   } else {
     await context.send({
       root: `${Deno.cwd()}/frontend/dist`,
