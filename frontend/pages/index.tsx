@@ -2,7 +2,7 @@ import React from "https://esm.sh/react@17.0.2";
 import styled from "https://esm.sh/styled-components";
 
 import config from "../back/config/config.ts";
-import { computeStats } from "../back/common/utils.ts";
+import { computeStats } from "../back/common/data.ts";
 
 import { Container } from "../components/Container.ts";
 import { Content } from "../components/Content.ts";

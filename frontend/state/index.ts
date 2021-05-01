@@ -10,7 +10,7 @@ export interface IStoreModel {
 
 export const model: IStoreModel = {
   getBlocks: thunk(async (actions) => {
-    const result = await fetch("/blocks");
+    const result = await fetch(`/blocks`);
     const json = (await result.json()) as IBlock[];
     console.log(json);
     actions.setBlocks(json);
