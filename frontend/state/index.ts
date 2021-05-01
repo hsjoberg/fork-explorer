@@ -61,7 +61,10 @@ export const model: IStoreModel = {
         console.log("Fetching blocks");
         const result = await fetch("/blocks");
         const json = (await result.json()) as IBlock[];
-        console.log(json);
+        if (json && json.length === 0) {
+          console.log("Got empty response from /blocks, ignoring...");
+          return;
+        }
         actions.setBlocks(json);
       } catch (error) {
         console.log("Couldn't fetch /blocks", error.message);
