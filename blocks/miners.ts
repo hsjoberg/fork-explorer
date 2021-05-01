@@ -1,12 +1,3 @@
-export interface IMinerData {
-  [key: string]: {
-    name: string;
-    signals: boolean;
-    website: string | undefined;
-    numBlocks: number;
-  };
-}
-
 export interface IMiners {
   coinbase_tags: {
     [key: string]: {

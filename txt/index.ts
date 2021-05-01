@@ -1,32 +1,47 @@
+import { bech32 } from "https://esm.sh/bech32";
+
 import config from "../config/config.ts";
 import { getBlocks } from "../blocks/index.ts";
-import { computeStats, computeMiners } from "../utils.ts";
+import { computeStats, computeMiners } from "../common/data.ts";
 
-const WHITE = "⬚";
-const BLACK = "▣";
+const UPCOMING = "⬚";
+const SIGNALING = "▣";
+const NONSIGNALING = "□";
 
 export function homeTXT() {
   const blocks = getBlocks();
   const {
-    blocksLeftForActivation,
     lockedIn,
-    currentNumberOfBlocks,
     currentPeriodFailed,
-    currentSignallingPercentage,
     willProbablyActivate,
+    currentNumberOfBlocks,
+    blocksLeftInThisPeriod,
+    blocksLeftForActivation,
+    currentSignallingPercentage,
+    currentNumberOfSignallingBlocks,
+    currentNumberOfNonSignallingBlocks,
   } = computeStats(blocks);
   const miners = computeMiners(blocks);
   const forkName = config.fork.name;
+  const lnurlPayBech32 = bech32.encode(
+    "lnurl",
+    bech32.toWords(new TextEncoder().encode(config.donation?.lnurlPayUrl)),
+    1024
+  );
 
   let blocksTable = "";
-  for (let i = 0; i < blocks.length; i++) {
-    if (i % 25 === 0) blocksTable += "\n";
+  blocksTable += `${blocks[0].height}`;
+  let i = 0;
+  for (i; i < blocks.length; i++) {
+    if (i % 28 === 0) blocksTable += "\n";
 
     const block = blocks[i];
-    blocksTable += block.signals ? BLACK : WHITE + " ";
+    blocksTable += typeof block.signals === "undefined" ? UPCOMING : block.signals ? SIGNALING : NONSIGNALING;
+    blocksTable += " ";
   }
+  blocksTable += " ".repeat(28 - String(blocks[i].height).length) + blocks[i].height;
 
-  let notes = [];
+  const notes = [];
   if (lockedIn) notes.push(`${forkName.toUpperCase()} IS LOCKED IN FOR DEPLOYMENT!`);
   else {
     notes.push(`${blocksLeftForActivation} ${forkName} blocks left until softfork is locked in.`);
@@ -51,6 +66,11 @@ ${config.fork.info.join("\n\n")}
 
 Current signalling period of 2016 blocks
 
+${">".repeat(currentNumberOfSignallingBlocks)}|${"-".repeat(blocksLeftInThisPeriod)}|${"<".repeat(
+    currentNumberOfNonSignallingBlocks
+  )}
+blocks: ${currentNumberOfSignallingBlocks} signalling | ${blocksLeftInThisPeriod} upcoming | ${currentNumberOfNonSignallingBlocks} non-signalling
+
 ${notes.map((n) => "- " + n).join("\n")}
 ${blocksTable}
 
@@ -66,5 +86,11 @@ ${miners
       }`
   )
   .join("\n")}
+
+---
+
+Donate via Lightning Network:
+${lnurlPayBech32}
+
   `;
 }

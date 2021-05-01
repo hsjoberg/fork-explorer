@@ -1,7 +1,6 @@
 import { action, Action, createStore, createTypedHooks, thunk, Thunk } from "https://esm.sh/easy-peasy";
 
-import { IBlock } from "../back/blocks/index.ts";
-import config from "../back/config/config.ts";
+import { IBlock } from "../back/common/interfaces.ts";
 
 export interface IStoreModel {
   getBlocks: Thunk<IStoreModel>;
@@ -11,43 +10,10 @@ export interface IStoreModel {
 
 export const model: IStoreModel = {
   getBlocks: thunk(async (actions) => {
-    if (config.mode === "real") {
-      const result = await fetch("/blocks");
-      const json = (await result.json()) as IBlock[];
-      console.log(json);
-      actions.setBlocks(json);
-    } else {
-      const start = 0;
-      const end = 1500;
-      const blocks: IBlock[] = [];
-      for (let i = start; i < 2016; i++) {
-        if (i < end) {
-          if (Math.floor(Math.random() * 100 + 1) > 20) {
-            blocks.push({
-              height: i,
-              signals: true,
-              miner: "abc",
-              minerWebsite: undefined,
-            });
-          } else {
-            blocks.push({
-              height: i,
-              signals: false,
-              miner: "def",
-              minerWebsite: undefined,
-            });
-          }
-        } else {
-          blocks.push({
-            height: i,
-            signals: undefined,
-            miner: undefined,
-            minerWebsite: undefined,
-          });
-        }
-      }
-      actions.setBlocks(blocks);
-    }
+    const result = await fetch("/blocks");
+    const json = (await result.json()) as IBlock[];
+    console.log(json);
+    actions.setBlocks(json);
   }),
 
   setBlocks: action((state, payload) => {

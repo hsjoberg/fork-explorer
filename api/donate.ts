@@ -4,7 +4,7 @@ import { ensureFile } from "https://deno.land/std/fs/mod.ts";
 import { sha256 } from "https://denopkg.com/chiefbiiko/sha256/mod.ts";
 
 import config from "../config/config.ts";
-import { bytesToHexString } from "../utils.ts";
+import { bytesToHexString } from "../common/utils.ts";
 
 await ensureFile("./addinvoice_payload.json");
 

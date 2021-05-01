@@ -4,7 +4,7 @@ import { QRCode } from "https://esm.sh/react-qr-svg";
 import { bech32 } from "https://esm.sh/bech32";
 
 import config from "../back/config/config.ts";
-import { bytesToString } from "../back/utils.ts";
+import { bytesToString } from "../back/common/utils.ts";
 
 export const DonateContainer = styled.div`
   margin: 0 auto 100px;

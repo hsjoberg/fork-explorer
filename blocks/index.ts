@@ -1,19 +1,27 @@
 import { getblock, getblockcount, getblockhash, getrawtransaction } from "../jsonrpc/index.ts";
 
+import { IBlock } from "../common/interfaces.ts";
+import { hexToAscii } from "../common/utils.ts";
 import config from "../config/config.ts";
 import miners from "./miners.ts";
-import { hexToAscii } from "../utils.ts";
-
-export interface IBlock {
-  height: number;
-  signals: boolean | undefined;
-  miner: string | undefined;
-  minerWebsite: string | undefined;
-}
 
 let blocks: IBlock[] = [];
 
-async function createBlock(height: number): Promise<IBlock> {
+async function createFakeBlock(height: number): Promise<IBlock> {
+  const minerKeys = Object.keys(miners.coinbase_tags);
+  const randomIndex = Math.floor(Math.random() * minerKeys.length);
+  const randomKey = minerKeys[randomIndex];
+  const minerData = miners.coinbase_tags[randomKey];
+
+  return await Promise.resolve({
+    miner: minerData?.name,
+    minerWebsite: minerData?.link,
+    height,
+    signals: Math.random() > 0.5,
+  });
+}
+
+async function createRealBlock(height: number): Promise<IBlock> {
   const blockHash = await getblockhash(height);
   const block = await getblock(blockHash);
 
@@ -25,13 +33,13 @@ async function createBlock(height: number): Promise<IBlock> {
   const minerData = (() => {
     for (const [tag, minerInfo] of Object.entries(miners.coinbase_tags)) {
       if (coinbase.includes(tag)) {
-        return { name: minerInfo.name, website: minerInfo.link };
+        return minerInfo;
       }
     }
 
     for (const [tag, minerInfo] of Object.entries(miners.payout_addresses)) {
       if (payoutAddress == tag) {
-        return { name: minerInfo.name, website: minerInfo.link };
+        return minerInfo;
       }
     }
 
@@ -40,13 +48,15 @@ async function createBlock(height: number): Promise<IBlock> {
 
   return {
     miner: minerData?.name,
-    minerWebsite: minerData?.website,
+    minerWebsite: minerData?.link,
     height: block.height,
     signals: (block.version & (config.fork.versionBit + 1)) === config.fork.versionBit + 1,
   };
 }
 
 async function setupPeriod(blockCount: number, startHeight: number, endHeight: number): Promise<IBlock[]> {
+  const createBlock = config.mode === "fake" ? createFakeBlock : createRealBlock;
+
   const blocks: IBlock[] = [];
   for (let i = startHeight; i < endHeight; i++) {
     console.log(`Fetching: ${i}`);
@@ -71,7 +81,8 @@ async function setupPeriod(blockCount: number, startHeight: number, endHeight: n
 }
 
 export async function bootstrapBlocks() {
-  console.log("Bootstrapping block data...");
+  console.log(`Bootstrapping ${config.mode} block data...`);
+  const createBlock = config.mode === "fake" ? createFakeBlock : createRealBlock;
 
   let blockCount = await getblockcount();
   const difficultyPeriodStartHeight = blockCount - (blockCount % 2016);
