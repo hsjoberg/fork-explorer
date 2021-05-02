@@ -2,9 +2,10 @@ import React, { ComponentType, useEffect, useState } from "https://esm.sh/react@
 import { StoreProvider } from "https://esm.sh/easy-peasy";
 
 import store, { useStoreActions } from "./state/index.ts";
-import config from "../back/config/config.ts";
+import config from "./back/config/config.ts";
 
 const forkName = config.fork.name;
+const twitterHandle = config.frontend.twitterHandle;
 
 function StoreStarter({ Page, pageProps }: { Page: ComponentType<any>; pageProps: any }) {
   const [gotBlocks, setGotBlocks] = useState(false);
@@ -33,14 +34,24 @@ export default function App({ Page, pageProps }: { Page: ComponentType<any>; pag
         <link rel="stylesheet" href="./style/site.css" />
         <link rel="stylesheet" href="./style/reset.css" />
 
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:site" content="@hampus_s" />
-        <meta name="twitter:creator" content="@hampus_s" />
-        <meta name="twitter:image" content="https://creazilla-store.fra1.digitaloceanspaces.com/emojis/54056/carrot-emoji-clipart-md.png" />
-        <meta property="og:image" content="https://creazilla-store.fra1.digitaloceanspaces.com/emojis/54056/carrot-emoji-clipart-md.png" />
-        <meta property="og:url" content="https://taproot.watch" />
-        <meta property="og:title"><content>{forkName} Activation</content></meta>
-        <meta property="og:description"><content>See the current signalling status of the {forkName} softfork.</content></meta>
+        {twitterHandle && (
+          <>
+            <meta name="twitter:card" content="summary" />
+            <meta name="twitter:site" content={twitterHandle} />
+            <meta name="twitter:creator" content={twitterHandle} />
+            <meta
+              name="twitter:image"
+              content="https://creazilla-store.fra1.digitaloceanspaces.com/emojis/54056/carrot-emoji-clipart-md.png"
+            />
+            <meta
+              property="og:image"
+              content="https://creazilla-store.fra1.digitaloceanspaces.com/emojis/54056/carrot-emoji-clipart-md.png"
+            />
+            <meta property="og:url" content="https://taproot.watch" />
+            <meta property="og:title" content={`${forkName} Activation`} />
+            <meta property="og:description" content="See the current signalling status of the {forkName} softfork." />
+          </>
+        )}
       </head>
       <a href="https://github.com/hsjoberg/fork-explorer" className="github-corner" aria-label="View source on GitHub">
         <svg width="80" height="80" viewBox="0 0 250 250" className="github-corner-svg" aria-hidden="true">
