@@ -58,6 +58,14 @@ Donate via Lightning Network:
 ${bech32.encode("lnurl", bech32.toWords(new TextEncoder().encode(config.donation?.lnurlPayUrl)), 1024)}`
     : "";
 
+  const progressBar =
+    ">".repeat(Math.ceil(currentNumberOfSignallingBlocks / 25)) +
+    "-".repeat(Math.ceil(blocksLeftInThisPeriod / 25)) +
+    "<".repeat(Math.ceil(currentNumberOfNonSignallingBlocks / 25));
+  const pct90 = Math.round(progressBar.length * 0.9);
+  const label90Pct = " ".repeat(pct90 - 1) + "90%";
+  const progressBarWith90Pct = progressBar.slice(0, pct90) + "|" + progressBar.slice(pct90);
+
   return `
 ###
 
@@ -69,9 +77,8 @@ ${config.fork.info.join("\n\n")}
 
 Current signalling period of 2016 blocks
 
-${">".repeat(Math.ceil(currentNumberOfSignallingBlocks / 25))}${"-".repeat(
-    Math.ceil(blocksLeftInThisPeriod / 25)
-  )}${"<".repeat(Math.ceil(currentNumberOfNonSignallingBlocks / 25))}
+${label90Pct}
+${progressBarWith90Pct}
 blocks: ${currentNumberOfSignallingBlocks} signalling | ${blocksLeftInThisPeriod} upcoming | ${currentNumberOfNonSignallingBlocks} non-signalling
 
 ${notes.map((n) => "- " + n).join("\n")}
