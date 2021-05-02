@@ -38,6 +38,7 @@ const ProgressBarContainer = styled.div`
 
 const Green = styled.div<{ roundedRightBorder?: boolean }>`
   display: flex;
+  font-size: 13px;
   justify-content: center;
   align-items: center;
   background: linear-gradient(45deg, #217f35 0%, rgba(9, 89, 0, 1) 100%);
@@ -51,6 +52,7 @@ const Green = styled.div<{ roundedRightBorder?: boolean }>`
 
 const White = styled.div<{ roundedLeftBorder?: boolean; roundedRightBorder?: boolean }>`
   display: flex;
+  font-size: 13px;
   justify-content: center;
   align-items: center;
   background: linear-gradient(45deg, #8e8e8e 0%, #afafaf 100%);
@@ -64,6 +66,7 @@ const White = styled.div<{ roundedLeftBorder?: boolean; roundedRightBorder?: boo
 
 const Red = styled.div<{ roundedLeftBorder?: boolean }>`
   display: flex;
+  font-size: 13px;
   justify-content: center;
   align-items: center;
   background: linear-gradient(45deg, #731212 0%, rgba(89, 0, 0, 1) 100%);
@@ -142,7 +145,7 @@ function ProgressBar() {
             roundedRightBorder={currentNumberOfSignallingBlocks === 2016}
             style={{ flex: currentSignallingRatioToAll }}
           >
-            {currentSignallingPercentageToAll}%
+            {currentSignallingRatioToAll > 0.035 && `${currentSignallingPercentageToAll}%`}
           </Green>
         )}
         {blocksLeftRatio > 0 && (
