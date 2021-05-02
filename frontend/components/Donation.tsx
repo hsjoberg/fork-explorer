@@ -15,7 +15,7 @@ export const DonateContainer = styled.div`
 export const DonateText = styled.a`
   display: block;
   text-align: center;
-  color: #404040;
+  color: #9c9c9c;
   text-shadow: #000 1px 1px 0px;
   cursor: pointer;
 `;

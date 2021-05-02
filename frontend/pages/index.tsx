@@ -51,6 +51,17 @@ const BootstrappingInProgress = styled.p`
   text-align: center;
 `;
 
+const ContactTwitter = styled.p`
+  color: #9e9e9e;
+  & > a {
+    color: #ababab;
+  }
+  text-shadow: #000 1px 1px 0px;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 35px;
+`;
+
 export default function Blocks() {
   const blocks = useStoreState((store) => store.blocks);
   const forkName = config.fork.name;
@@ -116,6 +127,14 @@ export default function Blocks() {
             <Block key={i} height={block.height} signals={block.signals} miner={block.miner} />
           ))}
         </BlockContainer>
+        {config.frontend.twitterHandle && (
+          <ContactTwitter>
+            Twitter:{" "}
+            <a target="_blank" href={`https://twitter.com/${config.frontend.twitterHandle}`}>
+              @{config.frontend.twitterHandle}
+            </a>
+          </ContactTwitter>
+        )}
         {config.donation && <Donation />}
       </Content>
     </Container>
