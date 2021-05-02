@@ -107,8 +107,8 @@ function ProgressBar() {
     currentNumberOfBlocks,
     blocksLeftInThisPeriod,
     currentNumberOfSignallingBlocks,
-    currentSignallingRatio,
-    currentSignallingPercentage,
+    currentSignallingRatioToAll,
+    currentSignallingPercentageToAll,
     currentNumberOfNonSignallingBlocks,
   } = computeStats(blocks);
 
@@ -121,7 +121,7 @@ function ProgressBar() {
   // Add rounding error leftovers to blocks left percentage
   const leftOver =
     100 -
-    (Number.parseFloat(currentSignallingPercentage) +
+    (Number.parseFloat(currentSignallingPercentageToAll) +
       Number.parseFloat(nonSignallingPercentage) +
       Number.parseFloat(blocksLeftPercentage));
   if (leftOver != 0) {
@@ -137,9 +137,12 @@ function ProgressBar() {
   return (
     <Container>
       <ProgressBarContainer>
-        {currentSignallingRatio > 0 && (
-          <Green roundedRightBorder={currentNumberOfSignallingBlocks === 2016} style={{ flex: currentSignallingRatio }}>
-            {currentSignallingPercentage}%
+        {currentSignallingRatioToAll > 0 && (
+          <Green
+            roundedRightBorder={currentNumberOfSignallingBlocks === 2016}
+            style={{ flex: currentSignallingRatioToAll }}
+          >
+            {currentSignallingPercentageToAll}%
           </Green>
         )}
         {blocksLeftRatio > 0 && (
@@ -158,8 +161,8 @@ function ProgressBar() {
         )}
       </ProgressBarContainer>
       <ProgressBarInfoContainer>
-        {currentSignallingRatio > 0 && (
-          <ProgressBarInfoText style={{ flex: currentSignallingRatio }}>
+        {currentSignallingRatioToAll > 0 && (
+          <ProgressBarInfoText style={{ flex: currentSignallingRatioToAll }}>
             {currentNumberOfSignallingBlocks} signalling block{currentNumberOfSignallingBlocks > 1 && <>s</>}
           </ProgressBarInfoText>
         )}
