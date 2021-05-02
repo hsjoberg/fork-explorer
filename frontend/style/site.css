@@ -44,3 +44,10 @@ body {
   border: 0;
   right: 0;
 }
+
+/* Hack for fixing the 404 page */
+#__aleph > div > p > code,
+#__aleph > div > p > small,
+#__aleph > div > p > span {
+  color: #f0f0f0 !important;
+}
