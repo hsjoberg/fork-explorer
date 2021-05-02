@@ -37,6 +37,8 @@ interface Config {
   frontend: {
     // How often to autrefresh, in seconds. Set to null to disable
     autoRefreshInterval: number | null;
+    // Twitter handle, this is for the Twitter link preview
+    twitterHandle: string,
   };
 
   // Donation configuration, right now only supports lnd
@@ -82,6 +84,7 @@ const config: Config = {
 
   frontend: {
     autoRefreshInterval: 120,
+    twitterHandle: "",
   },
 
   // donation: {
