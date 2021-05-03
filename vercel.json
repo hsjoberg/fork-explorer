@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "build-frontend.sh": {
+      "runtime": "vercel-deno@0.7.10"
+    }
+  }
+}

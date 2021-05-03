@@ -12,10 +12,43 @@ export interface IStoreModel {
 
 export const model: IStoreModel = {
   getBlocks: thunk(async (actions) => {
-    const result = await fetch(`/blocks`);
-    const json = (await result.json()) as IBlock[];
-    console.log(json);
-    actions.setBlocks(json);
+    if (config.mode === "real" || config.mode === "fake") {
+      const result = await fetch(`/blocks`);
+      const json = (await result.json()) as IBlock[];
+      console.log(json);
+      actions.setBlocks(json);
+    } else {
+      const start = 0;
+      const end = 1500;
+      const blocks: IBlock[] = [];
+      for (let i = start; i < 2016; i++) {
+        if (i < end) {
+          if (Math.floor(Math.random() * 100 + 1) > 20) {
+            blocks.push({
+              height: i,
+              signals: true,
+              miner: "abc",
+              minerWebsite: undefined,
+            });
+          } else {
+            blocks.push({
+              height: i,
+              signals: false,
+              miner: "def",
+              minerWebsite: undefined,
+            });
+          }
+        } else {
+          blocks.push({
+            height: i,
+            signals: undefined,
+            miner: undefined,
+            minerWebsite: undefined,
+          });
+        }
+      }
+      actions.setBlocks(blocks);
+    }
   }),
 
   autoRefresh: thunk((actions) => {
