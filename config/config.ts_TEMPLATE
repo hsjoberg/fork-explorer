@@ -1,6 +1,6 @@
 interface Config {
   // Whether to load real data or fake
-  mode: "real" | "fake";
+  mode: "real" | "fake" | "fake-frontend";
 
   // Configuration related to the API server
   server: {

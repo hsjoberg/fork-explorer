@@ -55,7 +55,7 @@ async function createRealBlock(height: number): Promise<IBlock> {
 }
 
 async function setupPeriod(blockCount: number, startHeight: number, endHeight: number): Promise<IBlock[]> {
-  const createBlock = config.mode === "fake" ? createFakeBlock : createRealBlock;
+  const createBlock = config.mode === "real" ? createRealBlock : createFakeBlock;
 
   const blocks: IBlock[] = [];
   for (let i = startHeight; i < endHeight; i++) {
@@ -82,9 +82,8 @@ async function setupPeriod(blockCount: number, startHeight: number, endHeight: n
 
 export async function bootstrapBlocks() {
   console.log(`Bootstrapping ${config.mode} block data...`);
-  const createBlock = config.mode === "fake" || config.mode === "fake-frontend" ? createFakeBlock : createRealBlock;
-  const callGetblockcount =
-    config.mode === "fake" || config.mode === "fake-frontend" ? async () => await Promise.resolve(1000) : getblockcount;
+  const createBlock = config.mode === "real" ? createRealBlock : createFakeBlock;
+  const callGetblockcount = config.mode === "real" ? getblockcount : async () => await Promise.resolve(1000);
 
   let blockCount = await callGetblockcount();
   const difficultyPeriodStartHeight = blockCount - (blockCount % 2016);
