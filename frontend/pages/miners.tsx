@@ -10,6 +10,7 @@ import SiteTitle from "../components/SiteTitle.tsx";
 import { useStoreState } from "../state/index.ts";
 import SiteMenu from "../components/SiteMenu.tsx";
 import { Donation } from "../components/Donation.tsx";
+import ContactTwitter from "../components/ContactTwitter.tsx";
 
 const Table = styled.table`
   width: 100%;
@@ -107,6 +108,7 @@ export default function Miners() {
             })}
           </TableBody>
         </Table>
+        {config.frontend.twitterHandle && <ContactTwitter />}
         {config.donation && <Donation />}
       </Content>
     </Container>
