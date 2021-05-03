@@ -4,7 +4,7 @@ import config from "./config/config.ts";
 import router from "./api/index.ts";
 import { homeTXT } from "./txt/index.ts";
 import { bootstrapBlocks } from "./blocks/index.ts";
-import pageviews from "./pageviews/index.ts";
+import { pageviews, pageviewsTxt } from "./pageviews/index.ts";
 
 bootstrapBlocks();
 
@@ -26,6 +26,7 @@ app.use(async (context) => {
       accepts.includes("text/plain") ||
       context.request.url.pathname === "/index.txt")
   ) {
+    await pageviewsTxt();
     context.response.body = homeTXT();
   } else {
     await pageviews();
