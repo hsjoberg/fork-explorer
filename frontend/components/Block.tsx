@@ -48,7 +48,7 @@ export function Block({ height, signals, miner }: IBlockProps) {
 Miner: ${miner ?? "Unknown"}`;
 
   return (
-    <a href={`https://mempool.space/block/${height}`} target="_blank">
+    <a href={`https://mempool.space/block/${height}?showDetails=true`} target="_blank">
       <BlockStyle title={hover} signals={signals}></BlockStyle>
     </a>
   );
