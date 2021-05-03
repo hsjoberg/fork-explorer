@@ -9,8 +9,25 @@ const Title = styled.h1`
   text-align: center;
   color: #d97b08;
   text-shadow: #000 3px 3px 0px;
+  position: relative;
 `;
 
-const TitleComponent = () => <Title>{config.fork.name} activation</Title>;
+const TxtLink = styled.a`
+  color: #696969;
+  position: absolute;
+  font-size: 10px;
+  margin-left: 4px;
+  text-shadow: transparent 0px 0px 0px;
+
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
+`;
+
+const TitleComponent = () => (
+  <Title>
+    {config.fork.name} activation<TxtLink href="/index.txt">Text version</TxtLink>
+  </Title>
+);
 
 export default TitleComponent;
