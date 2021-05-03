@@ -11,17 +11,13 @@ import { Donation } from "../components/Donation.tsx";
 import SiteTitle from "../components/SiteTitle.tsx";
 import SiteMenu from "../components/SiteMenu.tsx";
 import ProgressBar from "../components/ProgressBar.tsx";
+import Text from "../components/Text.tsx";
+import ContactTwitter from "../components/ContactTwitter.tsx";
 import { useStoreState } from "../state/index.ts";
 
 const DescriptionBlock = styled.div`
   max-width: 600px;
   margin: auto;
-`;
-
-const Text = styled.p`
-  color: #f7f7f7;
-  /* text-shadow: #000 2px 2px 0px; */
-  font-size: 16px;
   text-align: center;
 `;
 
@@ -49,17 +45,6 @@ const LockinInfo = styled.h2`
 const BootstrappingInProgress = styled.p`
   color: #efefef;
   text-align: center;
-`;
-
-const ContactTwitter = styled.p`
-  color: #9e9e9e;
-  & > a {
-    color: #ababab;
-  }
-  text-shadow: #000 1px 1px 0px;
-  text-align: center;
-  margin-top: 40px;
-  margin-bottom: 35px;
 `;
 
 export default function Blocks() {
@@ -127,14 +112,7 @@ export default function Blocks() {
             <Block key={i} height={block.height} signals={block.signals} miner={block.miner} />
           ))}
         </BlockContainer>
-        {config.frontend.twitterHandle && (
-          <ContactTwitter>
-            Twitter:{" "}
-            <a target="_blank" href={`https://twitter.com/${config.frontend.twitterHandle}`}>
-              @{config.frontend.twitterHandle}
-            </a>
-          </ContactTwitter>
-        )}
+        {config.frontend.twitterHandle && <ContactTwitter />}
         {config.donation && <Donation />}
       </Content>
     </Container>

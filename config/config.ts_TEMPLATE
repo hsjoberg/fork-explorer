@@ -1,3 +1,5 @@
+import React from "https://esm.sh/react@17.0.2";
+
 interface Config {
   // Whether to load real data or fake
   mode: "real" | "fake" | "fake-frontend";
@@ -35,10 +37,31 @@ interface Config {
 
   // Configuration specifically for the frontend site
   frontend: {
-    // How often to autrefresh, in seconds. Set to null to disable
+    // How often to auto-refresh, in seconds. Set to null to disable
     autoRefreshInterval: number | null;
     // Twitter handle, this is for the Twitter link preview
-    twitterHandle: string,
+    twitterHandle: string;
+    // Content related to the About page
+    about?: {
+      // Information about the softfork, it's allowed to use
+      // React components here.
+      // Use the Online Babel JSX Transpiler to create React components: https://babeljs.io/repl
+      softfork?: {
+        info?: React.ReactNode[];
+      };
+      // Information related to the current deployment method being
+      // used for this softfork (i.e BIP9, Speedy Trial etc)
+      method?: {
+        title: React.ReactNode;
+        info: React.ReactNode[];
+      };
+    };
+    // Sponsors of this project
+    sponsors?: {
+      title: string;
+      url: string;
+      imageUri: string;
+    }[];
   };
 
   // Donation configuration, right now only supports lnd
@@ -85,6 +108,22 @@ const config: Config = {
   frontend: {
     autoRefreshInterval: 120,
     twitterHandle: "",
+    about: {
+      softfork: {
+        info: [
+          React.createElement(React.Fragment, null, "Info about the Taproot softfork goes here"),
+          React.createElement(React.Fragment, null, "Info about the Taproot softfork goes here"),
+        ],
+      },
+      method: {
+        title: "Title of the softfork deployment method used (BIP9, Speedy Trial etc)",
+        info: [
+          React.createElement(React.Fragment, null, "Info about the deployment method goes here"),
+          React.createElement(React.Fragment, null, "Info about the deployment method goes here"),
+        ],
+      },
+    },
+    sponsors: [],
   },
 
   // donation: {
