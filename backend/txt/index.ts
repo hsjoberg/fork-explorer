@@ -1,8 +1,8 @@
 import { bech32 } from "https://esm.sh/bech32";
 
-import config from "../config/config.ts";
+import config from "../../config/config.ts";
 import { getBlocks } from "../blocks/index.ts";
-import { computeStats, computeMiners } from "../common/data.ts";
+import { computeStats, computeMiners } from "../../common/data.ts";
 
 const UPCOMING = "⬚";
 const SIGNALING = "▣";
