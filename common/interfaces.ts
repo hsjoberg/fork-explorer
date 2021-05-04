@@ -11,5 +11,6 @@ export interface IMinerData {
     signals: boolean;
     website: string | undefined;
     numBlocks: number;
+    numSignallingBlocks: number;
   };
 }

@@ -14,7 +14,7 @@ import ContactTwitter from "../components/ContactTwitter.tsx";
 
 const Table = styled.table`
   width: 100%;
-  max-width: 1000px;
+  max-width: 1050px;
   box-shadow: #000 3px 3px 14px;
   border-radius: 6px;
   margin: 0 auto 30px;
@@ -59,6 +59,7 @@ const Cell = styled.td`
 `;
 
 const SignallingCell = styled.td`
+  color: #efefef;
   padding: 16px;
   text-align: center;
 `;
@@ -101,6 +102,7 @@ export default function Miners() {
             <TableRow>
               <TableHeader>Miner name</TableHeader>
               <TableHeader>Share</TableHeader>
+              <TableHeader>Blocks</TableHeader>
               <TableHeader>Signals</TableHeader>
             </TableRow>
           </TableHead>
@@ -118,6 +120,9 @@ export default function Miners() {
                     {!miner.website && miner.name}
                   </Cell>
                   <Cell>{((miner.numBlocks / currentNumberOfBlocks) * 100).toFixed(2)}%</Cell>
+                  <SignallingCell>
+                    {miner.numSignallingBlocks}/{miner.numBlocks + " "}
+                  </SignallingCell>
                   <SignallingCell>
                     {miner.signals && <>✅</>}
                     {!miner.signals && <>🚫</>}

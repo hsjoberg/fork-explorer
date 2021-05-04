@@ -60,11 +60,14 @@ export function computeMiners(blocks: IBlock[]) {
         name: currBlock.miner ?? "Unrecognized miners",
         signals: currBlock.signals ?? false,
         website: currBlock.minerWebsite,
-        numBlocks: 1,
+        numBlocks: 0,
+        numSignallingBlocks: 0,
       };
-      return prev;
     }
     prev[key].numBlocks++;
+    if (currBlock.signals) {
+      prev[key].numSignallingBlocks++;
+    }
     return prev;
   }, {} as IMinerData);
 
