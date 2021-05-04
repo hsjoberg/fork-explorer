@@ -24,10 +24,6 @@ export function homeTXT() {
   const miners = computeMiners(blocks);
   const forkName = config.fork.name;
 
-  const totalSignalling = miners
-    .filter(([_, m]) => m.signals)
-    .reduce((sum, [_, m]) => sum + m.numBlocks / currentNumberOfBlocks, 0);
-
   let blocksTable = "";
   blocksTable += `${blocks[0].height}`;
   for (let i = 0; i < blocks.length; i++) {
@@ -93,7 +89,7 @@ ${blocksTable}
 
 Miners
 
-Current total: ${(totalSignalling * 100).toFixed(2)}% ✅
+Current total: ${currentSignallingPercentage}% ✅
 
 ${miners
   .map(
