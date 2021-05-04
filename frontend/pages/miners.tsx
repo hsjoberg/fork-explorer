@@ -63,11 +63,27 @@ const SignallingCell = styled.td`
   text-align: center;
 `;
 
+const Totals = styled.div`
+  font-size: 24px;
+  color: #ff9b20;
+  text-shadow: #000 2px 2px 0px;
+  max-width: 600px;
+  margin: auto;
+  text-align: center;
+  > span {
+    padding-left: 15px;
+  }
+  margin-bottom: 20px;
+`;
+
 export default function Miners() {
   const blocks = useStoreState((store) => store.blocks);
   const forkName = config.fork.name;
   const { currentNumberOfBlocks } = computeStats(blocks);
   const miners = useMemo(() => computeMiners(blocks), [blocks]);
+  const totalSignalling = miners
+    .filter(([_, m]) => m.signals)
+    .reduce((sum, [_, m]) => sum + m.numBlocks / currentNumberOfBlocks, 0);
 
   return (
     <Container>
@@ -77,6 +93,9 @@ export default function Miners() {
       <Content>
         <SiteTitle />
         <SiteMenu />
+        <Totals>
+          Current total: {(totalSignalling * 100).toFixed(2)}% <>✅</>
+        </Totals>
         <Table>
           <TableHead>
             <TableRow>
