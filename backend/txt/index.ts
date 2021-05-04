@@ -70,6 +70,13 @@ ${bech32.encode("lnurl", bech32.toWords(new TextEncoder().encode(config.donation
   const label90Pct = " ".repeat(pct90 - 1) + "90%";
   const progressBarWith90Pct = progressBar.slice(0, pct90) + "|" + progressBar.slice(pct90);
 
+  const minerLongestName = miners.reduce((prevName, [_, miner]) => {
+    if (miner.name.length > prevName) {
+      return miner.name.length;
+    }
+    return prevName;
+  }, 0);
+
   return `
 ###
 
@@ -91,19 +98,21 @@ ${blocksTable}
 
 ---
 
-Miners
+Mining Pools
 
 Current total: ${(totalSignalling * 100).toFixed(2)}% ✅
 
 ${miners
-  .map(
-    ([_, miner]) =>
-      `- ${miner.name}, share: ${((miner.numBlocks / currentNumberOfBlocks) * 100).toFixed(2)}. ${
-        miner.signals ? `signals! ✅` : `not signaling 🚫`
-      }`
-  )
+  .map(([_, miner]) => {
+    let minerTxt = "";
+    minerTxt += `- ${miner.name.padEnd(minerLongestName + 2)}`;
+    minerTxt += `share: ${((miner.numBlocks / currentNumberOfBlocks) * 100).toFixed(2)}%`.padEnd(12) + ` | `;
+    minerTxt += `blocks: ${miner.numSignallingBlocks}/${miner.numBlocks}`.padEnd(16) + ` | `;
+    minerTxt += `${miner.signals ? `signals!      ✅` : `not signaling 🚫`}`;
+    return minerTxt;
+  })
   .join("\n")}
 
 ${donation}
-  `;
+`;
 }
