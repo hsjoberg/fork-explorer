@@ -31,6 +31,7 @@ export default function App({ Page, pageProps }: { Page: ComponentType<any>; pag
     <main style={{ width: "100%", height: "100%" }}>
       <head>
         <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/png" href="./favicon.png" />
         <link rel="stylesheet" href="./style/site.css" />
         <link rel="stylesheet" href="./style/reset.css" />
 
