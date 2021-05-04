@@ -17,21 +17,8 @@ const Container = styled.div`
   position: relative;
 `;
 
-const ProgressBarInfoContainer = styled.div`
-  padding-top: 10px;
-  display: flex;
-`;
-
-const ProgressBarInfoText = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: #f7f7f7;
-  font-size: 13px;
-`;
-
 const ProgressBarContainer = styled.div`
+  box-shadow: rgb(0, 0, 0) 2px 2px 14px;
   display: flex;
   height: 44px;
 `;
@@ -78,6 +65,20 @@ const Red = styled.div<{ roundedLeftBorder?: boolean }>`
   border-top-left-radius: ${(props) => (props.roundedLeftBorder ? "6px" : "0px")};
   border-bottom-left-radius: ${(props) => (props.roundedLeftBorder ? "6px" : "0px")};
   color: #f7f7f7;
+`;
+
+const ProgressBarInfoContainer = styled.div`
+  padding-top: 10px;
+  display: flex;
+`;
+
+const ProgressBarInfoText = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #f7f7f7;
+  font-size: 13px;
 `;
 
 const NinetyPercentHolder = styled.div`
