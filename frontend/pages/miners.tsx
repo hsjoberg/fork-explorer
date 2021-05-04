@@ -79,8 +79,11 @@ const Totals = styled.div`
 export default function Miners() {
   const blocks = useStoreState((store) => store.blocks);
   const forkName = config.fork.name;
-  const { currentNumberOfBlocks, currentSignallingPercentage } = computeStats(blocks);
+  const { currentNumberOfBlocks } = computeStats(blocks);
   const miners = useMemo(() => computeMiners(blocks), [blocks]);
+  const totalSignalling = miners
+    .filter(([_, m]) => m.signals)
+    .reduce((sum, [_, m]) => sum + m.numBlocks / currentNumberOfBlocks, 0);
 
   return (
     <Container>
@@ -91,7 +94,7 @@ export default function Miners() {
         <SiteTitle />
         <SiteMenu />
         <Totals>
-          Current total: {currentSignallingPercentage}% <>✅</>
+          Current total: {(totalSignalling * 100).toFixed(2)}% <>✅</>
         </Totals>
         <Table>
           <TableHead>
