@@ -7,8 +7,7 @@ const Title = styled.h1`
   margin: 40px 0 20px;
   font-size: 42px;
   text-align: center;
-  color: #d97b08;
-  text-shadow: #000 3px 3px 0px;
+  color: #fff;
   position: relative;
 `;
 

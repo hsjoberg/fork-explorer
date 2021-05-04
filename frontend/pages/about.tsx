@@ -14,8 +14,7 @@ import ContactTwitter from "../components/ContactTwitter.tsx";
 const Header = styled.p`
   font-size: 24px;
   margin-bottom: 10px;
-  color: #ff9b20;
-  text-shadow: #000 2px 2px 0px;
+  color: #1DB492;
 `;
 
 const InfoContainer = styled.div`

@@ -22,24 +22,24 @@ const DescriptionBlock = styled.div`
 `;
 
 const TopSection = styled.div`
-  display: flex;
-  justify-content: space-between;
   align-items: center;
 `;
 
 const CurrentPeriod = styled.h2`
   font-size: 24px;
   margin-bottom: 10px;
-  color: #ff9b20;
-  text-shadow: #000 2px 2px 0px;
+  color: #fff;
 `;
 
 const LockinInfo = styled.h2`
-  font-size: 16px;
-  text-align: right;
-  margin-bottom: 10px;
-  color: #ff9b20;
-  text-shadow: #000 2px 2px 0px;
+  font-size: 14px;
+  margin-bottom: 24px;
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  font-weight: 500;
+  padding: 8px 16px;
+  display: inline-block;
 `;
 
 const BootstrappingInProgress = styled.p`
@@ -73,7 +73,7 @@ export default function Blocks() {
         </DescriptionBlock>
         {blocks.length > 0 && <ProgressBar />}
         <TopSection>
-          <CurrentPeriod>Current signalling period of 2016 blocks</CurrentPeriod>
+          <CurrentPeriod>2016 blocks period</CurrentPeriod>
           {/* <LockinInfo>90% of blocks within the period have to signal.</LockinInfo> */}
           <LockinInfo>
             {lockedIn && <>{forkName.toUpperCase()} IS LOCKED IN FOR DEPLOYMENT!</>}
@@ -81,8 +81,8 @@ export default function Blocks() {
               <>
                 {!currentPeriodFailed && (
                   <>
-                    {blocksLeftForActivation} {forkName} blocks left until softfork is locked in.
-                    <br />
+                    {blocksLeftForActivation} {forkName} blocks left until softfork is locked in
+                    
                     {willProbablyActivate && (
                       <>Taproot will lock in with the current signalling ratio ({currentSignallingPercentage}%)!</>
                     )}
@@ -93,9 +93,7 @@ export default function Blocks() {
                 )}
                 {currentPeriodFailed && (
                   <>
-                    {forkName} cannot be locked in within this period.
-                    <br />
-                    (90% of the blocks have to signal).
+                    {forkName} cannot be locked in within this period (90% of the blocks have to signal).
                   </>
                 )}
               </>

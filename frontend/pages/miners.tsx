@@ -14,7 +14,7 @@ import ContactTwitter from "../components/ContactTwitter.tsx";
 
 const Table = styled.table`
   width: 100%;
-  max-width: 1000px;
+  max-width: 1024px;
   box-shadow: #000 3px 3px 14px;
   border-radius: 6px;
   margin: 0 auto 30px;
@@ -65,8 +65,7 @@ const SignallingCell = styled.td`
 
 const Totals = styled.div`
   font-size: 24px;
-  color: #ff9b20;
-  text-shadow: #000 2px 2px 0px;
+  color: #1DB492;
   max-width: 600px;
   margin: auto;
   text-align: center;

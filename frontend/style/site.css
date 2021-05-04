@@ -7,7 +7,11 @@ body,
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol";
-  background-color: #242424;
+  background-color: #111111;
+}
+a {
+  text-decoration: none;
+  position: relative;
 }
 
 /* GitHib corner button */
