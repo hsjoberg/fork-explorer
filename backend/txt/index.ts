@@ -106,7 +106,7 @@ ${miners
   .map(([_, miner]) => {
     let minerTxt = "";
     minerTxt += `- ${miner.name.padEnd(minerLongestName + 2)}`;
-    minerTxt += `share: ${((miner.numBlocks / currentNumberOfBlocks) * 100).toFixed(2)}%`.padEnd(12) + ` | `;
+    minerTxt += `share: ${((miner.numBlocks / currentNumberOfBlocks) * 100).toFixed(2)}%`.padEnd(13) + ` | `;
     minerTxt += `blocks: ${miner.numSignallingBlocks}/${miner.numBlocks}`.padEnd(16) + ` | `;
     minerTxt += `${miner.signals ? `signals!      ✅` : `not signaling 🚫`}`;
     return minerTxt;
