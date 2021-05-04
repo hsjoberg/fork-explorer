@@ -32,6 +32,7 @@ export default function App({ Page, pageProps }: { Page: ComponentType<any>; pag
       <head>
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/png" href="./favicon.png" />
+        <link rel="apple-touch-icon" href="./favicon.png" />
         <link rel="stylesheet" href="./style/site.css" />
         <link rel="stylesheet" href="./style/reset.css" />
 
