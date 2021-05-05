@@ -6,7 +6,7 @@ import { computeStats } from "../back/common/data.ts";
 
 import { Container } from "../components/Container.ts";
 import { Content } from "../components/Content.ts";
-import { BlockContainer, Block } from "../components/Block.tsx";
+import { BlockContainer, Block, EmptyBlock } from "../components/Block.tsx";
 import { Donation } from "../components/Donation.tsx";
 import SiteTitle from "../components/SiteTitle.tsx";
 import SiteMenu from "../components/SiteMenu.tsx";
