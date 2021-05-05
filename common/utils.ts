@@ -17,3 +17,7 @@ export function hexToAscii(hex: string) {
   }
   return str;
 }
+
+export function wrap80(s: string) {
+  return s.replace(/(?![^\n]{1,80}$)([^\n]{1,80})\s/g, "$1\n");
+}

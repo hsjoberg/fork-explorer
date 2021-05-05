@@ -3,6 +3,7 @@ import { bech32 } from "https://esm.sh/bech32";
 import config from "../../config/config.ts";
 import { getBlocks } from "../blocks/index.ts";
 import { computeStats, computeMiners } from "../../common/data.ts";
+import { wrap80 } from "../../common/utils.ts";
 
 const UPCOMING = "⬚";
 const SIGNALING = "▣";
@@ -82,7 +83,7 @@ ${bech32.encode("lnurl", bech32.toWords(new TextEncoder().encode(config.donation
 
 ${forkName} activation
 
-${config.fork.info.join("\n\n")}
+${wrap80(config.fork.info.join("\n\n"))}
 
 ---
 
