@@ -23,7 +23,7 @@ export const BlockStyle = styled.div<{ signals?: boolean; selected?: boolean }>`
   height: 18px;
   margin: 3px;
   border-radius: 4px;
-  ${(props) => (props.selected ? `outline: 3px solid #ffa700;` : "")}
+  ${(props) => (props.selected ? `box-shadow: rgb(255 167 0) 0px 0px 2px 3px;` : "")}
 `;
 
 export interface IBlockProps {
