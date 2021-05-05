@@ -20,14 +20,12 @@ const Header = styled.p`
 
 const InfoContainer = styled.div`
   max-width: 980px;
-  margin: auto;
 `;
 
 const InfoSection = styled.div``;
 
 const SponsorContainer = styled.div`
   max-width: 980px;
-  margin: auto;
 `;
 
 const SponsorSection = styled.div`
@@ -38,9 +36,9 @@ const SponsorSection = styled.div`
 const Sponsor = styled.a`
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 175px;
   align-items: center;
-  margin: 10px 15px;
+  margin: 10px 10px;
   padding: 8px;
   text-decoration: none;
 `;
