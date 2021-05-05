@@ -1,5 +1,5 @@
 import React from "https://esm.sh/react@17.0.2";
-import styled from "https://esm.sh/styled-components";
+import styled, { css, keyframes } from "https://esm.sh/styled-components";
 
 export const BlockContainer = styled.div`
   display: flex;
@@ -25,14 +25,6 @@ export const BlockStyle = styled.div<{ signals?: boolean }>`
   border-radius: 4px;
 `;
 
-export const EmptyBlock = styled.div`
-  border: 1px solid #5a5a5a;
-  width: 18px;
-  height: 18px;
-  margin: 3px;
-  border-radius: 4px;
-`;
-
 export interface IBlockProps {
   height: number;
   signals: boolean | undefined;
@@ -40,10 +32,6 @@ export interface IBlockProps {
 }
 
 export function Block({ height, signals, miner }: IBlockProps) {
-  if (signals === undefined) {
-    return <EmptyBlock title={`Coming block ${height}`} />;
-  }
-
   const hover = `Height: ${height}
 Miner: ${miner ?? "Unknown"}`;
 
@@ -52,4 +40,44 @@ Miner: ${miner ?? "Unknown"}`;
       <BlockStyle title={hover} signals={signals}></BlockStyle>
     </a>
   );
+}
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0.35;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.35;
+  }
+`;
+
+const animation = css`
+  2.6s ${fadeIn} linear infinite
+`;
+
+export const EmptyBlockStyle = styled.div<{ nextBlock: boolean }>`
+  border: 1px solid #5a5a5a;
+  width: 18px;
+  height: 18px;
+  margin: 3px;
+  border-radius: 4px;
+
+  /* display: inline-block; */
+  /* visibility: ${(props) => (false ? "hidden" : "visible")}; */
+  animation: ${(props) => (props.nextBlock ? animation : "none")};
+`;
+
+export interface IEmptyBlockProps {
+  height: number;
+  nextBlock: boolean;
+}
+
+export function EmptyBlock({ height, nextBlock }: IEmptyBlockProps) {
+  return <EmptyBlockStyle title={`Coming block ${height}`} nextBlock={nextBlock} />;
 }

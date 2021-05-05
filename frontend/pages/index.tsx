@@ -57,6 +57,7 @@ export default function Blocks() {
     currentSignallingPercentage,
     willProbablyActivate,
   } = computeStats(blocks);
+  const nextBlockHeight = blocks.find((block) => block.signals === undefined)?.height ?? 0;
 
   return (
     <Container>
@@ -108,9 +109,12 @@ export default function Blocks() {
               Server is currently loading blocks, please try soon again.
             </BootstrappingInProgress>
           )}
-          {blocks.map((block, i) => (
-            <Block key={i} height={block.height} signals={block.signals} miner={block.miner} />
-          ))}
+          {blocks.map((block, i) => {
+            if (block.signals === undefined) {
+              return <EmptyBlock key={i} height={block.height} nextBlock={block.height === nextBlockHeight} />;
+            }
+            return <Block key={i} height={block.height} signals={block.signals} miner={block.miner} />;
+          })}
         </BlockContainer>
         {config.frontend.twitterHandle && <ContactTwitter />}
         {config.donation && <Donation />}
