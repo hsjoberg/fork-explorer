@@ -1,11 +1,12 @@
 import React from "https://esm.sh/react@17.0.2";
 import styled from "https://esm.sh/styled-components";
+import { useRouter } from "https://deno.land/x/aleph/framework/react/hooks.ts";
 
 import config from "../back/config/config.ts";
 import { computeStats } from "../back/common/data.ts";
 
 import { Container } from "../components/Container.ts";
-import { Content } from "../components/Content.ts";
+import { ContentWide } from "../components/Content.ts";
 import { BlockContainer, Block, EmptyBlock } from "../components/Block.tsx";
 import { Donation } from "../components/Donation.tsx";
 import SiteTitle from "../components/SiteTitle.tsx";
@@ -13,6 +14,7 @@ import SiteMenu from "../components/SiteMenu.tsx";
 import ProgressBar from "../components/ProgressBar.tsx";
 import Text from "../components/Text.tsx";
 import ContactTwitter from "../components/ContactTwitter.tsx";
+import CommonHeader from "../components/CommonHeader.ts";
 import { useStoreState } from "../state/index.ts";
 
 const DescriptionBlock = styled.div`
@@ -27,11 +29,8 @@ const TopSection = styled.div`
   align-items: center;
 `;
 
-const CurrentPeriod = styled.h2`
-  font-size: 24px;
+const CurrentPeriod = styled(CommonHeader)`
   margin-bottom: 10px;
-  color: #ff9b20;
-  text-shadow: #000 2px 2px 0px;
 `;
 
 const LockinInfo = styled.h2`
@@ -58,13 +57,15 @@ export default function Blocks() {
     willProbablyActivate,
   } = computeStats(blocks);
   const nextBlockHeight = blocks.find((block) => block.signals === undefined)?.height ?? 0;
+  const { query } = useRouter();
+  const selectedBlock = query.get("block");
 
   return (
     <Container>
       <head>
         <title>{forkName} activation</title>
       </head>
-      <Content>
+      <ContentWide>
         <SiteTitle />
         <SiteMenu />
         <DescriptionBlock>
@@ -113,12 +114,20 @@ export default function Blocks() {
             if (block.signals === undefined) {
               return <EmptyBlock key={i} height={block.height} nextBlock={block.height === nextBlockHeight} />;
             }
-            return <Block key={i} height={block.height} signals={block.signals} miner={block.miner} />;
+            return (
+              <Block
+                key={i}
+                height={block.height}
+                signals={block.signals}
+                selected={selectedBlock === block.height.toString()}
+                miner={block.miner}
+              />
+            );
           })}
         </BlockContainer>
         {config.frontend.twitterHandle && <ContactTwitter />}
         {config.donation && <Donation />}
-      </Content>
+      </ContentWide>
     </Container>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useMemo } from "https://esm.sh/react@17.0.2";
 import styled from "https://esm.sh/styled-components";
+import Anchor from "https://deno.land/x/aleph/framework/react/components/Anchor.ts";
 
 import config from "../back/config/config.ts";
 import { computeStats, computeMiners } from "../back/common/data.ts";
@@ -14,7 +15,6 @@ import ContactTwitter from "../components/ContactTwitter.tsx";
 
 const Table = styled.table`
   width: 100%;
-  max-width: 1050px;
   box-shadow: #000 3px 3px 14px;
   border-radius: 6px;
   margin: 0 auto 30px;
@@ -60,20 +60,20 @@ const Cell = styled.td`
 
 const SignallingCell = styled.td`
   color: #efefef;
+  & a {
+    color: #efefef;
+  }
   padding: 16px;
   text-align: center;
 `;
 
-const Totals = styled.div`
+const Totals = styled.h2`
   font-size: 24px;
   color: #ff9b20;
   text-shadow: #000 2px 2px 0px;
   max-width: 600px;
   margin: auto;
   text-align: center;
-  > span {
-    padding-left: 15px;
-  }
   margin-bottom: 20px;
 `;
 
@@ -121,7 +121,9 @@ export default function Miners() {
                   </Cell>
                   <Cell>{((miner.numBlocks / currentNumberOfBlocks) * 100).toFixed(2)}%</Cell>
                   <SignallingCell>
-                    {miner.numSignallingBlocks}/{miner.numBlocks + " "}
+                    <Anchor href={`/miner/${miner.name}`}>
+                      {miner.numSignallingBlocks}/{miner.numBlocks + " "}
+                    </Anchor>
                   </SignallingCell>
                   <SignallingCell>
                     {miner.signals && <>✅</>}

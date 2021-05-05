@@ -13,7 +13,7 @@ export const BlockContainer = styled.div`
   margin-bottom: 30px;
 `;
 
-export const BlockStyle = styled.div<{ signals?: boolean }>`
+export const BlockStyle = styled.div<{ signals?: boolean; selected?: boolean }>`
   background: ${(props) =>
     props.signals
       ? "linear-gradient(45deg, rgba(18,209,0,1) 0%, rgba(9,89,0,1) 100%)"
@@ -23,21 +23,24 @@ export const BlockStyle = styled.div<{ signals?: boolean }>`
   height: 18px;
   margin: 3px;
   border-radius: 4px;
+  ${(props) => (props.selected ? `outline: 3px solid #ffa700;` : "")}
 `;
 
 export interface IBlockProps {
   height: number;
-  signals: boolean | undefined;
+  signals: boolean;
   miner: string | undefined;
+  selected: boolean;
 }
 
-export function Block({ height, signals, miner }: IBlockProps) {
+export function Block({ height, signals, miner, selected }: IBlockProps) {
   const hover = `Height: ${height}
-Miner: ${miner ?? "Unknown"}`;
+Miner: ${miner ?? "Unknown"}
+Signalling: ${signals ? "Yes" : "No"}`;
 
   return (
     <a href={`https://mempool.space/block/${height}?showDetails=true`} target="_blank">
-      <BlockStyle title={hover} signals={signals}></BlockStyle>
+      <BlockStyle title={hover} signals={signals} selected={selected}></BlockStyle>
     </a>
   );
 }
