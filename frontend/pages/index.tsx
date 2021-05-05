@@ -73,7 +73,7 @@ export default function Blocks() {
         </DescriptionBlock>
         {blocks.length > 0 && <ProgressBar />}
         <TopSection>
-          <CurrentPeriod>Current signalling period of 2016 blocks</CurrentPeriod>
+          <CurrentPeriod>Current signalling period of 2016 blocks (2 weeks)</CurrentPeriod>
           {/* <LockinInfo>90% of blocks within the period have to signal.</LockinInfo> */}
           <LockinInfo>
             {lockedIn && <>{forkName.toUpperCase()} IS LOCKED IN FOR DEPLOYMENT!</>}
