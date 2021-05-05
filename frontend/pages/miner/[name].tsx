@@ -16,13 +16,26 @@ import ContactTwitter from "../../components/ContactTwitter.tsx";
 import CommonHeader from "../../components/CommonHeader.ts";
 import Text from "../../components/Text.tsx";
 
-const Miner = styled(CommonHeader)``;
+const Miner = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const MinerTitle = styled(CommonHeader)``;
+
+const SeeMinerOverview = styled(Anchor)`
+  color: #f7f7f7;
+  margin-bottom: 20px;
+`;
 
 const MinerBlocksContainer = styled.div``;
 
 const MinerBlock = styled.div`
   font-family: monospace;
 `;
+
 const Locate = styled(Anchor)`
   margin-left: 10px;
   text-decoration: none;
@@ -31,8 +44,6 @@ const Locate = styled(Anchor)`
 export default function Miners() {
   const blocks = useStoreState((store) => store.blocks);
   const forkName = config.fork.name;
-  const { currentNumberOfBlocks } = computeStats(blocks);
-  const miners = useMemo(() => computeMiners(blocks), [blocks]);
   const { params } = useRouter();
   const name = params.name ?? "";
 
@@ -45,10 +56,13 @@ export default function Miners() {
       <head>
         <title>{forkName} activation - Miners</title>
       </head>
-      <Content style={{ maxWidth: 650 }}>
+      <Content style={{ maxWidth: 800 }}>
         <SiteTitle />
         <SiteMenu />
-        <Miner>{name}</Miner>
+        <Miner>
+          <MinerTitle>{name}</MinerTitle>{" "}
+        </Miner>
+        <SeeMinerOverview href={`/?miner=${name}`}>See miner's block on overview page 🔍</SeeMinerOverview>
         <MinerBlocksContainer>
           {minerBlocks.map((block) => {
             return (

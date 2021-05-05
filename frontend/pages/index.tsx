@@ -58,6 +58,7 @@ export default function Blocks() {
   } = computeStats(blocks);
   const nextBlockHeight = blocks.find((block) => block.signals === undefined)?.height ?? 0;
   const { query } = useRouter();
+  const selectedMiner = query.get("miner");
   const selectedBlock = query.get("block");
 
   return (
@@ -97,7 +98,7 @@ export default function Blocks() {
                   <>
                     {forkName} cannot be locked in within this period.
                     <br />
-                    (90% of the blocks have to signal).
+                    90% of the blocks have to signal
                   </>
                 )}
               </>
@@ -119,7 +120,7 @@ export default function Blocks() {
                 key={i}
                 height={block.height}
                 signals={block.signals}
-                selected={selectedBlock === block.height.toString()}
+                selected={selectedBlock === block.height.toString() || selectedMiner === block.miner}
                 miner={block.miner}
               />
             );
