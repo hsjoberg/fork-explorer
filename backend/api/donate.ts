@@ -94,5 +94,6 @@ export const LnurlPayRequestCallback: RouterMiddleware = async (context) => {
       message: "Cheers!",
     },
     disposable: true,
+    routes: [],
   });
 };
