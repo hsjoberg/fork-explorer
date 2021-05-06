@@ -64,7 +64,7 @@ export default function Blocks() {
   return (
     <Container>
       <head>
-        <title>{forkName} activation</title>
+        <title>{forkName} activation test</title>
       </head>
       <ContentWide>
         <SiteTitle />
