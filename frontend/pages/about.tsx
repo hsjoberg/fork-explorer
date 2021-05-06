@@ -10,12 +10,12 @@ import SiteTitle from "../components/SiteTitle.tsx";
 import SiteMenu from "../components/SiteMenu.tsx";
 import Text from "../components/Text.tsx";
 import ContactTwitter from "../components/ContactTwitter.tsx";
+import CommonHeader from "../components/CommonHeader.ts";
 
-const Header = styled.p`
+const Header = styled(CommonHeader)`
   font-size: 24px;
   margin-bottom: 10px;
-  color: #ff9b20;
-  text-shadow: #000 2px 2px 0px;
+  font-weight: normal;
 `;
 
 const InfoContainer = styled.div`
@@ -103,7 +103,7 @@ export default function Blocks() {
           <SponsorContainer>
             <Header>Development Patrons</Header>
             {config.frontend.sponsors?.map((sponsor) => (
-              <SponsorSection>
+              <SponsorSection key={sponsor.title}>
                 <Sponsor href={sponsor.url} target="_blank">
                   <SponsorImage src={sponsor.imageUri} />
                   <SponsorName>{sponsor.title}</SponsorName>

@@ -18,8 +18,8 @@ const MenuItem = styled.p<{ active: boolean }>`
   display: block;
   font-size: 20px;
   text-align: center;
-  color: #ffd9aa;
-  text-shadow: #000 3px 3px 0px;
+  color: ${(props) => props.theme.menu.itemColor};
+  text-shadow: ${(props) => props.theme.menu.itemTextShadow};
   text-decoration: none;
 
   border-bottom: ${(props) => (props.active ? "1px solid #555" : "0 solid #fff")};

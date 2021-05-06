@@ -1,8 +1,10 @@
 import React, { ComponentType, useEffect, useState } from "https://esm.sh/react@17.0.2";
 import { StoreProvider } from "https://esm.sh/easy-peasy";
+import { ThemeProvider } from "https://esm.sh/styled-components";
 
 import store, { useStoreActions } from "./state/index.ts";
 import config from "./back/config/config.ts";
+import { defaultTheme } from "./theme/index.ts";
 
 const forkName = config.fork.name;
 const twitterHandle = config.frontend.twitterHandle;
@@ -72,7 +74,9 @@ export default function App({ Page, pageProps }: { Page: ComponentType<any>; pag
         </svg>
       </a>
       <StoreProvider store={store}>
-        <StoreStarter Page={Page} pageProps={pageProps} />
+        <ThemeProvider theme={defaultTheme}>
+          <StoreStarter Page={Page} pageProps={pageProps} />
+        </ThemeProvider>
       </StoreProvider>
     </main>
   );

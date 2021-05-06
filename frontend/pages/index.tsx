@@ -33,12 +33,10 @@ const CurrentPeriod = styled(CommonHeader)`
   margin-bottom: 10px;
 `;
 
-const LockinInfo = styled.h2`
+const LockinInfo = styled(CommonHeader)`
   font-size: 16px;
   text-align: right;
   margin-bottom: 10px;
-  color: #ff9b20;
-  text-shadow: #000 2px 2px 0px;
 `;
 
 const BootstrappingInProgress = styled.p`
