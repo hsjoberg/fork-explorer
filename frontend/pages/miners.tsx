@@ -12,6 +12,7 @@ import { useStoreState } from "../state/index.ts";
 import SiteMenu from "../components/SiteMenu.tsx";
 import { Donation } from "../components/Donation.tsx";
 import ContactTwitter from "../components/ContactTwitter.tsx";
+import CommonHeader from "../components/CommonHeader.ts";
 
 const Table = styled.table`
   width: 100%;
@@ -67,10 +68,7 @@ const SignallingCell = styled.td`
   text-align: center;
 `;
 
-const Totals = styled.h2`
-  font-size: 24px;
-  color: #ff9b20;
-  text-shadow: #000 2px 2px 0px;
+const Totals = styled(CommonHeader)`
   max-width: 600px;
   margin: auto;
   text-align: center;

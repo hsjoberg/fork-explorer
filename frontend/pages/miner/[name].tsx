@@ -66,7 +66,7 @@ export default function Miners() {
         <MinerBlocksContainer>
           {minerBlocks.map((block) => {
             return (
-              <MinerBlock>
+              <MinerBlock key={block.height}>
                 <Text>
                   {block.signals ? "✅ " : "🚫"} Block #
                   <Anchor href={`https://mempool.space/block/${block.height}?showDetails=true`} target="_blank">

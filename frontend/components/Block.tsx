@@ -7,18 +7,16 @@ export const BlockContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   padding: 3px;
-  background-color: #434343;
-  box-shadow: #000 3px 3px 14px;
+  background-color: ${(props) => props.theme.block.container.backgroundColor};
+  box-shadow: ${(props) => props.theme.block.container.boxShadow};
   border-radius: 6px;
   margin-bottom: 30px;
 `;
 
 export const BlockStyle = styled.div<{ signals?: boolean; selected?: boolean }>`
   background: ${(props) =>
-    props.signals
-      ? "linear-gradient(45deg, rgba(18,209,0,1) 0%, rgba(9,89,0,1) 100%)"
-      : "linear-gradient(45deg, rgba(209,0,0,1) 0%, rgba(89,0,0,1) 100%)"};
-  border: 1px solid #434343;
+    props.signals ? props.theme.block.block.signalling.background : props.theme.block.block.nonSignalling.background};
+  border: 1px solid ${(props) => props.theme.block.container.backgroundColor};
   width: 18px;
   height: 18px;
   margin: 3px;
@@ -65,14 +63,13 @@ const animation = css`
 `;
 
 export const EmptyBlockStyle = styled.div<{ nextBlock: boolean }>`
-  border: 1px solid #5a5a5a;
+  border: ${(props) => props.theme.block.block.upcoming.border};
+  background: ${(props) => props.theme.block.block.upcoming.background};
   width: 18px;
   height: 18px;
   margin: 3px;
   border-radius: 4px;
 
-  /* display: inline-block; */
-  /* visibility: ${(props) => (false ? "hidden" : "visible")}; */
   animation: ${(props) => (props.nextBlock ? animation : "none")};
 `;
 
