@@ -8,6 +8,12 @@ import { bytesToHexString } from "../../common/utils.ts";
 
 await ensureFile("./addinvoice_payload.json");
 
+interface LnurlPayComment {
+  paymentRequest: string;
+  comment: string;
+}
+await ensureFile("./lnurlpay.json");
+const lnurlPayComments: LnurlPayComment[] = JSON.parse((await Deno.readTextFile("./lnurlpay.json")) || "[]");
 const responseMetadata = JSON.stringify([["text/plain", "Donation to taproot.watch"]]);
 
 export const LnurlPayRequest: RouterMiddleware = (context) => {
@@ -26,7 +32,7 @@ export const LnurlPayRequest: RouterMiddleware = (context) => {
     maxSendable: 10000000,
     minSendable: 1000,
     metadata: responseMetadata,
-    // commentAllowed: 200,
+    commentAllowed: 256,
   });
 };
 
@@ -66,6 +72,21 @@ export const LnurlPayRequestCallback: RouterMiddleware = async (context) => {
     output: OutputMode.Capture,
   });
   const paymentRequest = JSON.parse(result.output).payment_request;
+
+  const comment = context.request.url.searchParams.get("comment");
+  if (comment) {
+    try {
+      const lnurlPay: LnurlPayComment = {
+        paymentRequest,
+        comment,
+      };
+      lnurlPayComments.push(lnurlPay);
+      await Deno.writeTextFile("./lnurlpay.json", JSON.stringify(lnurlPayComments, null, 2));
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   context.response.body = JSON.stringify({
     pr: paymentRequest,
     successAction: {
