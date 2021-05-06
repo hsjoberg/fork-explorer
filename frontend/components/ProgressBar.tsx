@@ -155,12 +155,12 @@ function ProgressBar() {
             roundedRightBorder={currentNumberOfNonSignallingBlocks === 0}
             style={{ flex: blocksLeftRatio }}
           >
-            {blocksLeftPercentage}%
+            {blocksLeftRatio > 0.035 && `${blocksLeftPercentage}%`}
           </White>
         )}
         {nonSignallingRatio > 0 && (
           <Red roundedLeftBorder={currentNumberOfNonSignallingBlocks === 2016} style={{ flex: nonSignallingRatio }}>
-            {nonSignallingPercentage}%
+            {nonSignallingRatio > 0.035 && `${nonSignallingPercentage}%`}
           </Red>
         )}
       </ProgressBarContainer>
