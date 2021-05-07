@@ -88,21 +88,21 @@ const config: Config = {
   mode: "real",
 
   server: {
-    host: "127.0.0.1",
-    port: 8080,
+    host: "${SERVER_HOST}", // 127.0.0.1
+    port: ${SERVER_PORT}, // 8080
   },
 
   bitcoinRpc: {
-    server: "http://127.0.0.1:8332",
-    user: "",
-    password: "",
+    server: "${BITCOIND_RPC_URL}", // http://127.0.0.1:8332
+    user: "${BITCOIND_RPC_USER}",
+    password: "${BITCOIND_RPC_PASSWORD}",
   },
 
   fork: {
-    name: "Taproot",
+    name: "${FORK_NAME}", // Taproot
     info: [],
-    versionBit: 2,
-    threshold: 1815,
+    versionBit: ${FORK_VERSION_BIT}, // 2
+    threshold: ${FORK_THRESHOLD}, // 1815
   },
 
   frontend: {
