@@ -1,4 +1,4 @@
-import { Router } from "https://deno.land/x/oak/mod.ts";
+import { Router } from "https://deno.land/x/oak@v7.3.0/mod.ts";
 
 import { GetBlocks } from "./blocks.ts";
 import { LnurlPayRequest, LnurlPayRequestCallback } from "./donate.ts";

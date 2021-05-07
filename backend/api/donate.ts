@@ -1,4 +1,4 @@
-import { RouterMiddleware } from "https://deno.land/x/oak/mod.ts";
+import { RouterMiddleware } from "https://deno.land/x/oak@v7.3.0/mod.ts";
 import { exec, OutputMode } from "https://deno.land/x/exec/mod.ts";
 import { ensureFile } from "https://deno.land/std/fs/mod.ts";
 import { sha256 } from "https://denopkg.com/chiefbiiko/sha256/mod.ts";

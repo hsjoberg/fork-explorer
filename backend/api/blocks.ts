@@ -1,4 +1,4 @@
-import { RouterMiddleware } from "https://deno.land/x/oak/mod.ts";
+import { RouterMiddleware } from "https://deno.land/x/oak@v7.3.0/mod.ts";
 import { getBlocks } from "../blocks/index.ts";
 
 export const GetBlocks: RouterMiddleware = (context) => {
