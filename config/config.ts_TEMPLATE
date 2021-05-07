@@ -102,7 +102,7 @@ const config: Config = {
     name: "Taproot",
     info: [],
     versionBit: 2,
-    threshold: 1845,
+    threshold: 1815,
   },
 
   frontend: {
