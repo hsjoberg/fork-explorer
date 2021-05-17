@@ -83,6 +83,7 @@ export default function Miners() {
   const totalSignalling = miners
     .filter(([_, m]) => m.signals)
     .reduce((sum, [_, m]) => sum + m.numBlocks / currentNumberOfBlocks, 0);
+  let accumulatedShare = 0;
 
   return (
     <Container>
@@ -100,6 +101,7 @@ export default function Miners() {
             <TableRow>
               <TableHeader>Miner name</TableHeader>
               <TableHeader>Share</TableHeader>
+              <TableHeader>Accumulated share</TableHeader>
               <TableHeader>Blocks</TableHeader>
               <TableHeader>Signals</TableHeader>
             </TableRow>
@@ -107,6 +109,8 @@ export default function Miners() {
 
           <TableBody>
             {miners.map(([key, miner]) => {
+              const share = miner.numBlocks / currentNumberOfBlocks;
+              accumulatedShare += share;
               return (
                 <TableRow key={key}>
                   <Cell>
@@ -117,7 +121,8 @@ export default function Miners() {
                     )}
                     {!miner.website && miner.name}
                   </Cell>
-                  <Cell>{((miner.numBlocks / currentNumberOfBlocks) * 100).toFixed(2)}%</Cell>
+                  <Cell>{(share * 100).toFixed(2)}%</Cell>
+                  <Cell>{(accumulatedShare * 100).toFixed(2)}%</Cell>
                   <SignallingCell>
                     <Anchor href={`/miner/${miner.name}`}>
                       {miner.numSignallingBlocks}/{miner.numBlocks + " "}
