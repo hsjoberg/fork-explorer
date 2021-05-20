@@ -28,6 +28,8 @@ export function homeTXT() {
   const totalSignalling = miners
     .filter(([_, m]) => m.signals)
     .reduce((sum, [_, m]) => sum + m.numBlocks / currentNumberOfBlocks, 0);
+  const threshold = Number.parseFloat((config.fork.threshold / 2016).toFixed(2));
+  const thresholdPercentage = Math.floor(threshold * 100);
 
   let blocksTable = "";
   blocksTable += `${blocks[0].height}`;
@@ -67,9 +69,9 @@ ${bech32.encode("lnurl", bech32.toWords(new TextEncoder().encode(config.donation
     ">".repeat(Math.ceil(currentNumberOfSignallingBlocks / 25)) +
     "-".repeat(Math.ceil(blocksLeftInThisPeriod / 25)) +
     "<".repeat(Math.ceil(currentNumberOfNonSignallingBlocks / 25));
-  const pct90 = Math.round(progressBar.length * 0.9);
-  const label90Pct = " ".repeat(pct90 - 1) + "90%";
-  const progressBarWith90Pct = progressBar.slice(0, pct90) + "|" + progressBar.slice(pct90);
+  const pct = Math.round(progressBar.length * 0.9);
+  const labelPct = " ".repeat(pct - 1) + thresholdPercentage + "%";
+  const progressBarWithPct = progressBar.slice(0, pct) + "|" + progressBar.slice(pct);
 
   const minerLongestName = miners.reduce((prevName, [_, miner]) => {
     if (miner.name.length > prevName) {
@@ -89,8 +91,8 @@ ${wrap80(config.fork.info.join("\n\n"))}
 
 Current signalling period of 2016 blocks
 
-${label90Pct}
-${progressBarWith90Pct}
+${labelPct}
+${progressBarWithPct}
 blocks: ${currentNumberOfSignallingBlocks} signalling | ${blocksLeftInThisPeriod} upcoming | ${currentNumberOfNonSignallingBlocks} non-signalling
 
 ${notes.map((n) => "- " + n).join("\n")}

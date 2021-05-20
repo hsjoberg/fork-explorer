@@ -3,6 +3,7 @@ import styled from "https://esm.sh/styled-components";
 
 import { computeStats } from "../back/common/data.ts";
 import { useStoreState } from "../state/index.ts";
+import config from "../back/config/config.ts";
 
 export const DonateContainer = styled.div`
   margin: 0 auto 100px;
@@ -81,13 +82,13 @@ const ProgressBarInfoText = styled.div`
   font-size: 13px;
 `;
 
-const NinetyPercentHolder = styled.div`
+const PercentHolder = styled.div<{ thresholdPrecentage: number }>`
   display: flex;
   flex-direction: column;
   width: 15px;
   position: absolute;
   top: 10px;
-  left: calc(90% - 2px);
+  left: calc(${(props) => props.thresholdPrecentage}% - 2px);
   font-size: 12px;
 `;
 
@@ -138,6 +139,8 @@ function ProgressBar() {
     }
   }
 
+  const thresholdPercentage = Math.floor((config.fork.threshold / 2016) * 100);
+
   return (
     <Container>
       <ProgressBarContainer>
@@ -181,10 +184,10 @@ function ProgressBar() {
           </ProgressBarInfoText>
         )}
       </ProgressBarInfoContainer>
-      <NinetyPercentHolder>
-        <NinetyPercentText>90%</NinetyPercentText>
+      <PercentHolder thresholdPrecentage={thresholdPercentage}>
+        <NinetyPercentText>{thresholdPercentage}%</NinetyPercentText>
         <NinetyPercentIndicator />
-      </NinetyPercentHolder>
+      </PercentHolder>
     </Container>
   );
 }

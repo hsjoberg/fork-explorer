@@ -58,6 +58,7 @@ export default function Blocks() {
   const { query } = useRouter();
   const selectedMiner = query.get("miner");
   const selectedBlock = query.get("block");
+  const thresholdPercentage = Math.floor((config.fork.threshold / 2016) * 100);
 
   return (
     <Container>
@@ -96,7 +97,7 @@ export default function Blocks() {
                   <>
                     {forkName} cannot be locked in within this period
                     <br />
-                    90% of the blocks have to signal
+                    {thresholdPercentage}% of the blocks have to signal
                   </>
                 )}
               </>
