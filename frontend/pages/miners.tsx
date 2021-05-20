@@ -75,13 +75,25 @@ const Totals = styled(CommonHeader)`
   margin-bottom: 20px;
 `;
 
+const TotalsPotential = styled(CommonHeader)`
+  max-width: 600px;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 18px;
+  text-decoration: underline #9a9a9a dotted;
+`;
+
 export default function Miners() {
   const blocks = useStoreState((store) => store.blocks);
   const forkName = config.fork.name;
   const { currentNumberOfBlocks } = computeStats(blocks);
   const miners = useMemo(() => computeMiners(blocks), [blocks]);
-  const totalSignalling = miners
+  const totalSignallingRatio = miners
     .filter(([_, m]) => m.signals)
+    .reduce((sum, [_, m]) => sum + m.numBlocks / currentNumberOfBlocks, 0);
+  const totalSignallingPotentialRatio = miners
+    .filter(([_, m]) => m.numSignallingBlocks > 0)
     .reduce((sum, [_, m]) => sum + m.numBlocks / currentNumberOfBlocks, 0);
 
   return (
@@ -93,8 +105,13 @@ export default function Miners() {
         <SiteTitle />
         <SiteMenu />
         <Totals>
-          Current total: {(totalSignalling * 100).toFixed(2)}% <>✅</>
+          Current total: {(totalSignallingRatio * 100).toFixed(2)}% <>✅</>
         </Totals>
+        {totalSignallingPotentialRatio > totalSignallingRatio && (
+          <TotalsPotential title="Share if miners would consistently signal for readiness">
+            {`Potential: ${(totalSignallingPotentialRatio * 100).toFixed(2)}%`}
+          </TotalsPotential>
+        )}
         <Table>
           <TableHead>
             <TableRow>
