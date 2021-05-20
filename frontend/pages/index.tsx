@@ -82,7 +82,7 @@ export default function Blocks() {
               <>
                 {!currentPeriodFailed && (
                   <>
-                    {blocksLeftForActivation} {forkName} blocks left until softfork is locked in.
+                    {blocksLeftForActivation} additional signalling blocks are needed for the softfork to lock in
                     <br />
                     {willProbablyActivate && (
                       <>Taproot will lock in with the current signalling ratio ({currentSignallingPercentage}%)!</>
@@ -94,7 +94,7 @@ export default function Blocks() {
                 )}
                 {currentPeriodFailed && (
                   <>
-                    {forkName} cannot be locked in within this period.
+                    {forkName} cannot be locked in within this period
                     <br />
                     90% of the blocks have to signal
                   </>
