@@ -10,6 +10,13 @@ body {
   background-color: #242424;
 }
 
+/* For hiding colums on small screens */
+@media only screen and (max-width: 640px) {
+  .collapse-by-640 {
+      display: none;
+  }
+}
+
 /* GitHib corner button */
 .github-corner:hover .octo-arm {
   animation: octocat-wave 560ms ease-in-out;

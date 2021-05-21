@@ -119,7 +119,7 @@ export default function Miners() {
             <TableRow>
               <TableHeader>Miner name</TableHeader>
               <TableHeader>Share</TableHeader>
-              <TableHeader>Accumulated share</TableHeader>
+              <TableHeader className="collapse-by-640">Accumulated share</TableHeader>
               <TableHeader>Blocks</TableHeader>
               <TableHeader>Signals</TableHeader>
             </TableRow>
@@ -140,7 +140,7 @@ export default function Miners() {
                     {!miner.website && miner.name}
                   </Cell>
                   <Cell>{(share * 100).toFixed(2)}%</Cell>
-                  <Cell>{(accumulatedShare * 100).toFixed(2)}%</Cell>
+                  <Cell className="collapse-by-640">{(accumulatedShare * 100).toFixed(2)}%</Cell>
                   <SignallingCell>
                     <Anchor href={`/miner/${miner.name}`}>
                       {miner.numSignallingBlocks}/{miner.numBlocks + " "}
