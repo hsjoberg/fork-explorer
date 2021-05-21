@@ -77,13 +77,13 @@ export default function Blocks() {
       <ContentWide>
         <SiteTitle />
         <SiteMenu />
-        {currentPeriodFailed && (
+        {currentPeriodFailed && blocksLeftInThisPeriod > 0 && (
           <CannotLockInInfo>
             The current period cannot lock in {forkName}.
             <br />
             The next period starts in approximately
             {" " + formatDistanceToNow(addMinutes(new Date(), blocksLeftInThisPeriod * 10), {}) + " "}(
-            {blocksLeftInThisPeriod} blocks)
+            {blocksLeftInThisPeriod} block{blocksLeftInThisPeriod > 1 && "s"})
           </CannotLockInInfo>
         )}
         <DescriptionBlock>
