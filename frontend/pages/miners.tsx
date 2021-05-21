@@ -82,6 +82,7 @@ const TotalsPotential = styled(CommonHeader)`
   margin-bottom: 25px;
   font-size: 18px;
   text-decoration: underline #9a9a9a dotted;
+  text-underline-position: under;
 `;
 
 export default function Miners() {
