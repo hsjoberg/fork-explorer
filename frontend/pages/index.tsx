@@ -1,6 +1,8 @@
 import React from "https://esm.sh/react@17.0.2";
 import styled from "https://esm.sh/styled-components";
 import { useRouter } from "https://deno.land/x/aleph/framework/react/hooks.ts";
+import addMinutes from "https://deno.land/x/date_fns@v2.15.0/addMinutes/index.js";
+import formatDistanceToNow from "https://deno.land/x/date_fns@v2.15.0/formatDistanceToNow/index.js";
 
 import config from "../back/config/config.ts";
 import { computeStats } from "../back/common/data.ts";
@@ -39,6 +41,12 @@ const LockinInfo = styled(CommonHeader)`
   margin-bottom: 10px;
 `;
 
+const CannotLockInInfo = styled(CommonHeader)`
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 30px;
+`;
+
 const BootstrappingInProgress = styled.p`
   color: #efefef;
   text-align: center;
@@ -53,6 +61,7 @@ export default function Blocks() {
     currentPeriodFailed,
     currentSignallingPercentage,
     willProbablyActivate,
+    blocksLeftInThisPeriod,
   } = computeStats(blocks);
   const nextBlockHeight = blocks.find((block) => block.signals === undefined)?.height ?? 0;
   const { query } = useRouter();
@@ -68,6 +77,15 @@ export default function Blocks() {
       <ContentWide>
         <SiteTitle />
         <SiteMenu />
+        {currentPeriodFailed && (
+          <CannotLockInInfo>
+            The current period cannot lock in {forkName}.
+            <br />
+            The next period starts in approximately
+            {" " + formatDistanceToNow(addMinutes(new Date(), blocksLeftInThisPeriod * 10), {}) + " "}(
+            {blocksLeftInThisPeriod} blocks)
+          </CannotLockInInfo>
+        )}
         <DescriptionBlock>
           {config.fork.info.map((text, index) => (
             <Text key={index}>{text}</Text>
