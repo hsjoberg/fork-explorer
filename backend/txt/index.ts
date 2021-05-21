@@ -8,6 +8,7 @@ import { wrap80 } from "../../common/utils.ts";
 const UPCOMING = "⬚";
 const SIGNALING = "▣";
 const NONSIGNALING = "□";
+const BLOCKS_PER_ROW = 36;
 
 export function homeTXT() {
   const blocks = getBlocks();
@@ -34,7 +35,7 @@ export function homeTXT() {
   let blocksTable = "";
   blocksTable += `${blocks[0].height}`;
   for (let i = 0; i < blocks.length; i++) {
-    if (i % 28 === 0) blocksTable += "\n";
+    if (i % BLOCKS_PER_ROW === 0) blocksTable += "\n";
 
     const block = blocks[i];
     blocksTable += typeof block.signals === "undefined" ? UPCOMING : block.signals ? SIGNALING : NONSIGNALING;
@@ -42,7 +43,7 @@ export function homeTXT() {
   }
   const last = blocks[blocks.length - 1];
   blocksTable += "\n";
-  blocksTable += " ".repeat(56 - String(last.height).length - 1) + String(last.height);
+  blocksTable += " ".repeat(BLOCKS_PER_ROW * 2 - String(last.height).length - 1) + String(last.height);
 
   const notes = [];
   if (lockedIn) notes.push(`${forkName.toUpperCase()} IS LOCKED IN FOR DEPLOYMENT!`);
