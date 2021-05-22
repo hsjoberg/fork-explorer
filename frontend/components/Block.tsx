@@ -21,6 +21,9 @@ export const BlockStyle = styled.div<{ signals?: boolean; selected?: boolean }>`
   height: 18px;
   margin: 3px;
   border-radius: 4px;
+  position: relative;
+  ${(props) => (props.signals ? props.theme.block.block.signalling.after : "")}
+  ${(props) => (!props.signals ? props.theme.block.block.nonSignalling.after : "")}
   ${(props) => (props.selected ? `box-shadow: rgb(255 167 0) 0px 0px 2px 3px;` : "")}
 `;
 

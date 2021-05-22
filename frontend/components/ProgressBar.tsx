@@ -19,7 +19,7 @@ const Container = styled.div`
 `;
 
 const ProgressBarContainer = styled.div`
-  box-shadow: rgb(0, 0, 0) 2px 2px 14px;
+  box-shadow: ${(props) => props.theme.progressBar.container.boxShadow};
   display: flex;
   height: 44px;
 `;
@@ -29,8 +29,8 @@ const Green = styled.div<{ roundedRightBorder?: boolean }>`
   font-size: 13px;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(45deg, #217f35 0%, rgba(9, 89, 0, 1) 100%);
-  border: 1px solid #1ed947;
+  background: ${(props) => props.theme.progressBar.progressBar.signalling.background};
+  border: ${(props) => props.theme.progressBar.progressBar.signalling.border};
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
   border-top-right-radius: ${(props) => (props.roundedRightBorder ? "6px" : "0px")};
@@ -43,8 +43,8 @@ const White = styled.div<{ roundedLeftBorder?: boolean; roundedRightBorder?: boo
   font-size: 13px;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(45deg, #8e8e8e 0%, #afafaf 100%);
-  border: 1px solid #f7f7f7;
+  background: ${(props) => props.theme.progressBar.progressBar.upcoming.background};
+  border: ${(props) => props.theme.progressBar.progressBar.upcoming.border};
   border-top-left-radius: ${(props) => (props.roundedLeftBorder ? "6px" : "0px")};
   border-bottom-left-radius: ${(props) => (props.roundedLeftBorder ? "6px" : "0px")};
   border-top-right-radius: ${(props) => (props.roundedRightBorder ? "6px" : "0px")};
@@ -57,8 +57,8 @@ const Red = styled.div<{ roundedLeftBorder?: boolean }>`
   font-size: 13px;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(45deg, #731212 0%, rgba(89, 0, 0, 1) 100%);
-  border: 1px solid #c30000;
+  background: ${(props) => props.theme.progressBar.progressBar.nonSignalling.background};
+  border: ${(props) => props.theme.progressBar.progressBar.nonSignalling.border};
   box-sizing: border-box;
   border-radius: 0px 6px 6px 0px;
   border-top-right-radius: 6px;

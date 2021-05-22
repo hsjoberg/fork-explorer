@@ -2,30 +2,52 @@ import React, { ComponentType, useEffect, useState } from "https://esm.sh/react@
 import { StoreProvider } from "https://esm.sh/easy-peasy";
 import { ThemeProvider } from "https://esm.sh/styled-components";
 
-import store, { useStoreActions } from "./state/index.ts";
+import store, { useStoreActions, useStoreState } from "./state/index.ts";
 import config from "./back/config/config.ts";
-import { defaultTheme } from "./theme/index.ts";
+import { defaultTheme, colorBlindnessTheme } from "./theme/index.ts";
 
 const forkName = config.fork.name;
 const twitterHandle = config.frontend.twitterHandle;
 
-function StoreStarter({ Page, pageProps }: { Page: ComponentType<any>; pageProps: any }) {
+function StoreStarter({ Page, pageProps }: { Page: ComponentType<any>; pageProps: unknown }) {
   const [gotBlocks, setGotBlocks] = useState(false);
+  const initialize = useStoreActions((store) => store.initialize);
   const getBlocks = useStoreActions((store) => store.getBlocks);
   const autoRefresh = useStoreActions((store) => store.autoRefresh);
+  const theme = useStoreState((store) => store.settings.theme);
 
   useEffect(() => {
     (async () => {
+      await initialize();
       await getBlocks();
       autoRefresh();
       setGotBlocks(true);
     })();
   }, []);
 
+  useEffect(() => {
+    const body = (window as any).document.querySelector("body");
+    if (!body) {
+      return;
+    }
+    if (theme === "default") {
+      body.style.backgroundColor = defaultTheme.backgroundColor;
+    } else if (theme === "colorblind") {
+      body.style.backgroundColor = colorBlindnessTheme.backgroundColor;
+    }
+  }, [theme]);
+
   if (!gotBlocks) {
     return null;
   }
-  return <Page {...pageProps} />;
+
+  const currentTheme = theme === "colorblind" ? colorBlindnessTheme : defaultTheme;
+
+  return (
+    <ThemeProvider theme={currentTheme}>
+      <Page {...pageProps} />
+    </ThemeProvider>
+  );
 }
 
 export default function App({ Page, pageProps }: { Page: ComponentType<any>; pageProps: any }) {
@@ -74,9 +96,7 @@ export default function App({ Page, pageProps }: { Page: ComponentType<any>; pag
         </svg>
       </a>
       <StoreProvider store={store}>
-        <ThemeProvider theme={defaultTheme}>
-          <StoreStarter Page={Page} pageProps={pageProps} />
-        </ThemeProvider>
+        <StoreStarter Page={Page} pageProps={pageProps} />
       </StoreProvider>
     </main>
   );

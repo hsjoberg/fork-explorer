@@ -3,15 +3,23 @@ import config from "../back/config/config.ts";
 
 import { IBlock } from "../back/common/interfaces.ts";
 import { createFakeBlock } from "../back/common/fake-block.ts";
+import { ISettingsModel, settings } from "./settings.ts";
 
 export interface IStoreModel {
+  initialize: Thunk<IStoreModel>;
+
   getBlocks: Thunk<IStoreModel>;
   setBlocks: Action<IStoreModel, IBlock[]>;
   autoRefresh: Thunk<IStoreModel>;
   blocks: IBlock[];
+  settings: ISettingsModel;
 }
 
 export const model: IStoreModel = {
+  initialize: thunk(async (actions) => {
+    await actions.settings.initialize();
+  }),
+
   getBlocks: thunk(async (actions) => {
     if (config.mode === "real" || config.mode === "fake") {
       const result = await fetch(`/blocks`);
@@ -38,12 +46,15 @@ export const model: IStoreModel = {
     }
   }),
 
-  autoRefresh: thunk((actions) => {
+  autoRefresh: thunk((actions, _, { getState }) => {
     if (!config.frontend.autoRefreshInterval) {
       return;
     }
 
     setInterval(async () => {
+      if (!getState().settings.autoRefreshEnabled) {
+        return;
+      }
       try {
         console.log("Fetching blocks");
         const result = await fetch("/blocks");
@@ -64,6 +75,8 @@ export const model: IStoreModel = {
   }),
 
   blocks: [],
+
+  settings,
 };
 
 const { useStoreActions, useStoreState } = createTypedHooks<IStoreModel>();
