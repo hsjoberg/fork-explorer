@@ -11,6 +11,7 @@ const MenuContainer = styled.div`
   align-items: center;
   padding: 0;
   margin-bottom: 40px;
+  position: relative;
 `;
 
 const MenuItem = styled.p<{ active: boolean }>`
@@ -39,6 +40,9 @@ const SiteMenuComponent = () => {
       </Anchor>
       <Anchor style={{ textDecoration: "none" }} href="/about">
         <MenuItem active={routePath === "/about"}>About {config.fork.name}</MenuItem>
+      </Anchor>
+      <Anchor style={{ textDecoration: "none" }} href="/settings">
+        <MenuItem active={routePath === "/settings"}>Settings</MenuItem>
       </Anchor>
     </MenuContainer>
   );
