@@ -1,6 +1,8 @@
 import React from "https://esm.sh/react@17.0.2";
 import styled, { css, keyframes } from "https://esm.sh/styled-components";
 
+import { useStoreState } from "../state/index.ts";
+
 export const BlockContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -48,7 +50,7 @@ Signalling: ${signals ? "Yes" : "No"}`;
 
 const fadeIn = keyframes`
   0% {
-    opacity: 0.35;
+    opacity: 0.30;
   }
   20% {
     opacity: 1;
@@ -57,7 +59,7 @@ const fadeIn = keyframes`
     opacity: 1;
   }
   100% {
-    opacity: 0.35;
+    opacity: 0.30;
   }
 `;
 
@@ -82,5 +84,7 @@ export interface IEmptyBlockProps {
 }
 
 export function EmptyBlock({ height, nextBlock }: IEmptyBlockProps) {
-  return <EmptyBlockStyle title={`Coming block ${height}`} nextBlock={nextBlock} />;
+  const autoRefreshEnabled = useStoreState((store) => store.settings.autoRefreshEnabled);
+
+  return <EmptyBlockStyle title={`Coming block ${height}`} nextBlock={autoRefreshEnabled && nextBlock} />;
 }
