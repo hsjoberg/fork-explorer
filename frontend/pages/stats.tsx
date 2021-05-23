@@ -1,17 +1,19 @@
 import React from "https://esm.sh/react@17.0.2";
 import styled, { useTheme } from "https://esm.sh/styled-components";
-import { VictoryContainer, VictoryChart, VictoryLine, VictoryAxis, VictoryTheme } from "https://esm.sh/victory";
+import { VictoryChart, VictoryLine, VictoryAxis, VictoryTheme } from "https://esm.sh/victory";
 
 import config from "../back/config/config.ts";
 
 import { Container } from "../components/Container.ts";
-import { ContentWide, Content } from "../components/Content.ts";
+import { ContentWide } from "../components/Content.ts";
 import SiteTitle from "../components/SiteTitle.tsx";
 import { useStoreState } from "../state/index.ts";
 import SiteMenu from "../components/SiteMenu.tsx";
 import { Donation } from "../components/Donation.tsx";
 import CommonHeader from "../components/CommonHeader.ts";
+import ContactTwitter from "../components/ContactTwitter.tsx";
 import Text from "../components/Text.tsx";
+import { computeStats } from "../back/common/data.ts";
 
 const ChartHolder = styled.div`
   margin-bottom: 100px;
@@ -28,6 +30,7 @@ interface IMovingAverageData {
 export default function Miners() {
   const theme = useTheme();
   const blocks = useStoreState((store) => store.blocks);
+  const { blocksLeftInThisPeriod } = computeStats(blocks);
   const forkName = config.fork.name;
 
   const data: IMovingAverageData[] = blocks
@@ -61,7 +64,6 @@ export default function Miners() {
         <Text>Signalling percentage over the last 144 blocks (Moving Average) in the current period.</Text>
         <ChartHolder>
           <VictoryChart
-            containerElement={<VictoryContainer responsive={false} />}
             margin={0}
             responsive={true}
             padding={{
@@ -71,11 +73,11 @@ export default function Miners() {
               bottom: 40,
             }}
             width={1100}
-            height={410}
+            height={520}
             theme={VictoryTheme.material}
           >
             <VictoryAxis
-              tickValues={xAxisTickValues}
+              tickValues={blocksLeftInThisPeriod < 1944 ? xAxisTickValues : undefined}
               style={{
                 grid: { stroke: "#777", strokeDasharray: "3" },
                 tickLabels: { fill: theme.stats.labelColor },
@@ -103,7 +105,7 @@ export default function Miners() {
             />
           </VictoryChart>
         </ChartHolder>
-
+        {config.frontend.twitterHandle && <ContactTwitter />}
         {config.donation && <Donation />}
       </ContentWide>
     </Container>
