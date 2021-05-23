@@ -45,6 +45,10 @@ export default function Miners() {
       };
     });
 
+  const xAxisTickValues = new Array(2016 / 144).fill(0).map((day, i) => {
+    return blocks[0].height + i * 144;
+  });
+
   return (
     <Container>
       <head>
@@ -54,7 +58,7 @@ export default function Miners() {
         <SiteTitle />
         <SiteMenu />
         <ChartTitle>144 Block Moving Average</ChartTitle>
-        <Text>Signalling percentage over the last 144 blocks (Moving Average)</Text>
+        <Text>Signalling percentage over the last 144 blocks (Moving Average) in the current period.</Text>
         <ChartHolder>
           <VictoryChart
             containerElement={<VictoryContainer responsive={false} />}
@@ -71,6 +75,7 @@ export default function Miners() {
             theme={VictoryTheme.material}
           >
             <VictoryAxis
+              tickValues={xAxisTickValues}
               style={{
                 grid: { stroke: "#777", strokeDasharray: "3" },
                 tickLabels: { fill: theme.stats.labelColor },
