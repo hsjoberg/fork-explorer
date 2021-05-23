@@ -8,7 +8,7 @@ export const ContentWide = styled.div`
 
 export const Content = styled.div`
   flex-direction: row;
-  width: 90%;
+  width: 100%;
   max-width: 1050px;
   display: flex;
   flex-direction: column;

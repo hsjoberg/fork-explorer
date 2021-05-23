@@ -13,17 +13,21 @@ import SiteMenu from "../components/SiteMenu.tsx";
 import { Donation } from "../components/Donation.tsx";
 import ContactTwitter from "../components/ContactTwitter.tsx";
 import CommonHeader from "../components/CommonHeader.ts";
-import { IMinerData, IMiners } from "../back/common/interfaces.ts";
+import { IMinerData } from "../back/common/interfaces.ts";
 
 const Table = styled.table`
-  width: 100%;
   box-shadow: #000 3px 3px 14px;
   border-radius: 6px;
-  margin: 0 auto 30px;
+  margin: 0 3px 30px;
   border: 0;
   border-collapse: collapse;
   border-radius: 8px;
   overflow: hidden;
+
+  @media (max-width: 500px) {
+    transform: scale(0.9);
+    transform-origin: top;
+  }
 `;
 
 const TableHead = styled.thead`
@@ -57,11 +61,14 @@ export const TableHeaderLink = styled.a`
   cursor: pointer;
   text-decoration: none;
   display: inline-block;
+  position: relative;
 `;
 
 export const TableHeaderSortContainer = styled.span`
+  display: block;
   position: absolute;
-  margin-left: 3px;
+  right: -10px;
+  top: 0;
 `;
 
 const Cell = styled.td`
