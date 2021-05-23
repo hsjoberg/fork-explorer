@@ -1,4 +1,4 @@
-import React, { useMemo } from "https://esm.sh/react@17.0.2";
+import React, { useMemo, useState } from "https://esm.sh/react@17.0.2";
 import styled from "https://esm.sh/styled-components";
 import Anchor from "https://deno.land/x/aleph@v0.3.0-alpha.32/framework/react/components/Anchor.ts";
 
@@ -13,6 +13,7 @@ import SiteMenu from "../components/SiteMenu.tsx";
 import { Donation } from "../components/Donation.tsx";
 import ContactTwitter from "../components/ContactTwitter.tsx";
 import CommonHeader from "../components/CommonHeader.ts";
+import { IMinerData, IMiners } from "../back/common/interfaces.ts";
 
 const Table = styled.table`
   width: 100%;
@@ -51,12 +52,24 @@ const TableHeader = styled.th`
   padding: 9px;
 `;
 
+export const TableHeaderLink = styled.a`
+  color: #efefef;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+`;
+
+export const TableHeaderSortContainer = styled.span`
+  position: absolute;
+  margin-left: 3px;
+`;
+
 const Cell = styled.td`
   color: #f0f0f0;
   > a {
     color: #f0f0f0;
   }
-  padding: 17px;
+  padding: 16px;
 `;
 
 const SignallingCell = styled.td`
@@ -85,6 +98,15 @@ const TotalsPotential = styled(CommonHeader)`
   text-underline-position: under;
 `;
 
+type SortKey = "name" | "share" | "blocks" | "signallingStatus";
+interface TableRow {
+  name: string;
+  share: string;
+  blocks: string;
+  signallingStatus: boolean;
+  website: string | undefined;
+}
+
 export default function Miners() {
   const blocks = useStoreState((store) => store.blocks);
   const forkName = config.fork.name;
@@ -96,6 +118,47 @@ export default function Miners() {
   const totalSignallingPotentialRatio = miners
     .filter(([_, m]) => m.numSignallingBlocks > 0)
     .reduce((sum, [_, m]) => sum + m.numBlocks / currentNumberOfBlocks, 0);
+  const [sortKey, setSortKey] = useState<SortKey>("share");
+  const [sortDirection, setSortDirection] = useState<"ASC" | "DESC">("DESC");
+
+  const fixTable = (miners: [string, IMinerData][], key: SortKey): TableRow[] => {
+    let data = miners
+      .map(([_, miner]) => {
+        const r: TableRow = {
+          name: miner.name,
+          share: `${((miner.numBlocks / currentNumberOfBlocks) * 100).toFixed(2)}%`,
+          blocks: `${miner.numSignallingBlocks}/${miner.numBlocks + " "}`,
+          signallingStatus: miner.signals,
+          website: miner.website,
+        };
+        return r;
+      })
+      .sort((a, b) => {
+        if (key === "blocks") {
+          return Number.parseInt(b["blocks"].split("/")[0]) - Number.parseInt(a["blocks"].split("/")[0]);
+        } else if (key === "share") {
+          return Number.parseFloat(b["share"].split("%")[0]) - Number.parseFloat(a["share"].split("%")[0]);
+        }
+        return `${b[key]}`.localeCompare(`${a[key]}`);
+      });
+
+    if (sortDirection === "ASC") {
+      data = data.slice().reverse();
+    }
+    return data;
+  };
+
+  const onClickSort = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, key: SortKey) => {
+    e.preventDefault();
+    if (sortKey !== key) {
+      setSortKey(key);
+      setSortDirection("DESC");
+    } else {
+      setSortDirection(sortDirection === "DESC" ? "ASC" : "DESC");
+    }
+  };
+
+  const tableData = fixTable(miners, sortKey);
 
   return (
     <Container>
@@ -116,34 +179,59 @@ export default function Miners() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeader>Mining pool</TableHeader>
-              <TableHeader>Share</TableHeader>
-              <TableHeader>Blocks</TableHeader>
-              <TableHeader>Signals</TableHeader>
+              <TableHeader>
+                <TableHeaderLink href="#" onClick={(e) => onClickSort(e, "name")}>
+                  Mining pool{" "}
+                  <TableHeaderSortContainer>
+                    {sortKey === "name" && (sortDirection === "ASC" ? "▴" : "▾")}
+                  </TableHeaderSortContainer>
+                </TableHeaderLink>
+              </TableHeader>
+              <TableHeader>
+                <TableHeaderLink href="#" onClick={(e) => onClickSort(e, "share")}>
+                  Share{" "}
+                  <TableHeaderSortContainer>
+                    {sortKey === "share" && (sortDirection === "ASC" ? "▴" : "▾")}
+                  </TableHeaderSortContainer>
+                </TableHeaderLink>
+              </TableHeader>
+              <TableHeader>
+                <TableHeaderLink href="#" onClick={(e) => onClickSort(e, "blocks")}>
+                  Blocks{" "}
+                  <TableHeaderSortContainer>
+                    {sortKey === "blocks" && (sortDirection === "ASC" ? "▴" : "▾")}
+                  </TableHeaderSortContainer>
+                </TableHeaderLink>
+              </TableHeader>
+              <TableHeader>
+                <TableHeaderLink href="#" onClick={(e) => onClickSort(e, "signallingStatus")}>
+                  Signals{" "}
+                  <TableHeaderSortContainer>
+                    {sortKey === "signallingStatus" && (sortDirection === "ASC" ? "▴" : "▾")}
+                  </TableHeaderSortContainer>
+                </TableHeaderLink>
+              </TableHeader>
             </TableRow>
           </TableHead>
-
           <TableBody>
-            {miners.map(([key, miner]) => {
+            {tableData.map((row) => {
               return (
-                <TableRow key={key}>
+                <TableRow key={row.name}>
                   <Cell>
-                    {miner.website && (
-                      <a href={miner.website} target="_blank">
-                        {miner.name}
+                    {row.website && (
+                      <a href={row.website} target="_blank">
+                        {row.name}
                       </a>
                     )}
-                    {!miner.website && miner.name}
+                    {!row.website && row.name}
                   </Cell>
-                  <Cell>{((miner.numBlocks / currentNumberOfBlocks) * 100).toFixed(2)}%</Cell>
+                  <Cell>{row.share}</Cell>
                   <SignallingCell>
-                    <Anchor href={`/miner/${miner.name}`}>
-                      {miner.numSignallingBlocks}/{miner.numBlocks + " "}
-                    </Anchor>
+                    <Anchor href={`/miner/${row.name}`}>{row.blocks}</Anchor>
                   </SignallingCell>
                   <SignallingCell>
-                    {miner.signals && <>✅</>}
-                    {!miner.signals && <>🚫</>}
+                    {row.signallingStatus && <>✅</>}
+                    {!row.signallingStatus && <>🚫</>}
                   </SignallingCell>
                 </TableRow>
               );

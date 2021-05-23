@@ -1,5 +1,5 @@
 import config from "../config/config.ts";
-import { IBlock, IMinerData } from "./interfaces.ts";
+import { IBlock, IMinerData, IMiners } from "./interfaces.ts";
 
 export function computeStats(blocks: IBlock[]) {
   const threshold = config.fork.threshold;
@@ -42,7 +42,7 @@ export function computeStats(blocks: IBlock[]) {
   };
 }
 
-export function computeMiners(blocks: IBlock[]) {
+export function computeMiners(blocks: IBlock[]): [string, IMinerData][] {
   // We have to reverse the array as we have to check
   // for the latest block by a miner to decide whether they
   // are signalling or not.
@@ -69,7 +69,7 @@ export function computeMiners(blocks: IBlock[]) {
       prev[key].numSignallingBlocks++;
     }
     return prev;
-  }, {} as IMinerData);
+  }, {} as IMiners);
 
   // Sort the miners by share
   return Object.entries(miners).sort(([_, a], [_2, b]) => {
