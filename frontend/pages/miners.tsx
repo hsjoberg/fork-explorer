@@ -116,7 +116,7 @@ export default function Miners() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeader>Miner name</TableHeader>
+              <TableHeader>Mining pool</TableHeader>
               <TableHeader>Share</TableHeader>
               <TableHeader>Blocks</TableHeader>
               <TableHeader>Signals</TableHeader>
