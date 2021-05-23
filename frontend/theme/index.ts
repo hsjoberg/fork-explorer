@@ -54,6 +54,10 @@ export interface ITheme {
       };
     };
   };
+  stats: {
+    primaryColor: string;
+    labelColor: string;
+  };
 }
 
 export const defaultTheme: ITheme = {
@@ -111,6 +115,10 @@ export const defaultTheme: ITheme = {
         border: "1px solid #f7f7f7",
       },
     },
+  },
+  stats: {
+    primaryColor: "#ff9b20",
+    labelColor: "#f7f7f7",
   },
 };
 
@@ -179,5 +187,9 @@ export const colorBlindnessTheme: ITheme = {
         border: "1px solid rgba(255,255,255,0.1)",
       },
     },
+  },
+  stats: {
+    primaryColor: "#1ac29c",
+    labelColor: "#fcfcfc",
   },
 };

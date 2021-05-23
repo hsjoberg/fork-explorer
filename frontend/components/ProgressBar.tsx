@@ -36,6 +36,7 @@ const Green = styled.div<{ roundedRightBorder?: boolean }>`
   border-top-right-radius: ${(props) => (props.roundedRightBorder ? "6px" : "0px")};
   border-bottom-right-radius: ${(props) => (props.roundedRightBorder ? "6px" : "0px")};
   color: #f7f7f7;
+  cursor: default;
 `;
 
 const White = styled.div<{ roundedLeftBorder?: boolean; roundedRightBorder?: boolean }>`
@@ -50,6 +51,7 @@ const White = styled.div<{ roundedLeftBorder?: boolean; roundedRightBorder?: boo
   border-top-right-radius: ${(props) => (props.roundedRightBorder ? "6px" : "0px")};
   border-bottom-right-radius: ${(props) => (props.roundedRightBorder ? "6px" : "0px")};
   color: #f7f7f7;
+  cursor: default;
 `;
 
 const Red = styled.div<{ roundedLeftBorder?: boolean }>`
@@ -66,6 +68,7 @@ const Red = styled.div<{ roundedLeftBorder?: boolean }>`
   border-top-left-radius: ${(props) => (props.roundedLeftBorder ? "6px" : "0px")};
   border-bottom-left-radius: ${(props) => (props.roundedLeftBorder ? "6px" : "0px")};
   color: #f7f7f7;
+  cursor: default;
 `;
 
 const ProgressBarInfoContainer = styled.div`

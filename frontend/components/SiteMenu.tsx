@@ -17,13 +17,13 @@ const MenuContainer = styled.div`
 const MenuItem = styled.p<{ active: boolean }>`
   margin: 0 10px;
   display: block;
-  font-size: 20px;
+  font-size: 17.5px;
   text-align: center;
   color: ${(props) => props.theme.menu.itemColor};
   text-shadow: ${(props) => props.theme.menu.itemTextShadow};
   text-decoration: none;
 
-  border-bottom: ${(props) => (props.active ? "1px solid #555" : "0 solid #fff")};
+  border-bottom: ${(props) => (props.active ? "1px solid #555" : "1px solid transparent")};
 `;
 
 const SiteMenuComponent = () => {
@@ -37,6 +37,9 @@ const SiteMenuComponent = () => {
       </Anchor>
       <Anchor style={{ textDecoration: "none" }} href="/miners">
         <MenuItem active={routePath === "/miners"}>Mining Pools</MenuItem>
+      </Anchor>
+      <Anchor style={{ textDecoration: "none" }} href="/stats">
+        <MenuItem active={routePath === "/stats"}>Stats</MenuItem>
       </Anchor>
       <Anchor style={{ textDecoration: "none" }} href="/about">
         <MenuItem active={routePath === "/about"}>About {config.fork.name}</MenuItem>
