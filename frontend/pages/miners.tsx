@@ -96,6 +96,7 @@ export default function Miners() {
   const totalSignallingPotentialRatio = miners
     .filter(([_, m]) => m.numSignallingBlocks > 0)
     .reduce((sum, [_, m]) => sum + m.numBlocks / currentNumberOfBlocks, 0);
+  let accumulatedShare = 0;
 
   return (
     <Container>
@@ -118,6 +119,7 @@ export default function Miners() {
             <TableRow>
               <TableHeader>Mining pool</TableHeader>
               <TableHeader>Share</TableHeader>
+              <TableHeader className="collapse-by-640">Accumulated share</TableHeader>
               <TableHeader>Blocks</TableHeader>
               <TableHeader>Signals</TableHeader>
             </TableRow>
@@ -125,6 +127,8 @@ export default function Miners() {
 
           <TableBody>
             {miners.map(([key, miner]) => {
+              const share = miner.numBlocks / currentNumberOfBlocks;
+              accumulatedShare += share;
               return (
                 <TableRow key={key}>
                   <Cell>
@@ -135,7 +139,8 @@ export default function Miners() {
                     )}
                     {!miner.website && miner.name}
                   </Cell>
-                  <Cell>{((miner.numBlocks / currentNumberOfBlocks) * 100).toFixed(2)}%</Cell>
+                  <Cell>{(share * 100).toFixed(2)}%</Cell>
+                  <Cell className="collapse-by-640">{(accumulatedShare * 100).toFixed(2)}%</Cell>
                   <SignallingCell>
                     <Anchor href={`/miner/${miner.name}`}>
                       {miner.numSignallingBlocks}/{miner.numBlocks + " "}
