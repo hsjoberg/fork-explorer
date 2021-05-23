@@ -26,40 +26,9 @@ interface IMovingAverageData {
 }
 
 export default function Miners() {
-  // const [data, setData] = useState<IMovingAverageData[]>([]);
   const theme = useTheme();
   const blocks = useStoreState((store) => store.blocks);
   const forkName = config.fork.name;
-
-  // useEffect(() => {
-  //   (async () => {
-  //     if (0 && config.mode !== "fake-frontend") {
-  //       const result = await fetch("/pageviews");
-  //     } else {
-  //       setData(
-  //         Object.entries({
-  //           "2021-04-27": 788,
-  //           "2021-04-28": 2163,
-  //           "2021-04-29": 1193,
-  //           "2021-04-30": 1187,
-  //           "2021-05-01": 18270,
-  //           "2021-05-02": 124202,
-  //           "2021-05-03": 79952,
-  //           "2021-05-04": 49340,
-  //           "2021-05-05": 33298,
-  //           "2021-05-06": 22786,
-  //           "2021-05-07": 18172,
-  //           "2021-05-08": 348960,
-  //         }).map(([key, value]) => {
-  //           return {
-  //             date: key,
-  //             pageviews: value,
-  //           };
-  //         })
-  //       );
-  //     }
-  //   })();
-  // }, []);
 
   const data: IMovingAverageData[] = blocks
     .filter((block) => block.signals !== undefined)
@@ -101,9 +70,18 @@ export default function Miners() {
             height={410}
             theme={VictoryTheme.material}
           >
-            <VictoryAxis style={{ tickLabels: { fill: theme.stats.labelColor } }} />
             <VictoryAxis
-              style={{ tickLabels: { fill: theme.stats.labelColor } }}
+              style={{
+                grid: { stroke: "#777", strokeDasharray: "3" },
+                tickLabels: { fill: theme.stats.labelColor },
+              }}
+            />
+            <VictoryAxis
+              style={{
+                grid: { stroke: "#777", strokeDasharray: "3" },
+                tickLabels: { fill: theme.stats.labelColor },
+              }}
+              tickValues={[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]}
               domain={[0, 1]}
               tickFormat={(ratio: number) => Math.floor(ratio * 100) + "%"}
               dependentAxis
