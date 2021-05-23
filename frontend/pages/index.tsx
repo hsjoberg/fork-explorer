@@ -115,7 +115,7 @@ export default function Blocks() {
                   <>
                     {forkName} cannot be locked in within this period
                     <br />
-                    {thresholdPercentage}% of the blocks have to signal
+                    {thresholdPercentage}% of the blocks have to signal (current ratio: {currentSignallingPercentage}%)
                   </>
                 )}
               </>
