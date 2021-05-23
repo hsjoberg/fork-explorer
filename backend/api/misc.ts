@@ -1,4 +1,4 @@
-import { RouterMiddleware } from "https://deno.land/x/oak@v7.3.0/mod.ts";
+import { RouterMiddleware } from "https://deno.land/x/oak@v7.5.0/mod.ts";
 
 import { getblockhash } from "../jsonrpc/index.ts";
 import { getblockchaininfo, getblockcount } from "../jsonrpc/index.ts";

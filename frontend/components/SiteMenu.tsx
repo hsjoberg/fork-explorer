@@ -1,8 +1,8 @@
 import React from "https://esm.sh/react@17.0.2";
 import styled from "https://esm.sh/styled-components";
 
-import Anchor from "https://deno.land/x/aleph/framework/react/components/Anchor.ts";
-import { useRouter } from "https://deno.land/x/aleph/framework/react/hooks.ts";
+import Anchor from "https://deno.land/x/aleph@v0.3.0-alpha.32/framework/react/components/Anchor.ts";
+import { useRouter } from "https://deno.land/x/aleph@v0.3.0-alpha.32/framework/react/hooks.ts";
 import config from "../back/frontend/back/config/config.ts";
 
 const MenuContainer = styled.div`
