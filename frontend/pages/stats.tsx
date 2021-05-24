@@ -1,6 +1,13 @@
 import React from "https://esm.sh/react@17.0.2";
 import styled, { useTheme } from "https://esm.sh/styled-components";
-import { VictoryChart, VictoryLine, VictoryAxis, VictoryTheme } from "https://esm.sh/victory";
+import {
+  VictoryChart,
+  VictoryLine,
+  VictoryAxis,
+  VictoryTheme,
+  VictoryTooltip,
+  VictoryVoronoiContainer,
+} from "https://esm.sh/victory";
 
 import config from "../back/config/config.ts";
 import { Container } from "../components/Container.ts";
@@ -59,7 +66,9 @@ export default function Miners() {
   };
 
   const axisStyle = {
-    grid: { stroke: "#777", strokeDasharray: "3" },
+    axis: { stroke: "transparent" },
+    ticks: { stroke: "transparent", size: 5 },
+    grid: { stroke: "#666", strokeDasharray: "3" },
     tickLabels: { fill: theme.stats.labelColor },
   };
 
@@ -76,11 +85,31 @@ export default function Miners() {
           <Text>Signalling percentage over the last 144 blocks (Moving Average) in the current period.</Text>
           <ChartHolder>
             <VictoryChart
+              containerComponent={
+                <VictoryVoronoiContainer
+                  voronoiDimension="x"
+                  labels={({ datum }: any) => {
+                    let tooltip = `Day:`.padEnd(18, " ") + `${Math.floor((datum.periodHeight * 10) / 60 / 24) + 1}\n`;
+                    tooltip += `Height:`.padEnd(18, " ") + `${datum.height}\n`;
+                    tooltip += `Interval Height:`.padEnd(18, " ") + `${datum.periodHeight}\n`;
+                    tooltip += `Percentage:`.padEnd(18, " ") + `${Math.floor(datum.ratio * 100)}%`;
+                    return tooltip;
+                  }}
+                  labelComponent={
+                    <VictoryTooltip
+                      style={{ fontSize: 9, textAnchor: "start", fontFamily: "monospace" }}
+                      centerOffset={{ y: -5 }}
+                      dy={-7}
+                    />
+                  }
+                  bindTooltipToMouse={true}
+                ></VictoryVoronoiContainer>
+              }
               margin={0}
-              responsive={true}
+              responsive={false}
               padding={{
-                left: 50,
-                right: 20,
+                left: 70,
+                right: 70,
                 top: 15,
                 bottom: 40,
               }}
@@ -96,7 +125,14 @@ export default function Miners() {
                 tickValues={[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]}
                 tickFormat={(ratio: number) => Math.floor(ratio * 100) + "%"}
               />
-              <VictoryLine interpolation="linear" data={data} x="height" y="ratio" style={lineStyle} />
+              <VictoryLine
+                labelComponent={<VictoryTooltip />}
+                interpolation="linear"
+                data={data}
+                x="height"
+                y="ratio"
+                style={lineStyle}
+              />
             </VictoryChart>
           </ChartHolder>
         </Body>
