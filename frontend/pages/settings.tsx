@@ -3,6 +3,8 @@ import styled from "https://esm.sh/styled-components";
 
 import config from "../back/config/config.ts";
 
+import { useStoreActions, useStoreState } from "../state/index.ts";
+import { Theme } from "../state/settings.ts";
 import { Container } from "../components/Container.ts";
 import { Content } from "../components/Content.ts";
 import { Donation } from "../components/Donation.tsx";
@@ -11,14 +13,15 @@ import SiteMenu from "../components/SiteMenu.tsx";
 import Text from "../components/Text.tsx";
 import ContactTwitter from "../components/ContactTwitter.tsx";
 import CommonHeader from "../components/CommonHeader.ts";
-import { Theme } from "../state/settings.ts";
-import { useStoreActions, useStoreState } from "../state/index.ts";
+import Body from "../components/Body.ts";
 
 const SettingsContainer = styled.div`
   align-self: center;
   max-width: 700px;
   width: 100%;
   margin-bottom: 120px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const SettingsGroup = styled.div`
@@ -71,32 +74,34 @@ export default function Blocks() {
       <Content>
         <SiteTitle />
         <SiteMenu />
-        <SettingsContainer>
-          <CommonHeader>Settings</CommonHeader>
-          <SettingsGroup>
-            <SettingsLabel>Theme</SettingsLabel>
-            <Dropdown
-              value={currentTheme}
-              onChange={async (event) => {
-                await onChangeTheme(event.target.value);
-              }}
-            >
-              {Object.entries(Theme).map((theme) => {
-                return (
-                  <DropdownOption key={theme[1]} value={theme[1]}>
-                    {theme[1]}
-                  </DropdownOption>
-                );
-              })}
-            </Dropdown>
-          </SettingsGroup>
-          {config.frontend.autoRefreshInterval !== null && (
+        <Body>
+          <SettingsContainer>
+            <CommonHeader>Settings</CommonHeader>
             <SettingsGroup>
-              <SettingsLabel>Auto-fetch blocks (every {config.frontend.autoRefreshInterval}s)</SettingsLabel>
-              <Checkbox onChange={toggleAutoRefreshEnabled} checked={autoRefreshEnabled} />
+              <SettingsLabel>Theme</SettingsLabel>
+              <Dropdown
+                value={currentTheme}
+                onChange={async (event) => {
+                  await onChangeTheme(event.target.value);
+                }}
+              >
+                {Object.entries(Theme).map((theme) => {
+                  return (
+                    <DropdownOption key={theme[1]} value={theme[1]}>
+                      {theme[1]}
+                    </DropdownOption>
+                  );
+                })}
+              </Dropdown>
             </SettingsGroup>
-          )}
-        </SettingsContainer>
+            {config.frontend.autoRefreshInterval !== null && (
+              <SettingsGroup>
+                <SettingsLabel>Auto-fetch blocks (every {config.frontend.autoRefreshInterval}s)</SettingsLabel>
+                <Checkbox onChange={toggleAutoRefreshEnabled} checked={autoRefreshEnabled} />
+              </SettingsGroup>
+            )}
+          </SettingsContainer>
+        </Body>
         {config.frontend.twitterHandle && <ContactTwitter />}
         {config.donation && <Donation />}
       </Content>

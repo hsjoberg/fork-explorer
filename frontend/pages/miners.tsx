@@ -14,8 +14,10 @@ import { Donation } from "../components/Donation.tsx";
 import ContactTwitter from "../components/ContactTwitter.tsx";
 import CommonHeader from "../components/CommonHeader.ts";
 import { IMinerData } from "../back/common/interfaces.ts";
+import Body from "../components/Body.ts";
 
 const Table = styled.table`
+  width: 100%;
   box-shadow: #000 3px 3px 14px;
   border-radius: 6px;
   margin: 0 3px 30px;
@@ -183,68 +185,70 @@ export default function Miners() {
             {`Potential: ${(totalSignallingPotentialRatio * 100).toFixed(2)}%`}
           </TotalsPotential>
         )}
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableHeader>
-                <TableHeaderLink href="#" onClick={(e) => onClickSort(e, "name")}>
-                  Mining pool{" "}
-                  <TableHeaderSortContainer>
-                    {sortKey === "name" && (sortDirection === "ASC" ? "▴" : "▾")}
-                  </TableHeaderSortContainer>
-                </TableHeaderLink>
-              </TableHeader>
-              <TableHeader>
-                <TableHeaderLink href="#" onClick={(e) => onClickSort(e, "share")}>
-                  Share{" "}
-                  <TableHeaderSortContainer>
-                    {sortKey === "share" && (sortDirection === "ASC" ? "▴" : "▾")}
-                  </TableHeaderSortContainer>
-                </TableHeaderLink>
-              </TableHeader>
-              <TableHeader>
-                <TableHeaderLink href="#" onClick={(e) => onClickSort(e, "blocks")}>
-                  Blocks{" "}
-                  <TableHeaderSortContainer>
-                    {sortKey === "blocks" && (sortDirection === "ASC" ? "▴" : "▾")}
-                  </TableHeaderSortContainer>
-                </TableHeaderLink>
-              </TableHeader>
-              <TableHeader>
-                <TableHeaderLink href="#" onClick={(e) => onClickSort(e, "signallingStatus")}>
-                  Signals{" "}
-                  <TableHeaderSortContainer>
-                    {sortKey === "signallingStatus" && (sortDirection === "ASC" ? "▴" : "▾")}
-                  </TableHeaderSortContainer>
-                </TableHeaderLink>
-              </TableHeader>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {tableData.map((row) => {
-              return (
-                <TableRow key={row.name}>
-                  <Cell>
-                    {row.website && (
-                      <a href={row.website} target="_blank">
-                        {row.name}
-                      </a>
-                    )}
-                    {!row.website && row.name}
-                  </Cell>
-                  <Cell>{row.share}</Cell>
-                  <SignallingCell>
-                    <Anchor href={`/miner/${row.name}`}>{row.blocks}</Anchor>
-                  </SignallingCell>
-                  <SignallingCell>
-                    {row.signallingStatus && <>✅</>}
-                    {!row.signallingStatus && <>🚫</>}
-                  </SignallingCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+        <Body>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableHeader>
+                  <TableHeaderLink href="#" onClick={(e) => onClickSort(e, "name")}>
+                    Mining pool{" "}
+                    <TableHeaderSortContainer>
+                      {sortKey === "name" && (sortDirection === "ASC" ? "▴" : "▾")}
+                    </TableHeaderSortContainer>
+                  </TableHeaderLink>
+                </TableHeader>
+                <TableHeader>
+                  <TableHeaderLink href="#" onClick={(e) => onClickSort(e, "share")}>
+                    Share{" "}
+                    <TableHeaderSortContainer>
+                      {sortKey === "share" && (sortDirection === "ASC" ? "▴" : "▾")}
+                    </TableHeaderSortContainer>
+                  </TableHeaderLink>
+                </TableHeader>
+                <TableHeader>
+                  <TableHeaderLink href="#" onClick={(e) => onClickSort(e, "blocks")}>
+                    Blocks{" "}
+                    <TableHeaderSortContainer>
+                      {sortKey === "blocks" && (sortDirection === "ASC" ? "▴" : "▾")}
+                    </TableHeaderSortContainer>
+                  </TableHeaderLink>
+                </TableHeader>
+                <TableHeader>
+                  <TableHeaderLink href="#" onClick={(e) => onClickSort(e, "signallingStatus")}>
+                    Signals{" "}
+                    <TableHeaderSortContainer>
+                      {sortKey === "signallingStatus" && (sortDirection === "ASC" ? "▴" : "▾")}
+                    </TableHeaderSortContainer>
+                  </TableHeaderLink>
+                </TableHeader>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {tableData.map((row) => {
+                return (
+                  <TableRow key={row.name}>
+                    <Cell>
+                      {row.website && (
+                        <a href={row.website} target="_blank">
+                          {row.name}
+                        </a>
+                      )}
+                      {!row.website && row.name}
+                    </Cell>
+                    <Cell>{row.share}</Cell>
+                    <SignallingCell>
+                      <Anchor href={`/miner/${row.name}`}>{row.blocks}</Anchor>
+                    </SignallingCell>
+                    <SignallingCell>
+                      {row.signallingStatus && <>✅</>}
+                      {!row.signallingStatus && <>🚫</>}
+                    </SignallingCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </Body>
         {config.frontend.twitterHandle && <ContactTwitter />}
         {config.donation && <Donation />}
       </Content>

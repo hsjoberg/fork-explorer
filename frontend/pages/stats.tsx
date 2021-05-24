@@ -3,7 +3,6 @@ import styled, { useTheme } from "https://esm.sh/styled-components";
 import { VictoryChart, VictoryLine, VictoryAxis, VictoryTheme } from "https://esm.sh/victory";
 
 import config from "../back/config/config.ts";
-
 import { Container } from "../components/Container.ts";
 import { ContentWide } from "../components/Content.ts";
 import SiteTitle from "../components/SiteTitle.tsx";
@@ -14,6 +13,8 @@ import CommonHeader from "../components/CommonHeader.ts";
 import ContactTwitter from "../components/ContactTwitter.tsx";
 import Text from "../components/Text.tsx";
 import { computeStats } from "../back/common/data.ts";
+import { ITheme } from "../theme/index.ts";
+import Body from "../components/Body.ts";
 
 const ChartHolder = styled.div`
   margin-bottom: 100px;
@@ -28,7 +29,7 @@ interface IMovingAverageData {
 }
 
 export default function Miners() {
-  const theme = useTheme();
+  const theme = useTheme() as ITheme;
   const blocks = useStoreState((store) => store.blocks);
   const { blocksLeftInThisPeriod } = computeStats(blocks);
   const forkName = config.fork.name;
@@ -52,6 +53,16 @@ export default function Miners() {
     return blocks[0].height + i * 144;
   });
 
+  const lineStyle = {
+    data: { stroke: theme.stats.primaryColor },
+    parent: { border: "1px solid #ccc" },
+  };
+
+  const axisStyle = {
+    grid: { stroke: "#777", strokeDasharray: "3" },
+    tickLabels: { fill: theme.stats.labelColor },
+  };
+
   return (
     <Container>
       <head>
@@ -60,51 +71,35 @@ export default function Miners() {
       <ContentWide>
         <SiteTitle />
         <SiteMenu />
-        <ChartTitle>144 Block Moving Average</ChartTitle>
-        <Text>Signalling percentage over the last 144 blocks (Moving Average) in the current period.</Text>
-        <ChartHolder>
-          <VictoryChart
-            margin={0}
-            responsive={true}
-            padding={{
-              left: 50,
-              right: 20,
-              top: 15,
-              bottom: 40,
-            }}
-            width={1100}
-            height={520}
-            theme={VictoryTheme.material}
-          >
-            <VictoryAxis
-              tickValues={blocksLeftInThisPeriod < 1944 ? xAxisTickValues : undefined}
-              style={{
-                grid: { stroke: "#777", strokeDasharray: "3" },
-                tickLabels: { fill: theme.stats.labelColor },
+        <Body>
+          <ChartTitle>144 Block Moving Average</ChartTitle>
+          <Text>Signalling percentage over the last 144 blocks (Moving Average) in the current period.</Text>
+          <ChartHolder>
+            <VictoryChart
+              margin={0}
+              responsive={true}
+              padding={{
+                left: 50,
+                right: 20,
+                top: 15,
+                bottom: 40,
               }}
-            />
-            <VictoryAxis
-              style={{
-                grid: { stroke: "#777", strokeDasharray: "3" },
-                tickLabels: { fill: theme.stats.labelColor },
-              }}
-              tickValues={[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]}
-              domain={[0, 1]}
-              tickFormat={(ratio: number) => Math.floor(ratio * 100) + "%"}
-              dependentAxis
-            />
-            <VictoryLine
-              interpolation="linear"
-              data={data}
-              x="height"
-              y="ratio"
-              style={{
-                data: { stroke: theme.stats.primaryColor },
-                parent: { border: "1px solid #ccc" },
-              }}
-            />
-          </VictoryChart>
-        </ChartHolder>
+              width={1100}
+              height={510}
+              theme={VictoryTheme.material}
+            >
+              <VictoryAxis tickValues={blocksLeftInThisPeriod < 1944 ? xAxisTickValues : undefined} style={axisStyle} />
+              <VictoryAxis
+                dependentAxis
+                style={axisStyle}
+                domain={[0, 1]}
+                tickValues={[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]}
+                tickFormat={(ratio: number) => Math.floor(ratio * 100) + "%"}
+              />
+              <VictoryLine interpolation="linear" data={data} x="height" y="ratio" style={lineStyle} />
+            </VictoryChart>
+          </ChartHolder>
+        </Body>
         {config.frontend.twitterHandle && <ContactTwitter />}
         {config.donation && <Donation />}
       </ContentWide>
