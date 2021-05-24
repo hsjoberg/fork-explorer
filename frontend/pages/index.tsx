@@ -66,7 +66,10 @@ export default function Blocks() {
   } = computeStats(blocks);
   const nextBlockHeight = blocks.find((block) => block.signals === undefined)?.height ?? 0;
   const { query } = useRouter();
-  const selectedMiner = query.get("miner");
+  let selectedMiner: string | undefined | null = query.get("miner");
+  if (selectedMiner === "Unrecognized miners") {
+    selectedMiner = undefined;
+  }
   const selectedBlock = query.get("block");
   const thresholdPercentage = Math.floor((config.fork.threshold / 2016) * 100);
 

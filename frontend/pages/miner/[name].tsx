@@ -47,8 +47,12 @@ export default function Miners() {
   const { params } = useRouter();
   const name = params.name ?? "";
 
+  let searchName: string | undefined = name;
+  if (searchName === "Unrecognized miners") {
+    searchName = undefined;
+  }
   const minerBlocks = blocks.filter((block) => {
-    return block.miner === name;
+    return block.signals !== undefined && block.miner === searchName;
   });
 
   return (
