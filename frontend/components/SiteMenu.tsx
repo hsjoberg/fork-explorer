@@ -12,6 +12,7 @@ const MenuContainer = styled.div`
   padding: 0;
   margin-bottom: 40px;
   position: relative;
+  overflow: hidden;
 `;
 
 const MenuItem = styled.p<{ active: boolean }>`

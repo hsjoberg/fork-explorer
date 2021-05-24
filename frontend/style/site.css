@@ -51,3 +51,7 @@ body {
 #__aleph > div > p > span {
   color: #f0f0f0 !important;
 }
+
+svg {
+  overflow: visible;
+}

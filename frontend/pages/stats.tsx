@@ -108,8 +108,8 @@ export default function Miners() {
               margin={0}
               responsive={false}
               padding={{
-                left: 70,
-                right: 70,
+                left: 20,
+                right: 20,
                 top: 15,
                 bottom: 40,
               }}
