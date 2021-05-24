@@ -56,7 +56,7 @@ export default function Miners() {
       };
     });
 
-  const xAxisTickValues = new Array(2016 / 144).fill(0).map((day, i) => {
+  const xAxisTickValues = new Array(2016 / 144 + 1).fill(0).map((day, i) => {
     return blocks[0].height + i * 144;
   });
 
