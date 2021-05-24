@@ -25,7 +25,7 @@ const Table = styled.table`
   overflow: hidden;
 
   @media (max-width: 500px) {
-    transform: scale(0.9);
+    transform: scale(0.95);
     transform-origin: top;
   }
 `;

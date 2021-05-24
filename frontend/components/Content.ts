@@ -10,6 +10,8 @@ export const Content = styled.div`
   flex-direction: row;
   width: 100%;
   max-width: 1050px;
+  padding-left: 10px;
+  padding-right: 10px;
   display: flex;
   flex-direction: column;
 `;
