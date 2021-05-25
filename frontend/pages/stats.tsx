@@ -25,6 +25,8 @@ import Body from "../components/Body.ts";
 
 const ChartHolder = styled.div`
   margin-bottom: 100px;
+  margin-left: 28px;
+  margin-right: 28px;
 `;
 
 const ChartTitle = styled(CommonHeader)``;
@@ -72,6 +74,8 @@ export default function Miners() {
     tickLabels: { fill: theme.stats.labelColor },
   };
 
+  const thresholdPercentage = Math.floor((config.fork.threshold / 2016) * 100);
+
   return (
     <Container>
       <head>
@@ -83,12 +87,19 @@ export default function Miners() {
         <Body>
           <ChartTitle>144 Block Moving Average</ChartTitle>
           <Text>Signalling percentage over the last 144 blocks (Moving Average) in the current period.</Text>
+          <Text>
+            Reaching {thresholdPercentage}% is not indicative of a softfork lock-in. {config.fork.threshold} blocks
+            within a period have to signal for the {config.fork.name} to lock in.
+          </Text>
           <ChartHolder>
             <VictoryChart
               containerComponent={
                 <VictoryVoronoiContainer
                   voronoiDimension="x"
                   labels={({ datum }: any) => {
+                    if (!datum.height) {
+                      return null;
+                    }
                     let tooltip = `Day:`.padEnd(18, " ") + `${Math.floor((datum.periodHeight * 10) / 60 / 24) + 1}\n`;
                     tooltip += `Height:`.padEnd(18, " ") + `${datum.height}\n`;
                     tooltip += `Interval Height:`.padEnd(18, " ") + `${datum.periodHeight}\n`;
@@ -126,13 +137,12 @@ export default function Miners() {
                 tickFormat={(ratio: number) => Math.floor(ratio * 100) + "%"}
               />
               <VictoryLine
-                labelComponent={<VictoryTooltip />}
-                interpolation="linear"
-                data={data}
-                x="height"
-                y="ratio"
-                style={lineStyle}
+                labels={() => null}
+                style={{ data: { stroke: "#999" } }}
+                domain={{ x: [data[0].height, data[data.length - 1].height] }}
+                y={() => config.fork.threshold / 2016}
               />
+              <VictoryLine labelComponent={<VictoryTooltip />} data={data} x="height" y="ratio" style={lineStyle} />
             </VictoryChart>
           </ChartHolder>
         </Body>
