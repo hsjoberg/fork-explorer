@@ -103,7 +103,7 @@ export default function Miners() {
                     let tooltip = `Day:`.padEnd(18, " ") + `${Math.floor((datum.periodHeight * 10) / 60 / 24) + 1}\n`;
                     tooltip += `Height:`.padEnd(18, " ") + `${datum.height}\n`;
                     tooltip += `Interval Height:`.padEnd(18, " ") + `${datum.periodHeight}\n`;
-                    tooltip += `Percentage:`.padEnd(18, " ") + `${Math.floor(datum.ratio * 100)}%`;
+                    tooltip += `Percentage:`.padEnd(18, " ") + `${(datum.ratio * 100).toFixed(2)}%`;
                     return tooltip;
                   }}
                   labelComponent={
