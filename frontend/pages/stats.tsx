@@ -89,7 +89,7 @@ export default function Miners() {
           <Text>Signalling percentage over the last 144 blocks (Moving Average) in the current period.</Text>
           <Text>
             Reaching {thresholdPercentage}% is not indicative of a softfork lock-in. {config.fork.threshold} blocks
-            within a period have to signal for the {config.fork.name} to lock in.
+            within a period have to signal for the {config.fork.name} softfork to lock in.
           </Text>
           <ChartHolder>
             <VictoryChart

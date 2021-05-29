@@ -4,7 +4,6 @@ import { useRouter } from "https://deno.land/x/aleph@v0.3.0-alpha.32/framework/r
 import Anchor from "https://deno.land/x/aleph@v0.3.0-alpha.32/framework/react/components/Anchor.ts";
 
 import config from "../../back/config/config.ts";
-import { computeStats, computeMiners } from "../../back/common/data.ts";
 
 import { Container } from "../../components/Container.ts";
 import { Content } from "../../components/Content.ts";
@@ -15,6 +14,7 @@ import { Donation } from "../../components/Donation.tsx";
 import ContactTwitter from "../../components/ContactTwitter.tsx";
 import CommonHeader from "../../components/CommonHeader.ts";
 import Text from "../../components/Text.tsx";
+import Body from "../../components/Body.ts";
 
 const Miner = styled.div`
   display: flex;
@@ -63,25 +63,27 @@ export default function Miners() {
       <Content style={{ maxWidth: 800 }}>
         <SiteTitle />
         <SiteMenu />
-        <Miner>
-          <MinerTitle>{name}</MinerTitle>{" "}
-        </Miner>
-        <SeeMinerOverview href={`/?miner=${name}`}>See miner's block on overview page 🔍</SeeMinerOverview>
-        <MinerBlocksContainer>
-          {minerBlocks.map((block) => {
-            return (
-              <MinerBlock key={block.height}>
-                <Text>
-                  {block.signals ? "✅ " : "🚫"} Block #
-                  <Anchor href={`https://mempool.space/block/${block.height}?showDetails=true`} target="_blank">
-                    {block.height}
-                  </Anchor>
-                  <Locate href={`/?block=${block.height}`}>🔍</Locate>
-                </Text>
-              </MinerBlock>
-            );
-          })}
-        </MinerBlocksContainer>
+        <Body>
+          <Miner>
+            <MinerTitle>{name}</MinerTitle>{" "}
+          </Miner>
+          <SeeMinerOverview href={`/?miner=${name}`}>See miner's block on overview page 🔍</SeeMinerOverview>
+          <MinerBlocksContainer>
+            {minerBlocks.map((block) => {
+              return (
+                <MinerBlock key={block.height}>
+                  <Text>
+                    {block.signals ? "✅ " : "🚫"} Block #
+                    <Anchor href={`https://mempool.space/block/${block.height}?showDetails=true`} target="_blank">
+                      {block.height}
+                    </Anchor>
+                    <Locate href={`/?block=${block.height}`}>🔍</Locate>
+                  </Text>
+                </MinerBlock>
+              );
+            })}
+          </MinerBlocksContainer>
+        </Body>
         {config.frontend.twitterHandle && <ContactTwitter />}
         {config.donation && <Donation />}
       </Content>
