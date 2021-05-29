@@ -86,7 +86,7 @@ export default function Blocks() {
             <CannotLockInInfo>
               The current period cannot lock in {forkName}.
               <br />
-              The next period starts in approximately
+              The next period starts in
               {" " + formatDistanceToNow(addMinutes(new Date(), blocksLeftInThisPeriod * 10), {}) + " "}(
               {blocksLeftInThisPeriod} block{blocksLeftInThisPeriod > 1 && "s"})
             </CannotLockInInfo>
