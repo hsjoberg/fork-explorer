@@ -156,6 +156,10 @@ const miners: IMiners = {
       name: "GHash.IO",
       link: "https://ghash.io/",
     },
+    "MARA Pool": {
+      name: "MARA Pool",
+      link: "https://marathondh.com/",
+    },
     "st mining corp": {
       name: "ST Mining Corp",
       link: "https://bitcointalk.org/index.php?topic=77000.msg3207708#msg3207708",
