@@ -142,7 +142,7 @@ export default function Miners() {
                 domain={{ x: [data[0].height, data[data.length - 1].height] }}
                 y={() => config.fork.threshold / 2016}
               />
-              <VictoryLine labelComponent={<VictoryTooltip />} data={data} x="height" y="ratio" style={lineStyle} />
+              <VictoryLine data={data} x="height" y="ratio" style={lineStyle} />
             </VictoryChart>
           </ChartHolder>
         </Body>

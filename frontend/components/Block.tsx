@@ -86,5 +86,5 @@ export interface IEmptyBlockProps {
 export function EmptyBlock({ height, nextBlock }: IEmptyBlockProps) {
   const autoRefreshEnabled = useStoreState((store) => store.settings.autoRefreshEnabled);
 
-  return <EmptyBlockStyle title={`Coming block ${height}`} nextBlock={autoRefreshEnabled && nextBlock} />;
+  return <EmptyBlockStyle title={`Upcoming block ${height}`} nextBlock={autoRefreshEnabled && nextBlock} />;
 }
