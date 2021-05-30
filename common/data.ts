@@ -17,12 +17,8 @@ export function computeStats(blocks: IBlock[]) {
   const currentSignallingPercentage = (currentSignallingRatio * 100).toFixed(2);
   const currentSignallingRatioToAll = currentNumberOfBlocks > 0 ? currentNumberOfSignallingBlocks / 2016 : 0;
   const currentSignallingPercentageToAll = (currentSignallingRatioToAll * 100).toFixed(2);
-  let willProbablyActivate: boolean | undefined = undefined;
-  let estimatedSignallingBlocksLeft;
-  if (currentNumberOfBlocks >= 144) {
-    estimatedSignallingBlocksLeft = Math.floor(currentSignallingRatio * blocksLeftInThisPeriod);
-    willProbablyActivate = estimatedSignallingBlocksLeft <= blocksLeftInThisPeriod && currentSignallingRatio >= 0.9;
-  }
+  const estimatedSignallingBlocksLeft = Math.floor(currentSignallingRatio * blocksLeftInThisPeriod);
+  const willProbablyActivate = estimatedSignallingBlocksLeft <= blocksLeftInThisPeriod && currentSignallingRatio >= 0.9;
   const currentNumberOfNonSignallingBlocks = currentNumberOfBlocks - currentNumberOfSignallingBlocks;
 
   return {
