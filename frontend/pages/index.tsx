@@ -17,6 +17,7 @@ import ProgressBar from "../components/ProgressBar.tsx";
 import Text from "../components/Text.tsx";
 import ContactTwitter from "../components/ContactTwitter.tsx";
 import CommonHeader from "../components/CommonHeader.ts";
+import FinalBlockCountdown from "../components/FinalBlockCountdown.tsx";
 import { useStoreState } from "../state/index.ts";
 import Body from "../components/Body.ts";
 
@@ -82,6 +83,7 @@ export default function Blocks() {
         <SiteTitle />
         <SiteMenu />
         <Body style={{ paddingLeft: 18, paddingRight: 18 }}>
+          {!currentPeriodFailed && !lockedIn && blocksLeftForActivation <= 33 * 2 && <FinalBlockCountdown />}
           {currentPeriodFailed && blocksLeftInThisPeriod > 0 && (
             <CannotLockInInfo>
               The current period cannot lock in {forkName}.

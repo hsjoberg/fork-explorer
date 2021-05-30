@@ -15,12 +15,12 @@ export const BlockContainer = styled.div`
   margin-bottom: 30px;
 `;
 
-export const BlockStyle = styled.div<{ signals?: boolean; selected?: boolean }>`
+export const BlockStyle = styled.div<{ signals?: boolean; selected?: boolean; big?: boolean }>`
   background: ${(props) =>
     props.signals ? props.theme.block.block.signalling.background : props.theme.block.block.nonSignalling.background};
   border: 1px solid ${(props) => props.theme.block.container.backgroundColor};
-  width: 18px;
-  height: 18px;
+  width: ${(props) => (props.big ? "36px" : "18px")};
+  height: ${(props) => (props.big ? "36px" : "18px")};
   margin: 3px;
   border-radius: 4px;
   position: relative;
@@ -34,16 +34,17 @@ export interface IBlockProps {
   signals: boolean;
   miner: string | undefined;
   selected: boolean;
+  big?: boolean;
 }
 
-export function Block({ height, signals, miner, selected }: IBlockProps) {
+export function Block({ height, signals, miner, selected, big }: IBlockProps) {
   const hover = `Height: ${height}
 Miner: ${miner ?? "Unknown"}
 Signalling: ${signals ? "Yes" : "No"}`;
 
   return (
     <a href={`https://mempool.space/block/${height}?showDetails=true`} target="_blank">
-      <BlockStyle title={hover} signals={signals} selected={selected}></BlockStyle>
+      <BlockStyle title={hover} signals={signals} selected={selected} big={big}></BlockStyle>
     </a>
   );
 }
@@ -67,11 +68,11 @@ const animation = css`
   2.6s ${fadeIn} linear infinite
 `;
 
-export const EmptyBlockStyle = styled.div<{ nextBlock: boolean }>`
+export const EmptyBlockStyle = styled.div<{ nextBlock: boolean; big?: boolean }>`
   border: ${(props) => props.theme.block.block.upcoming.border};
   background: ${(props) => props.theme.block.block.upcoming.background};
-  width: 18px;
-  height: 18px;
+  width: ${(props) => (props.big ? "36px" : "18px")};
+  height: ${(props) => (props.big ? "36px" : "18px")};
   margin: 3px;
   border-radius: 4px;
 
@@ -79,12 +80,19 @@ export const EmptyBlockStyle = styled.div<{ nextBlock: boolean }>`
 `;
 
 export interface IEmptyBlockProps {
-  height: number;
+  height?: number;
   nextBlock: boolean;
+  big?: boolean;
 }
 
-export function EmptyBlock({ height, nextBlock }: IEmptyBlockProps) {
+export function EmptyBlock({ height, nextBlock, big }: IEmptyBlockProps) {
   const autoRefreshEnabled = useStoreState((store) => store.settings.autoRefreshEnabled);
 
-  return <EmptyBlockStyle title={`Upcoming block ${height}`} nextBlock={autoRefreshEnabled && nextBlock} />;
+  return (
+    <EmptyBlockStyle
+      title={`Upcoming block${height ? ` ${height}` : ""}`}
+      nextBlock={autoRefreshEnabled && nextBlock}
+      big={big}
+    />
+  );
 }
