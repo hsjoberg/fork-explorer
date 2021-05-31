@@ -70,7 +70,7 @@ const miners: IMiners = {
     },
     "/ArkPool/": {
       name: "ArkPool",
-      link: "",
+      link: "https://www.arkpool.com/",
     },
     "/BTC.TOP/": {
       name: "BTC.TOP",
@@ -578,7 +578,7 @@ const miners: IMiners = {
     },
     TogetherPool: {
       name: "TogetherPool",
-      link: "",
+      link: "https://www.togetherpool.com/",
     },
   },
   payout_addresses: {
@@ -1011,8 +1011,8 @@ const miners: IMiners = {
       link: "https://bitfury.com/",
     },
     "1M1Xw2rczxkF3p3wiNHaTmxvbpZZ7M6vaa": {
-      name: "1M1X",
-      link: "",
+      name: "Poolin",
+      link: "https://www.poolin.com/",
     },
     "39m5Wvn9ZqyhYmCYpsyHuGMt5YYw4Vmh1Z": {
       name: "BytePool",
@@ -1136,11 +1136,11 @@ const miners: IMiners = {
     },
     bc1qwlrsvgtn99rqp3fgaxq6f6jkgms80rnej0a8tc: {
       name: "TogetherPool",
-      link: "",
+      link: "https://www.togetherpool.com/",
     },
     "1QEiAhdHdMhBgVbDM7zUXWGkNhgEEJ6uLd": {
       name: "ArkPool",
-      link: "",
+      link: "https://www.arkpool.com/",
     },
     "12cKiMNhCtBhZRUBCnYXo8A4WQzMUtYjmR": {
       name: "Sigmapool.com",
