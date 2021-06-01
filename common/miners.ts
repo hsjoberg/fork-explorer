@@ -584,8 +584,8 @@ const miners: IMiners = {
       name: "TogetherPool",
       link: "https://www.togetherpool.com/",
     },
-},
-payout_addresses: {
+  },
+  payout_addresses: {
     "3Bmb9Jig8A5kHdDSxvDZ6eryj3AXd3swuJ": {
       name: "NovaBlock",
       link: "https://novablock.com",
