@@ -532,6 +532,10 @@ const miners: IMiners = {
       name: "Binance Pool",
       link: "https://pool.binance.com/",
     },
+    "binance/": {
+      name: "Binance Pool",
+      link: "https://pool.binance.com/",
+    },
     "/Minerium.com/": {
       name: "Minerium",
       link: "https://www.minerium.com/",
@@ -578,7 +582,7 @@ const miners: IMiners = {
     },
     TogetherPool: {
       name: "TogetherPool",
-      link: "",
+      link: "https://www.togetherpool.com/",
     },
   },
   payout_addresses: {
@@ -662,7 +666,7 @@ const miners: IMiners = {
       name: "BitMinter",
       link: "https://bitminter.com/",
     },
-    "15xiShqUqerfjFdyfgBH1K7Gwp6cbYmsTW ": {
+    "15xiShqUqerfjFdyfgBH1K7Gwp6cbYmsTW": {
       name: "EclipseMC",
       link: "https://eclipsemc.com/",
     },
@@ -1011,8 +1015,8 @@ const miners: IMiners = {
       link: "https://bitfury.com/",
     },
     "1M1Xw2rczxkF3p3wiNHaTmxvbpZZ7M6vaa": {
-      name: "1M1X",
-      link: "",
+      name: "Poolin",
+      link: "https://www.poolin.com/",
     },
     "39m5Wvn9ZqyhYmCYpsyHuGMt5YYw4Vmh1Z": {
       name: "BytePool",
@@ -1136,7 +1140,7 @@ const miners: IMiners = {
     },
     bc1qwlrsvgtn99rqp3fgaxq6f6jkgms80rnej0a8tc: {
       name: "TogetherPool",
-      link: "",
+      link: "https://www.togetherpool.com",
     },
     "1QEiAhdHdMhBgVbDM7zUXWGkNhgEEJ6uLd": {
       name: "ArkPool",
