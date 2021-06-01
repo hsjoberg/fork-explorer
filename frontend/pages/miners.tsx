@@ -131,7 +131,7 @@ export default function Miners() {
   const [sortDirection, setSortDirection] = useState<"ASC" | "DESC">("DESC");
 
   const fixTable = (miners: [string, IMinerData][], key: SortKey): TableRow[] => {
-    let data = miners
+    const data = miners
       .map(([_, miner]) => {
         const r: TableRow = {
           name: miner.name,
@@ -152,7 +152,7 @@ export default function Miners() {
       });
 
     if (sortDirection === "ASC") {
-      data = data.slice().reverse();
+      data.reverse();
     }
     return data;
   };
@@ -226,7 +226,7 @@ export default function Miners() {
             <TableBody>
               {tableData.map((row) => {
                 return (
-                  <TableRow key={row.name}>
+                  <TableRow key={row.name + row.signallingStatus}>
                     <Cell>
                       {row.website && (
                         <a href={row.website} target="_blank">
