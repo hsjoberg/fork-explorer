@@ -6,7 +6,7 @@ Fork Explorer let's you see the status of a BIP9-style softfork. It relies on bi
 
 ## Build and Run
 
-You need [Deno](https://deno.land) to build and run this project. Deno is a new
+You need [Deno](https://deno.land) version <= v1.9.2 to build and run this project. Deno is a new
 Javascript environment, similar to Node.
 
 0. Fix config file by duplicating `config/config.ts_TEMPLATE` to `config/config.ts` and setting
