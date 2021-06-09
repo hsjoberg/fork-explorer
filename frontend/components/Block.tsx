@@ -18,6 +18,8 @@ export const BlockContainer = styled.div`
 export const BlockStyle = styled.div<{ signals?: boolean; selected?: boolean; big?: boolean }>`
   background: ${(props) =>
     props.signals ? props.theme.block.block.signalling.background : props.theme.block.block.nonSignalling.background};
+  background-size: ${(props) =>
+    props.signals ? props.theme.block.block.signalling.backgroundSize : props.theme.block.block.nonSignalling.backgroundSize};
   border: 1px solid ${(props) => props.theme.block.container.backgroundColor};
   width: ${(props) => (props.big ? "36px" : "18px")};
   height: ${(props) => (props.big ? "36px" : "18px")};

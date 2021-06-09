@@ -4,7 +4,7 @@ import { ThemeProvider } from "https://esm.sh/styled-components";
 
 import store, { useStoreActions, useStoreState } from "./state/index.ts";
 import config from "./back/config/config.ts";
-import { defaultTheme, colorBlindnessTheme } from "./theme/index.ts";
+import { defaultTheme, colorBlindnessTheme, saltyRogerTheme } from "./theme/index.ts";
 
 const forkName = config.fork.name;
 const twitterHandle = config.frontend.twitterHandle;
@@ -41,7 +41,13 @@ function StoreStarter({ Page, pageProps }: { Page: ComponentType<any>; pageProps
     return null;
   }
 
-  const currentTheme = theme === "colorblind" ? colorBlindnessTheme : defaultTheme;
+  let currentTheme = defaultTheme;
+  if (theme === "colorblind") {
+    currentTheme = colorBlindnessTheme
+  }
+  else if (theme === "saltyroger") {
+    currentTheme = saltyRogerTheme
+  }
 
   return (
     <ThemeProvider theme={currentTheme}>
