@@ -27,6 +27,7 @@ export interface ITheme {
       };
       nonSignalling: {
         background: string;
+        backgroundSize: string;
         after: string;
       };
       upcoming: {
@@ -89,6 +90,7 @@ export const defaultTheme: ITheme = {
       },
       nonSignalling: {
         background: "linear-gradient(45deg, rgba(209,0,0,1) 0%, rgba(89,0,0,1) 100%)",
+        backgroundSize: "cover",
         after: "",
       },
       upcoming: {
@@ -161,6 +163,7 @@ export const colorBlindnessTheme: ITheme = {
       },
       nonSignalling: {
         background: "#686969",
+        backgroundSize: "cover",
         after: "",
       },
       upcoming: {
@@ -191,5 +194,68 @@ export const colorBlindnessTheme: ITheme = {
   stats: {
     primaryColor: "#1ac29c",
     labelColor: "#fcfcfc",
+  },
+};
+
+export const saltyRogerTheme: ITheme = {
+  backgroundColor: "#242424",
+  textColor: "#f7f7f7",
+  textShadowColor: "#000",
+  mainHeader: {
+    color: "#d97b08",
+    textShadow: "#000 3px 3px 0px",
+    txtLinkColor: "#696969",
+  },
+  commonHeader: {
+    color: "#ff9b20",
+    textShadow: "#000 2px 2px 0px",
+  },
+  menu: {
+    itemColor: "#ffd9aa",
+    itemTextShadow: "#000 2px 2px 0px",
+  },
+  block: {
+    container: {
+      backgroundColor: "#404040",
+      boxShadow: "#000 3px 3px 14px",
+    },
+    block: {
+      signalling: {
+        background: "linear-gradient(45deg, rgba(18,209,0,1) 0%, rgba(9,89,0,1) 100%)",
+        after: "",
+      },
+      nonSignalling: {
+        background: "url(/saltyroger.png)",
+        backgroundSize: "cover",
+        after: "",
+      },
+      upcoming: {
+        background: "transparent",
+        border: "1px solid #5a5a5a",
+      },
+    },
+  },
+  progressBar: {
+    container: {
+      boxShadow: "rgb(0, 0, 0) 2px 2px 14px",
+    },
+    progressBar: {
+      signalling: {
+        background: "linear-gradient(45deg, #217f35 0%, rgba(9, 89, 0, 1) 100%)",
+        border: "1px solid #1ed947",
+      },
+      nonSignalling: {
+        background: "linear-gradient(45deg, #731212 0%, rgba(89, 0, 0, 1) 100%)",
+        border: "1px solid #c30000",
+      },
+      upcoming: {
+        background: "linear-gradient(45deg, #8e8e8e 0%, #afafaf 100%)",
+        border: "1px solid #f7f7f7",
+      },
+    },
+  },
+  stats: {
+    primaryColor: "#ff9b20",
+    labelColor: "#f7f7f7",
   },
 };

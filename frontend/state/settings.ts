@@ -3,6 +3,7 @@ import { action, Action, thunk, Thunk } from "https://esm.sh/easy-peasy";
 export enum Theme {
   "default" = "default",
   "colorblind" = "colorblind",
+  "saltyroger" = "saltyroger"
 }
 
 export interface ISettingsModel {
