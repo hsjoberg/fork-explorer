@@ -15,7 +15,11 @@ app.use(router.routes());
 app.use(async (context) => {
   const accepts = context.request.accepts();
 
-  if ([".js", ".css", ".json", ".ico", "png"].some((extension) => context.request.url.pathname.endsWith(extension))) {
+  if (
+    [".js", ".css", ".json", ".ico", "png", ".mp4"].some((extension) =>
+      context.request.url.pathname.endsWith(extension)
+    )
+  ) {
     await context.send({
       root: `${Deno.cwd()}/frontend/dist`,
       index: "index.html",
