@@ -25,6 +25,13 @@ export function homeTXT() {
   } = computeStats(blocks);
   const miners = computeMiners(blocks);
   const forkName = config.fork.name;
+  const status = config.fork.status;
+
+  if (status === "locked_in") {
+    return `LOCKED IN!\n${forkName} has been locked in!`;
+  } else if (status === "active") {
+    return `ACTIVE\n${forkName} softfork has been activated!`;
+  }
 
   const totalSignalling = miners
     .filter(([_, m]) => m.signals)

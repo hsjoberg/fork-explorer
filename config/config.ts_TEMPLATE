@@ -33,6 +33,8 @@ interface Config {
     versionBit: number;
     // Threshold for the softfork to be locked in
     threshold: number;
+    // Status of the softfork
+    status: "pre" | "started" | "locked_in" | "active";
   };
 
   // Configuration specifically for the frontend site
@@ -41,6 +43,11 @@ interface Config {
     autoRefreshInterval: number | null;
     // Twitter handle, this is for the Twitter link preview
     twitterHandle: string;
+    // Celebratory video to display once lock-in is reached
+    celebrate?: {
+      type: string;
+      url: string;
+    };
     // Content related to the About page
     about?: {
       // Information about the softfork, it's allowed to use
@@ -103,11 +110,16 @@ const config: Config = {
     info: [],
     versionBit: 2,
     threshold: 1815,
+    status: "started",
   },
 
   frontend: {
     autoRefreshInterval: 120,
     twitterHandle: "",
+    // celebrate?: {
+    //   type: "video";
+    //   url: "path";
+    // };
     about: {
       softfork: {
         info: [

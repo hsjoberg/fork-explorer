@@ -1,5 +1,5 @@
 import React from "https://esm.sh/react@17.0.2";
-import styled from "https://esm.sh/styled-components";
+import styled from "https://esm.sh/styled-components@5.3.0";
 
 import Anchor from "https://deno.land/x/aleph@v0.3.0-alpha.32/framework/react/components/Anchor.ts";
 import { useRouter } from "https://deno.land/x/aleph@v0.3.0-alpha.32/framework/react/hooks.ts";
@@ -30,20 +30,26 @@ const MenuItem = styled.p<{ active: boolean }>`
 const SiteMenuComponent = () => {
   const router = useRouter();
   const routePath = router.routePath;
+  const forkName = config.fork.name;
+  const status = config.fork.status;
 
   return (
     <MenuContainer>
       <Anchor style={{ textDecoration: "none" }} href="/">
         <MenuItem active={routePath === "/"}>Overview</MenuItem>
       </Anchor>
-      <Anchor style={{ textDecoration: "none" }} href="/miners">
-        <MenuItem active={routePath === "/miners"}>Mining Pools</MenuItem>
-      </Anchor>
-      <Anchor style={{ textDecoration: "none" }} href="/stats">
-        <MenuItem active={routePath === "/stats"}>Stats</MenuItem>
-      </Anchor>
+      {!["locked_in", "active"].includes(status) && (
+        <Anchor style={{ textDecoration: "none" }} href="/miners">
+          <MenuItem active={routePath === "/miners"}>Mining Pools</MenuItem>
+        </Anchor>
+      )}
+      {!["locked_in", "active"].includes(status) && (
+        <Anchor style={{ textDecoration: "none" }} href="/stats">
+          <MenuItem active={routePath === "/stats"}>Stats</MenuItem>
+        </Anchor>
+      )}
       <Anchor style={{ textDecoration: "none" }} href="/about">
-        <MenuItem active={routePath === "/about"}>About {config.fork.name}</MenuItem>
+        <MenuItem active={routePath === "/about"}>About {forkName}</MenuItem>
       </Anchor>
       <Anchor style={{ textDecoration: "none" }} href="/settings">
         <MenuItem active={routePath === "/settings"}>Settings</MenuItem>
