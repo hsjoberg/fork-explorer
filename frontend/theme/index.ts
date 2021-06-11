@@ -23,6 +23,7 @@ export interface ITheme {
     block: {
       signalling: {
         background: string;
+        backgroundSize: string;
         after: string;
       };
       nonSignalling: {
@@ -86,6 +87,7 @@ export const defaultTheme: ITheme = {
     block: {
       signalling: {
         background: "linear-gradient(45deg, rgba(18,209,0,1) 0%, rgba(9,89,0,1) 100%)",
+        backgroundSize: "cover",
         after: "",
       },
       nonSignalling: {
@@ -149,6 +151,7 @@ export const colorBlindnessTheme: ITheme = {
     block: {
       signalling: {
         background: "#1ac29c",
+        backgroundSize: "cover",
         after: `&:after {
           content: "";
           width: 4px;
@@ -222,6 +225,7 @@ export const saltyRogerTheme: ITheme = {
     block: {
       signalling: {
         background: "linear-gradient(45deg, rgba(18,209,0,1) 0%, rgba(9,89,0,1) 100%)",
+        backgroundSize: "cover",
         after: "",
       },
       nonSignalling: {
