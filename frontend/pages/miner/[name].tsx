@@ -1,5 +1,5 @@
 import React from "https://esm.sh/react@17.0.2";
-import styled from "https://esm.sh/styled-components";
+import styled from "https://esm.sh/styled-components@5.3.0";
 import { useRouter } from "https://deno.land/x/aleph@v0.3.0-alpha.32/framework/react/hooks.ts";
 import Anchor from "https://deno.land/x/aleph@v0.3.0-alpha.32/framework/react/components/Anchor.ts";
 

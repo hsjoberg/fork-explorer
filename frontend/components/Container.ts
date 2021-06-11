@@ -1,4 +1,4 @@
-import styled from "https://esm.sh/styled-components";
+import styled from "https://esm.sh/styled-components@5.3.0";
 
 export const Container = styled.div`
   min-height: 100%;

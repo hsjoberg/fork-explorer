@@ -1,6 +1,6 @@
 import React, { ComponentType, useEffect, useState } from "https://esm.sh/react@17.0.2";
-import { StoreProvider } from "https://esm.sh/easy-peasy";
-import { ThemeProvider } from "https://esm.sh/styled-components";
+import { StoreProvider } from "https://esm.sh/easy-peasy@5.0.3";
+import { ThemeProvider } from "https://esm.sh/styled-components@5.3.0";
 
 import store, { useStoreActions, useStoreState } from "./state/index.ts";
 import config from "./back/config/config.ts";
@@ -43,10 +43,9 @@ function StoreStarter({ Page, pageProps }: { Page: ComponentType<any>; pageProps
 
   let currentTheme = defaultTheme;
   if (theme === "colorblind") {
-    currentTheme = colorBlindnessTheme
-  }
-  else if (theme === "saltyroger") {
-    currentTheme = saltyRogerTheme
+    currentTheme = colorBlindnessTheme;
+  } else if (theme === "saltyroger") {
+    currentTheme = saltyRogerTheme;
   }
 
   return (

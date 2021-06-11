@@ -1,5 +1,5 @@
 import React, { useState } from "https://esm.sh/react@17.0.2";
-import styled from "https://esm.sh/styled-components";
+import styled from "https://esm.sh/styled-components@5.3.0";
 import { QRCode } from "https://esm.sh/react-qr-svg";
 import { bech32 } from "https://esm.sh/bech32";
 

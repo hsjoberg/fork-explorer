@@ -1,5 +1,5 @@
 import React from "https://esm.sh/react@17.0.2";
-import styled, { useTheme } from "https://esm.sh/styled-components";
+import styled, { useTheme } from "https://esm.sh/styled-components@5.3.0";
 import {
   VictoryChart,
   VictoryLine,
@@ -7,7 +7,7 @@ import {
   VictoryTheme,
   VictoryTooltip,
   VictoryVoronoiContainer,
-} from "https://esm.sh/victory";
+} from "https://esm.sh/victory@35.8.5";
 
 import config from "../back/config/config.ts";
 import { Container } from "../components/Container.ts";

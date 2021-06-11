@@ -1,5 +1,5 @@
 import React from "https://esm.sh/react@17.0.2";
-import styled from "https://esm.sh/styled-components";
+import styled from "https://esm.sh/styled-components@5.3.0";
 import config from "../back/config/config.ts";
 
 const ContactTwitter = styled.p`

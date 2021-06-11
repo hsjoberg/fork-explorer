@@ -1,4 +1,4 @@
-import * as base64 from "https://denopkg.com/chiefbiiko/base64/mod.ts";
+import * as base64 from "https://denopkg.com/chiefbiiko/base64@v0.2.1/mod.ts";
 
 import config from "../../config/config.ts";
 

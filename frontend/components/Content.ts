@@ -1,4 +1,4 @@
-import styled from "https://esm.sh/styled-components";
+import styled from "https://esm.sh/styled-components@5.3.0";
 
 export const ContentWide = styled.div`
   width: 100%;

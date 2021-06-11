@@ -1,4 +1,4 @@
-import { action, Action, createStore, createTypedHooks, thunk, Thunk } from "https://esm.sh/easy-peasy";
+import { action, Action, createStore, createTypedHooks, thunk, Thunk } from "https://esm.sh/easy-peasy@5.0.3";
 import config from "../back/config/config.ts";
 
 import { IBlock } from "../back/common/interfaces.ts";
