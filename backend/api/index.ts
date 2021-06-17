@@ -1,6 +1,7 @@
 import { Router } from "https://deno.land/x/oak@v7.5.0/mod.ts";
 
-import { GetBlocks, GetBlocksPeriod } from "./blocks.ts";
+import { GetBlocks } from "./blocks.ts";
+import { GetPeriod } from "./period.ts";
 import { LnurlPayRequest, LnurlPayRequestCallback } from "./donate.ts";
 import { GetBlockchainInfo, GetBlockCount, GetBlockHash } from "./misc.ts";
 
@@ -8,7 +9,7 @@ const router = new Router();
 
 router.get("/blocks", GetBlocks);
 
-router.get("/blocks/:blocks", GetBlocksPeriod);
+router.get("/period/:period", GetPeriod);
 
 router.get("/invoice", LnurlPayRequest);
 
