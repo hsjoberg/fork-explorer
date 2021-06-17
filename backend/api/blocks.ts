@@ -7,6 +7,7 @@ export const GetBlocks: RouterMiddleware = (context) => {
   const blocks = getBlocks();
   context.response.body = blocks;
 };
+
 export const GetBlocksPeriod: RouterMiddleware = async (context) => {
   try {
     const period = Number.parseInt(context.params.blocks || "");
@@ -23,8 +24,9 @@ export const GetBlocksPeriod: RouterMiddleware = async (context) => {
       return;
     }
 
+    const decoder = new TextDecoder("utf-8");
     const blocks = await Deno.readFile(path);
-    context.response.body = blocks;
+    context.response.body = JSON.parse(decoder.decode(blocks));
   } catch (error) {
     console.log(error);
     context.response.status = 500;
