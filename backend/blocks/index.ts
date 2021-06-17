@@ -40,7 +40,7 @@ async function createRealBlock(height: number): Promise<IBlock> {
   };
 }
 
-async function setupPeriod(blockCount: number, startHeight: number, endHeight: number): Promise<IBlock[]> {
+export async function setupPeriod(blockCount: number, startHeight: number, endHeight: number): Promise<IBlock[]> {
   const createBlock = config.mode === "real" ? createRealBlock : createFakeBlock;
 
   const blocks: IBlock[] = [];

@@ -26,6 +26,14 @@ Set `mode: "fake"` or `mode: "fake-backend"` in your `config/config.ts`.
 
 `fake-frontend`: Frontend will generate fake blocks, this mode works in conjuction with `./frontend-dev-server.sh`
 
+## Generating block data from a specific difficulty period
+
+Difficulty period is calculated as `floor([any block in the period])`.
+
+`deno run --allow-net --allow-read --allow-write generate/index.ts [period number]`
+
+Once generated, the data is available via API call `/blocks/[epoch number]` or `[project root]/data/periods/[epoch].json`.
+
 ## Commit and Code-Style
 
 Follow the code style of the file you are working in.
