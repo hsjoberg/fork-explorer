@@ -1,12 +1,12 @@
-import { action, Action, thunk, Thunk } from "https://esm.sh/easy-peasy@5.0.3";
+ { action, Action, thunk, Thunk }  "https://esm.sh/easy-peasy@5.0.3";
 
-export enum Theme {
+ Theme {
   "default" = "default",
   "colorblind" = "colorblind",
   "saltyroger" = "saltyroger",
 }
 
-export interface ISettingsModel {
+ ISettingsModel {
   initialize: Thunk<ISettingsModel>;
 
   changeTheme: Thunk<ISettingsModel, Theme>;
@@ -19,21 +19,21 @@ export interface ISettingsModel {
   autoRefreshEnabled: boolean;
 }
 
-export const settings: ISettingsModel = {
-  initialize: thunk(async (actions) => {
-    actions.setTheme((await (window as any).localStorage.getItem("theme")) ?? "default");
+ settings: ISettingsModel = {
+  initialize: thunk( (actions) => {
+    actions.setTheme(( (window  any).localStorage.getItem("theme"))  "default");
     actions.setAutoRefreshEnabled(
-      JSON.parse((await (window as any).localStorage.getItem("autoRefreshEnabled")) ?? true)
+      JSON.parse(( (window  any).localStorage.getItem("autoRefreshEnabled"))  true)
     );
   }),
 
-  changeTheme: thunk(async (actions, payload) => {
-    await (window as any).localStorage.setItem("theme", payload);
+  changeTheme: thunk( (actions, payload) => {
+     (window  any).localStorage.setItem("theme", payload);
     actions.setTheme(payload);
   }),
 
-  changeAutoRefreshEnabled: thunk(async (actions, payload) => {
-    await (window as any).localStorage.setItem("autoRefreshEnabled", JSON.stringify(payload));
+  changeAutoRefreshEnabled: thunk( (actions, payload) => {
+     (window  any).localStorage.setItem("autoRefreshEnabled", JSON.stringify(payload));
     actions.setAutoRefreshEnabled(payload);
   }),
 
@@ -49,4 +49,4 @@ export const settings: ISettingsModel = {
   autoRefreshEnabled: true,
 };
 
-export default settings;
+ settings;
