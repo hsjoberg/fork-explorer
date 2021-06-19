@@ -11,14 +11,14 @@
     
 
      path = Deno.cwd() + `/data/periods/${context.params.period}.json`
-     (!(await exists(path))) 
+     (!( exists(path))) 
       context.response.status = 404
       context.response.body = "404 File Not Found"
       
     
 
-    const decoder =  TextDecoder("utf-8")
-    const blocks =  Deno.readFile(path)
+     decoder =  TextDecoder("utf-8")
+     blocks =  Deno.readFile(path)
     context.response.body = JSON.parse(decoder.decode(blocks))
   
     console.log(error)
