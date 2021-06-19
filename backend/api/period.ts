@@ -11,7 +11,7 @@
     }
 
      path = Deno.cwd() + `/data/periods/${context.params.period}.json`;
-     (!(await exists(path))) {
+     (!( exists(path))) {
       context.response.status = 404;
       context.response.body = "404 File Not Found";
       ;
