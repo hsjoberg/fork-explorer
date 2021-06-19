@@ -22,18 +22,18 @@
 
   getBlocks: thunk( (actions) => {
      (config.mode === "real" || config.mode === "fake") {
-       result = await fetch(`/blocks`);
-      const json = (await result.json()) as IBlock[];
+       result =  fetch(`/blocks`);
+       json = ( result.json())  IBlock[];
       console.log(json);
       actions.setBlocks(json);
-    } else {
-      const start = 100000;
-      const end = 101016;
-      const blocks: IBlock[] = [];
-      for (let i = start; i < 102016; i++) {
-        if (i < end) {
+    }  {
+       start = 100000;
+       end = 101016;
+       blocks: IBlock[] = [];
+       (let i = start; i < 102016; i++) {
+         (i < end) {
           blocks.push(await createFakeBlock(i));
-        } else {
+        }  {
           blocks.push({
             height: i,
             signals: undefined,
@@ -47,24 +47,24 @@
   }),
 
   autoRefresh: thunk((actions, _, { getState }) => {
-    if (!config.frontend.autoRefreshInterval) {
-      return;
+     (!config.frontend.autoRefreshInterval) {
+      ;
     }
 
     setInterval(async () => {
-      if (!getState().settings.autoRefreshEnabled) {
-        return;
+       (!getState().settings.autoRefreshEnabled) {
+        ;
       }
-      try {
+       {
         console.log("Fetching blocks");
-        const result = await fetch("/blocks");
-        const json = (await result.json()) as IBlock[];
-        if (json && json.length === 0) {
-          console.log("Got empty response from /blocks, ignoring...");
-          return;
+         = fetch("/blocks");
+         json = (await result.json())  IBlock[];
+         (json && json.length === 0) {
+          console.log("Got empty response  /blocks, ignoring...");
+          ;
         }
         actions.setBlocks(json);
-      } catch (error) {
+      }  (error) {
         console.log("Couldn't fetch /blocks", error.message);
       }
     }, config.frontend.autoRefreshInterval * 1000);
@@ -79,7 +79,7 @@
   settings,
 };
 
-const { useStoreActions, useStoreState } = createTypedHooks<IStoreModel>();
-export { useStoreActions, useStoreState };
+ { useStoreActions, useStoreState } = createTypedHooks<IStoreModel>();
+ { useStoreActions, useStoreState };
 
-export default createStore(model);
+  createStore(model);
