@@ -38,6 +38,7 @@ const SiteMenuComponent = () => {
       <Anchor style={{ textDecoration: "none" }} href="/">
         <MenuItem active={routePath === "/"}>Overview</MenuItem>
       </Anchor>
+ patch-1
       {!["locked_in", "active"].includes(status) && (
         <Anchor style={{ textDecoration: "none" }} href="/miners">
           <MenuItem active={routePath === "/miners"}>Mining Pools</MenuItem>
@@ -48,6 +49,14 @@ const SiteMenuComponent = () => {
           <MenuItem active={routePath === "/stats"}>Stats</MenuItem>
         </Anchor>
       )}
+
+      <Anchor style={{ textDecoration: "none" }} href="/miners">
+        <MenuItem active={routePath === "/miners"}>Mining Pools</MenuItem>
+      </Anchor>
+      <Anchor style={{ textDecoration: "none" }} href="/stats">
+        <MenuItem active={routePath === "/stats"}>Stats</MenuItem>
+      </Anchor>
+ ma
       <Anchor style={{ textDecoration: "none" }} href="/about">
         <MenuItem active={routePath === "/about"}>About {forkName}</MenuItem>
       </Anchor>

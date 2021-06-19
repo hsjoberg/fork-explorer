@@ -198,6 +198,8 @@ export const colorBlindnessTheme: ITheme = {
     primaryColor: "#1ac29c",
     labelColor: "#fcfcfc",
   },
+
+  patch-1
 };
 
 export const saltyRogerTheme: ITheme = {
@@ -262,4 +264,7 @@ export const saltyRogerTheme: ITheme = {
     primaryColor: "#ff9b20",
     labelColor: "#f7f7f7",
   },
+
+  
+ ma
 };

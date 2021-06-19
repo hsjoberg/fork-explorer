@@ -185,6 +185,7 @@ export default function Miners() {
             {`Potential: ${(totalSignallingPotentialRatio * 100).toFixed(2)}%`}
           </TotalsPotential>
         )}
+ patch-1
         <Body>
           <Table>
             <TableHead>
@@ -249,6 +250,45 @@ export default function Miners() {
             </TableBody>
           </Table>
         </Body>
+
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableHeader>Mining pool</TableHeader>
+              <TableHeader>Share</TableHeader>
+              <TableHeader>Blocks</TableHeader>
+              <TableHeader>Signals</TableHeader>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {miners.map(([key, miner]) => {
+              return (
+                <TableRow key={key}>
+                  <Cell>
+                    {miner.website && (
+                      <a href={miner.website} target="_blank">
+                        {miner.name}
+                      </a>
+                    )}
+                    {!miner.website && miner.name}
+                  </Cell>
+                  <Cell>{((miner.numBlocks / currentNumberOfBlocks) * 100).toFixed(2)}%</Cell>
+                  <SignallingCell>
+                    <Anchor href={`/miner/${miner.name}`}>
+                      {miner.numSignallingBlocks}/{miner.numBlocks + " "}
+                    </Anchor>
+                  </SignallingCell>
+                  <SignallingCell>
+                    {miner.signals && <>✅</>}
+                    {!miner.signals && <>🚫</>}
+                  </SignallingCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+ ma
         {config.frontend.twitterHandle && <ContactTwitter />}
         {config.donation && <Donation />}
       </Content>
