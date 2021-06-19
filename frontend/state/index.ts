@@ -32,7 +32,7 @@
        blocks: IBlock[] = [];
        (let i = start; i < 102016; i++) {
          (i < end) {
-          blocks.push(await createFakeBlock(i));
+          blocks.push( createFakeBlock(i));
         }  {
           blocks.push({
             height: i,
@@ -51,14 +51,14 @@
       ;
     }
 
-    setInterval(async () => {
+    setInterval( () => {
        (!getState().settings.autoRefreshEnabled) {
         ;
       }
        {
         console.log("Fetching blocks");
          = fetch("/blocks");
-         json = (await result.json())  IBlock[];
+         json = ( result.json())  IBlock[];
          (json && json.length === 0) {
           console.log("Got empty response  /blocks, ignoring...");
           ;
