@@ -1,11 +1,11 @@
-import { action, Action, createStore, createTypedHooks, thunk, Thunk } from "https://esm.sh/easy-peasy@5.0.3";
-import config from "../back/config/config.ts";
+ { action, Action, createStore, createTypedHooks, thunk, Thunk }  "https://esm.sh/easy-peasy@5.0.3";
+ config  "../back/config/config.ts";
 
-import { IBlock } from "../back/common/interfaces.ts";
-import { createFakeBlock } from "../back/common/fake-block.ts";
-import { ISettingsModel, settings } from "./settings.ts";
+ { IBlock }  "../back/common/interfaces.ts";
+ { createFakeBlock }  "../back/common/fake-block.ts";
+ { ISettingsModel, settings }  "./settings.ts";
 
-export interface IStoreModel {
+ IStoreModel {
   initialize: Thunk<IStoreModel>;
 
   getBlocks: Thunk<IStoreModel>;
@@ -15,14 +15,14 @@ export interface IStoreModel {
   settings: ISettingsModel;
 }
 
-export const model: IStoreModel = {
-  initialize: thunk(async (actions) => {
-    await actions.settings.initialize();
+ model: IStoreModel = {
+  initialize: thunk( (actions) => {
+     actions.settings.initialize();
   }),
 
-  getBlocks: thunk(async (actions) => {
-    if (config.mode === "real" || config.mode === "fake") {
-      const result = await fetch(`/blocks`);
+  getBlocks: thunk( (actions) => {
+     (config.mode === "real" || config.mode === "fake") {
+       result = await fetch(`/blocks`);
       const json = (await result.json()) as IBlock[];
       console.log(json);
       actions.setBlocks(json);
