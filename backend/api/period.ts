@@ -1,5 +1,5 @@
 import { RouterMiddleware } from "https://deno.land/x/oak@v7.5.0/mod.ts";
-import { exists } from "https://deno.land/std@0.98.0/fs/mod.ts";
+import { exists } from "https://deno.land/std@0.101.0/fs/mod.ts";
 
 export const GetPeriod: RouterMiddleware = async (context) => {
   try {

@@ -1,4 +1,4 @@
-import { ensureFile } from "https://deno.land/std@0.98.0/fs/mod.ts";
+import { ensureFile } from "https://deno.land/std@0.101.0/fs/mod.ts";
 import format from "https://deno.land/x/date_fns@v2.15.0/format/index.js";
 
 await ensureFile("./pageviews.json");
