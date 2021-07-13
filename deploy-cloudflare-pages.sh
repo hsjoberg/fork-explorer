@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get Deno
-wget https://github.com/denoland/deno/releases/download/v1.9.2/deno-x86_64-unknown-linux-gnu.zip
+wget https://github.com/denoland/deno/releases/download/v1.12.0/deno-x86_64-unknown-linux-gnu.zip
 unzip deno-x86_64-unknown-linux-gnu.zip
 
 # Fix config
