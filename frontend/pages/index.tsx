@@ -75,6 +75,7 @@ export default function Blocks() {
   }
   const selectedBlock = query.get("block");
   const thresholdPercentage = Math.floor((config.fork.threshold / 2016) * 100);
+  const forkCompleted = lockedIn || ["locked_in", "active"].includes(status);
 
   return (
     <Container>
@@ -85,19 +86,19 @@ export default function Blocks() {
         <SiteTitle />
         <SiteMenu />
         <Body style={{ paddingLeft: 18, paddingRight: 18 }}>
-          {(lockedIn || ["locked_in", "active"].includes(status)) && <ForkCompleted />}
-          {!currentPeriodFailed && !lockedIn && blocksLeftForActivation <= 33 * 2 && <FinalBlockCountdown />}
-          {currentPeriodFailed && blocksLeftInThisPeriod > 0 && (
-            <CannotLockInInfo>
-              The current period cannot lock in {forkName}.
-              <br />
-              The next period starts in
-              {" " + formatDistanceToNow(addMinutes(new Date(), blocksLeftInThisPeriod * 10), {}) + " "}(
-              {blocksLeftInThisPeriod} block{blocksLeftInThisPeriod > 1 && "s"})
-            </CannotLockInInfo>
-          )}
-          {!["locked_in", "active"].includes(status) && (
+          {forkCompleted && <ForkCompleted />}
+          {!forkCompleted && (
             <>
+              {!currentPeriodFailed && !lockedIn && blocksLeftForActivation <= 33 * 2 && <FinalBlockCountdown />}
+              {currentPeriodFailed && blocksLeftInThisPeriod > 0 && (
+                <CannotLockInInfo>
+                  The current period cannot lock in {forkName}.
+                  <br />
+                  The next period starts in
+                  {" " + formatDistanceToNow(addMinutes(new Date(), blocksLeftInThisPeriod * 10), {}) + " "}(
+                  {blocksLeftInThisPeriod} block{blocksLeftInThisPeriod > 1 && "s"})
+                </CannotLockInInfo>
+              )}
               <DescriptionBlock>
                 {config.fork.info.map((text, index) => (
                   <Text key={index}>{text}</Text>
