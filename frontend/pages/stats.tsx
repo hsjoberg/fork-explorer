@@ -7,7 +7,7 @@ import {
   VictoryTheme,
   VictoryTooltip,
   VictoryVoronoiContainer,
-} from "https://esm.sh/victory@35.8.5";
+} from "https://esm.sh/victory@36.0.1";
 
 import config from "../back/config/config.ts";
 import { Container } from "../components/Container.ts";

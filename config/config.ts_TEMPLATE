@@ -146,8 +146,8 @@ const config: Config = {
   //     macaroon: "/path/to/invoice.macaroon",
   //     lightningNodeUri: "pubkey@ip:port"
   //   },
+  //   lnurlPayUrl: "https://domain.com/invoice",
   // },
-  // lnurlPayUrl: "https://domain.com/invoice",
 };
 
 export default config;

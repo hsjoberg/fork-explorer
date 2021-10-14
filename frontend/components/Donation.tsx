@@ -1,7 +1,7 @@
 import React, { useState } from "https://esm.sh/react@17.0.2";
 import styled from "https://esm.sh/styled-components@5.3.0";
 import { QRCode } from "https://esm.sh/react-qr-svg";
-import { bech32 } from "https://esm.sh/bech32";
+import { bech32 } from "https://esm.sh/bech32?es2020";
 
 import config from "../back/config/config.ts";
 import { bytesToString } from "../back/common/utils.ts";

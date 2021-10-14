@@ -11,4 +11,4 @@ sed -i 's/mode: "real"/mode: "fake-frontend"/g' config/config.ts
 
 # Build
 mkdir frontend/dist
-./deno run -A https://deno.land/x/aleph@v0.3.0-alpha.33/cli.ts build frontend --reload
+./deno run -A https://deno.land/x/aleph@v0.3.0-beta.19/cli.ts build frontend --reload
