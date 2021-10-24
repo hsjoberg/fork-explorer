@@ -60,6 +60,9 @@ export interface ITheme {
     primaryColor: string;
     labelColor: string;
   };
+  activationCountdown: {
+    countdownTimeColor: string;
+  };
 }
 
 export const defaultTheme: ITheme = {
@@ -123,6 +126,9 @@ export const defaultTheme: ITheme = {
   stats: {
     primaryColor: "#ff9b20",
     labelColor: "#f7f7f7",
+  },
+  activationCountdown: {
+    countdownTimeColor: "#ffb151",
   },
 };
 
@@ -198,6 +204,9 @@ export const colorBlindnessTheme: ITheme = {
     primaryColor: "#1ac29c",
     labelColor: "#fcfcfc",
   },
+  activationCountdown: {
+    countdownTimeColor: "#fff",
+  },
 };
 
 export const saltyRogerTheme: ITheme = {
@@ -261,5 +270,8 @@ export const saltyRogerTheme: ITheme = {
   stats: {
     primaryColor: "#ff9b20",
     labelColor: "#f7f7f7",
+  },
+  activationCountdown: {
+    countdownTimeColor: "#ffb151",
   },
 };

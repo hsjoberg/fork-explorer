@@ -46,12 +46,13 @@ const Countdown = styled(CommonHeader)`
   text-align: center;
   margin-top: 20px;
   margin-bottom: 10px;
-  color: #ffb151;
+  color: ${(props) => props.theme.activationCountdown.countdownTimeColor};
 `;
 
 const CountdownBlocks = styled(CommonHeader)`
   font-size: 18px;
   text-align: center;
+  margin-bottom: 50px;
 `;
 
 function randomInRange(min: number, max: number) {
@@ -127,7 +128,7 @@ export default function LockedIn() {
           <CountdownBlocks>{config.fork.activationHeight - currentBlockheight} blocks left</CountdownBlocks>
         </>
       )}
-      {config.frontend.celebrate && <Video src={config.frontend.celebrate.url} controls autoPlay />}
+      {config.frontend.celebrate && <Video src={config.frontend.celebrate.url} controls />}
     </StatusContainer>
   );
 }
