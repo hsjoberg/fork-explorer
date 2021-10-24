@@ -4,10 +4,13 @@ import { GetBlocks } from "./blocks.ts";
 import { GetPeriod } from "./period.ts";
 import { LnurlPayRequest, LnurlPayRequestCallback } from "./donate.ts";
 import { GetBlockchainInfo, GetBlockCount, GetBlockHash } from "./misc.ts";
+import { GetPeriods } from "./periods.ts";
 
 const router = new Router();
 
 router.get("/blocks", GetBlocks);
+
+router.get("/periods", GetPeriods);
 
 router.get("/period/:period", GetPeriod);
 

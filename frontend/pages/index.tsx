@@ -67,6 +67,7 @@ export default function Blocks() {
     willProbablyActivate,
     blocksLeftInThisPeriod,
   } = computeStats(blocks);
+  const monitoringMode = useStoreState((store) => store.monitoringMode);
   const nextBlockHeight = blocks.find((block) => block.signals === undefined)?.height ?? 0;
   const { query } = useRouter();
   let selectedMiner: string | undefined | null = query.get("miner");
@@ -75,7 +76,7 @@ export default function Blocks() {
   }
   const selectedBlock = query.get("block");
   const thresholdPercentage = Math.floor((config.fork.threshold / 2016) * 100);
-  const forkCompleted = lockedIn || ["locked_in", "active"].includes(status);
+  const forkCompleted = monitoringMode === "current_period" && (lockedIn || ["locked_in", "active"].includes(status));
 
   return (
     <Container>

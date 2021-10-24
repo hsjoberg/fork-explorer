@@ -40,6 +40,7 @@ const SettingsLabel = styled(Text)`
 `;
 
 const Dropdown = styled.select`
+  width: 80px;
   font-size: 13px;
 `;
 
@@ -57,6 +58,9 @@ export default function Blocks() {
   const currentTheme = useStoreState((store) => store.settings.theme);
   const changeTheme = useStoreActions((store) => store.settings.changeTheme);
   const changeAutoRefreshEnabled = useStoreActions((store) => store.settings.changeAutoRefreshEnabled);
+  const availablePeriods = useStoreState((store) => store.availablePeriods);
+  const changeMonitoringPeriod = useStoreActions((store) => store.changeMonitoringPeriod);
+  const activePeriod = useStoreState((store) => store.activePeriod);
 
   const onChangeTheme = async (theme: Theme) => {
     await changeTheme(theme);
@@ -64,6 +68,10 @@ export default function Blocks() {
 
   const toggleAutoRefreshEnabled = async () => {
     await changeAutoRefreshEnabled(!autoRefreshEnabled);
+  };
+
+  const onChangePeriod = async (selected: "current" | string) => {
+    await changeMonitoringPeriod(selected === "current" ? selected : Number.parseInt(selected));
   };
 
   return (
@@ -98,6 +106,21 @@ export default function Blocks() {
               <SettingsGroup>
                 <SettingsLabel>Auto-fetch blocks (every {config.frontend.autoRefreshInterval}s)</SettingsLabel>
                 <Checkbox onChange={toggleAutoRefreshEnabled} checked={autoRefreshEnabled} />
+              </SettingsGroup>
+            )}
+            {availablePeriods.length > 0 && (
+              <SettingsGroup>
+                <SettingsLabel>Period</SettingsLabel>
+                <Dropdown value={activePeriod ?? "current"} onChange={(event) => onChangePeriod(event.target.value)}>
+                  <DropdownOption value="current">{config.fork.status === "started" ? "Current" : "-"}</DropdownOption>
+                  {availablePeriods.map((period) => {
+                    return (
+                      <DropdownOption key={period} value={period}>
+                        {period}
+                      </DropdownOption>
+                    );
+                  })}
+                </Dropdown>
               </SettingsGroup>
             )}
           </SettingsContainer>
