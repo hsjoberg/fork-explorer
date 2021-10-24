@@ -40,7 +40,7 @@ const SettingsLabel = styled(Text)`
 `;
 
 const Dropdown = styled.select`
-  width: 80px;
+  width: 100px;
   font-size: 13px;
 `;
 

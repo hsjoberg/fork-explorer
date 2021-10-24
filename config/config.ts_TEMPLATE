@@ -35,6 +35,13 @@ interface Config {
     threshold: number;
     // Status of the softfork
     status: "pre" | "started" | "locked_in" | "active";
+    // Block height the softfork gets activated.
+    activationHeight: number;
+    // Show a countdown timer until the softfork is activated.
+    // Only available when the `status` is `locked_in`.
+    showActivationCountdown: boolean;
+    // Show celebration confetti on the site.
+    showCelebrationConfetti: boolean;
   };
 
   // Configuration specifically for the frontend site
@@ -111,6 +118,9 @@ const config: Config = {
     versionBit: 2,
     threshold: 1815,
     status: "started",
+    activationHeight: 709632,
+    showActivationCountdown: false,
+    showCelebrationConfetti: true,
   },
 
   frontend: {
