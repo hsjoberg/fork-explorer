@@ -39,6 +39,7 @@ const CountdownHeader = styled(CommonHeader)`
   font-size: 28px;
   text-align: center;
   margin-bottom: 0;
+  text-transform: uppercase;
 `;
 
 const Countdown = styled(CommonHeader)`
@@ -121,7 +122,7 @@ export default function LockedIn() {
       )}
       {showActivationCountdown && (
         <>
-          <CountdownHeader>TAPROOT ACTIVATES IN</CountdownHeader>
+          <CountdownHeader>{config.fork.name} activates in</CountdownHeader>
           <Countdown>
             {formatDistanceToNow(addMinutes(new Date(), (config.fork.activationHeight - currentBlockheight) * 10), {})}
           </Countdown>

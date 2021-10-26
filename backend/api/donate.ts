@@ -29,7 +29,7 @@ export const LnurlPayRequest: RouterMiddleware = (context) => {
   context.response.body = JSON.stringify({
     tag: "payRequest",
     callback: `${config.donation.lnurlPayUrl}/callback`,
-    maxSendable: 10000000,
+    maxSendable: 1_000_000 * 1000,
     minSendable: 1000,
     metadata: responseMetadata,
     commentAllowed: 256,
