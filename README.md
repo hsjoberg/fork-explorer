@@ -6,7 +6,7 @@ Fork Explorer let's you see the status of a BIP9-style softfork. It relies on bi
 
 ## Build and Run
 
-You need [Deno](https://deno.land) version <= v1.9.2 to build and run this project. Deno is a new
+You need [Deno](https://deno.land) to build and run this project. Deno is a new
 Javascript environment, similar to Node.
 
 0. Fix config file by duplicating `config/config.ts_TEMPLATE` to `config/config.ts` and setting
@@ -28,11 +28,12 @@ Set `mode: "fake"` or `mode: "fake-backend"` in your `config/config.ts`.
 
 ## Generating block data from a specific difficulty period
 
-Difficulty period is calculated as `floor([any block in the period])`.
+Difficulty period is calculated as `floor([any block in the period]/2016)`.
 
 `deno run --allow-net --allow-read --allow-write generate/index.ts [period number]`
 
 Once generated, the data is available via API call `/blocks/[epoch number]` or `[project root]/data/periods/[epoch].json`.
+You can also display generated periods on the site by going to Settings and changing "Period" dropdown.
 
 ## Commit and Code-Style
 
@@ -42,7 +43,7 @@ This project uses [Prettier](https://prettier.io/) for code formatting.
 To contribute, install and activate the Prettier extension to your editor of choice.
 
 For commits, make descriptive and atomic git commits.
-You can prefix the page or relevant code you are working with, for example on frontend change:
+You can prefix the page or relevant code you are working with, for example on a frontend change:
 
 ```
 index: Add 90% indicator to Progress Bar
