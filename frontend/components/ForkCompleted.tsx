@@ -48,12 +48,14 @@ const Countdown = styled(CommonHeader)`
   margin-top: 20px;
   margin-bottom: 10px;
   color: ${(props) => props.theme.activationCountdown.countdownTimeColor};
+  text-transform: uppercase;
 `;
 
 const CountdownBlocks = styled(CommonHeader)`
   font-size: 18px;
   text-align: center;
   margin-bottom: 50px;
+  text-transform: uppercase;
 `;
 
 function randomInRange(min: number, max: number) {

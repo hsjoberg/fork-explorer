@@ -33,7 +33,7 @@ Difficulty period is calculated as `floor([any block in the period]/2016)`.
 `deno run --allow-net --allow-read --allow-write generate/index.ts [period number]`
 
 Once generated, the data is available via API call `/blocks/[epoch number]` or `[project root]/data/periods/[epoch].json`.
-You can also display generated periods on the site by going to Settings and changing "Period" dropdown.
+You can also display generated periods on the site by going to Settings and changing the "Period" dropdown.
 
 ## Commit and Code-Style
 
