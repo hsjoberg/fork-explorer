@@ -92,7 +92,11 @@ export default function LockedIn() {
     }
   }, []);
 
-  const currentBlockheight = (blocks.find((block) => block.signals === undefined)?.height ?? 0) - 1;
+  const currentBlockheight =
+    blocks
+      .slice(0) // Clone the array as Array.prototype.reverse() mutates original array
+      .reverse()
+      .find((block) => block.signals)?.height ?? -1;
 
   if (currentBlockheight >= config.fork.activationHeight) {
     // Just hack this one until we utilize `bitcoin-cli getblockchainfo`
