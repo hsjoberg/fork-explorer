@@ -4,7 +4,7 @@
 vendorMap.json
 
 dist
-config/config.ts
+src/config/config.ts
 pageviews.json
 pageviews_txt.json
 lnurlpay.json

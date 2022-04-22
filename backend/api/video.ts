@@ -1,6 +1,6 @@
 import { RouterMiddleware } from "https://deno.land/x/oak@v10.5.1/mod.ts";
 
-import config from "../../config/config.ts";
+import config from "../../src/config/config.ts";
 
 export const Video: RouterMiddleware<any, any, any> = async ({ request, response }) => {
   try {

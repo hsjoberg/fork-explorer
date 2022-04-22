@@ -4,8 +4,8 @@ import addMinutes from "https://deno.land/x/date_fns@v2.15.0/addMinutes/index.js
 import formatDistanceToNow from "https://deno.land/x/date_fns@v2.15.0/formatDistanceToNow/index.js";
 import { useRouter, useLocation } from "wouter";
 
-import config from "../symlinks/config.ts";
-import { computeStats } from "../symlinks/data.ts";
+import config from "../config/config.ts";
+import { computeStats } from "../common/data.ts";
 
 import { Container } from "../components/Container.ts";
 import { ContentWide } from "../components/Content.ts";

@@ -1,6 +1,6 @@
 import { Application } from "https://deno.land/x/oak@v10.5.1/mod.ts";
 
-import config from "./config/config.ts";
+import config from "./src/config/config.ts";
 import router from "./backend/api/index.ts";
 import { homeTXT } from "./backend/txt/index.ts";
 import { bootstrapBlocks } from "./backend/blocks/index.ts";

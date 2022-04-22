@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { BlockContainer, Block, EmptyBlock } from "./Block.tsx";
 import CommonHeader from "./CommonHeader.ts";
 import { useStoreState } from "../state/index.ts";
-import config from "../symlinks/config.ts";
-import { computeStats } from "../symlinks/data.ts";
+import config from "../config/config.ts";
+import { computeStats } from "../common/data.ts";
 
 const FinalCountdownHolder = styled.div`
   margin: auto;

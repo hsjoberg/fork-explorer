@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import config from "../symlinks/config.ts";
+import config from "../config/config.ts";
 
 import { useStoreActions, useStoreState } from "../state/index.ts";
 import { Theme } from "../state/settings.ts";

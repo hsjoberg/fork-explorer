@@ -1,6 +1,6 @@
 import * as base64 from "https://denopkg.com/chiefbiiko/base64@v0.2.1/mod.ts";
 
-import config from "../../config/config.ts";
+import config from "../../src/config/config.ts";
 
 const host = config.bitcoinRpc.server;
 const rpcUser = config.bitcoinRpc.user;

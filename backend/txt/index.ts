@@ -1,9 +1,9 @@
 import { bech32 } from "https://esm.sh/bech32?esnext";
 
-import config from "../../config/config.ts";
+import config from "../../src/config/config.ts";
 import { getBlocks } from "../blocks/index.ts";
-import { computeStats, computeMiners } from "../../common/data.ts";
-import { wrap80 } from "../../common/utils.ts";
+import { computeStats, computeMiners } from "../../src/common/data.ts";
+import { wrap80 } from "../../src/common/utils.ts";
 
 const UPCOMING = "⬚";
 const SIGNALING = "▣";

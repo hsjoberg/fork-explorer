@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link, useLocation } from "wouter";
 
-import config from "../symlinks/config.ts";
+import config from "../config/config.ts";
 import { useStoreState } from "../state/index.ts";
 
 const MenuContainer = styled.div`

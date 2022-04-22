@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { QRCode } from "https://esm.sh/react-qr-svg";
 import { bech32 } from "https://esm.sh/bech32?es2020";
 
-import config from "../symlinks/config.ts";
-import { bytesToString } from "../symlinks/utils.ts";
+import config from "../config/config.ts";
+import { bytesToString } from "../common/utils.ts";
 
 export const DonateContainer = styled.div`
   margin: 0 auto 100px;

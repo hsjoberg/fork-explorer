@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import config from "../symlinks/config.ts";
+import config from "../config/config.ts";
 
 const Title = styled.h1`
   margin: 40px 0 20px;

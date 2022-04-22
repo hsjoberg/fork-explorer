@@ -1,8 +1,8 @@
 import { action, Action, createStore, createTypedHooks, thunk, Thunk } from "https://esm.sh/easy-peasy@5.0.4";
 
-import config from "../symlinks/config.ts";
-import { IBlock } from "../symlinks/interfaces.ts";
-import { createFakeBlock } from "../symlinks/fake-block.ts";
+import config from "../config/config.ts";
+import { IBlock } from "../common/interfaces.ts";
+import { createFakeBlock } from "../common/fake-block.ts";
 import { ISettingsModel, settings } from "./settings.ts";
 
 type MonitoringMode = "current_period" | "historic_period";

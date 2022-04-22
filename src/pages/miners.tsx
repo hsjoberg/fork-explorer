@@ -2,8 +2,8 @@ import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 import { Link } from "wouter";
 
-import config from "../symlinks/config.ts";
-import { computeStats, computeMiners } from "../symlinks/data.ts";
+import config from "../config/config.ts";
+import { computeStats, computeMiners } from "../common/data.ts";
 
 import { Container } from "../components/Container.ts";
 import { Content } from "../components/Content.ts";
@@ -13,7 +13,7 @@ import SiteMenu from "../components/SiteMenu.tsx";
 import { Donation } from "../components/Donation.tsx";
 import ContactTwitter from "../components/ContactTwitter.tsx";
 import CommonHeader from "../components/CommonHeader.ts";
-import { IMinerData } from "../symlinks/interfaces.ts";
+import { IMinerData } from "../common/interfaces.ts";
 import Body from "../components/Body.ts";
 
 const Table = styled.table`

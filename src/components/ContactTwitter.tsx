@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import config from "../symlinks/config.ts";
+import config from "../config/config.ts";
 
 const ContactTwitter = styled.p`
   color: #9e9e9e;

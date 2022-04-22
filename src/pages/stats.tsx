@@ -12,7 +12,7 @@ import {
   VictoryScatter,
 } from "victory";
 
-import config from "../symlinks/config.ts";
+import config from "../config/config.ts";
 import { Container } from "../components/Container.ts";
 import { ContentWide } from "../components/Content.ts";
 import SiteTitle from "../components/SiteTitle.tsx";
@@ -22,7 +22,7 @@ import { Donation } from "../components/Donation.tsx";
 import CommonHeader from "../components/CommonHeader.ts";
 import ContactTwitter from "../components/ContactTwitter.tsx";
 import Text from "../components/Text.tsx";
-import { computeStats } from "../symlinks/data.ts";
+import { computeStats } from "../common/data.ts";
 import { ITheme } from "../theme/index.ts";
 import Body from "../components/Body.ts";
 

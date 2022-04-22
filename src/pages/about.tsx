@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import config from "../symlinks/config.ts";
+import config from "../config/config.ts";
 
 import { Container } from "../components/Container.ts";
 import { Content } from "../components/Content.ts";

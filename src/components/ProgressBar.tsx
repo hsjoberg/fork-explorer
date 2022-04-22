@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import { computeStats } from "../symlinks/data.ts";
+import { computeStats } from "../common/data.ts";
 import { useStoreState } from "../state/index.ts";
-import config from "../symlinks/config.ts";
+import config from "../config/config.ts";
 
 export const DonateContainer = styled.div`
   margin: 0 auto 100px;
