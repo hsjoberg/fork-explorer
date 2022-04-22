@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "wouter";
+import { Helmet } from "react-helmet";
 
 import config from "../config/config.ts";
 import { Container } from "../components/Container.ts";
@@ -54,9 +55,9 @@ export default function Minersx(props: { miner: string }) {
 
   return (
     <Container>
-      <head>
+      <Helmet>
         <title>{forkName} activation - Miners</title>
-      </head>
+      </Helmet>
       <Content style={{ maxWidth: 800 }}>
         <SiteTitle />
         <SiteMenu />

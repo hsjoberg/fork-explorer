@@ -6,16 +6,16 @@ import ultraCache from "ultra/cache";
 import { Cache } from "https://deno.land/x/ultra/src/types.ts";
 import { ThemeProvider, withTheme } from "styled-components";
 import { StoreProvider } from "easy-peasy";
+
 import { defaultTheme, colorBlindnessTheme, saltyRogerTheme } from "./theme/index.ts";
-
 import store, { useStoreActions, useStoreState } from "./state/index.ts";
-
 import Index from "./pages/index.tsx";
 import About from "./pages/about.tsx";
 import Miners from "./pages/miners.tsx";
 import Stats from "./pages/stats.tsx";
 import Settings from "./pages/settings.tsx";
 import Miner from "./pages/minerpage.tsx";
+import config from "./config/config.ts";
 
 // const Index = lazy(() => import("./pages/index.tsx"));
 // const About = lazy(() => import("./pages/about.tsx"));
@@ -72,7 +72,7 @@ function StoreStarter(props: any) {
     <ThemeProvider theme={currentTheme}>
       <>
         <Helmet>
-          <title>Ultra</title>
+          <title>{config.fork.name} activation</title>
           <link rel="stylesheet" href="/reset.css" />
           <link rel="stylesheet" href="/site.css" />
           <link rel="icon" type="image/png" href="/assets/favicon.ico" />

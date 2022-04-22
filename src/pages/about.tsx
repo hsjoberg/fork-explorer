@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 
 import config from "../config/config.ts";
 
@@ -59,13 +60,16 @@ export default function Blocks() {
 
   return (
     <Container>
+      <Helmet>
+        <title>{config.fork.name} Activation - About</title>
+      </Helmet>
       <Content>
         <SiteTitle />
         <SiteMenu />
         <Body>
           <InfoContainer>
             <InfoSection>
-              <Header>Information about the softfork {config.fork.name}</Header>
+              <Header>Information about the softfork {forkName}</Header>
               {config.frontend.about?.softfork?.info?.map((section, i) => (
                 <Text key={i}>{section}</Text>
               ))}

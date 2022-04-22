@@ -11,6 +11,7 @@ import {
   VictoryContainer,
   VictoryScatter,
 } from "victory";
+import { Helmet } from "react-helmet";
 
 import config from "../config/config.ts";
 import { Container } from "../components/Container.ts";
@@ -81,9 +82,9 @@ export default function Stats() {
 
   return (
     <Container>
-      <head>
+      <Helmet>
         <title>{forkName} activation - Statistics</title>
-      </head>
+      </Helmet>
       <ContentWide>
         <SiteTitle />
         <SiteMenu />

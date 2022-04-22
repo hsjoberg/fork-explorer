@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 import { Link } from "wouter";
+import { Helmet } from "react-helmet";
 
 import config from "../config/config.ts";
 import { computeStats, computeMiners } from "../common/data.ts";
@@ -171,9 +172,9 @@ export default function Miners() {
 
   return (
     <Container>
-      <head>
+      <Helmet>
         <title>{forkName} activation - Miners</title>
-      </head>
+      </Helmet>
       <Content>
         <SiteTitle />
         <SiteMenu />
