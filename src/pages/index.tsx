@@ -119,12 +119,14 @@ export default function Blocks() {
                           <br />
                           {willProbablyActivate && (
                             <>
-                              Taproot will lock in with the current signalling ratio ({currentSignallingPercentage}%)!
+                              {config.fork.name} will lock in with the current signalling ratio (
+                              {currentSignallingPercentage}%)!
                             </>
                           )}
                           {!willProbablyActivate && (
                             <>
-                              Taproot will not lock in with the current signalling ratio ({currentSignallingPercentage}
+                              {config.fork.name} will not lock in with the current signalling ratio (
+                              {currentSignallingPercentage}
                               %)
                             </>
                           )}

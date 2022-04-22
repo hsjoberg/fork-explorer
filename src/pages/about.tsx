@@ -65,7 +65,7 @@ export default function Blocks() {
         <Body>
           <InfoContainer>
             <InfoSection>
-              <Header>Information about the softfork Taproot</Header>
+              <Header>Information about the softfork {config.fork.name}</Header>
               {config.frontend.about?.softfork?.info?.map((section, i) => (
                 <Text key={i}>{section}</Text>
               ))}
@@ -79,11 +79,11 @@ export default function Blocks() {
             <InfoSection>
               <Header>About this site</Header>
               <Text>
-                taproot.watch is based on open-source software called{" "}
                 <a href="https://github.com/hsjoberg/fork-explorer" target="_blank">
                   fork-explorer
-                </a>
-                . Both this site and the open-source project is developed and maintained by Hampus Sjöberg (
+                </a>{" "}
+                is an on open-source project. Both this site and the open-source project is developed and maintained by
+                Hampus Sjöberg (
                 <a href="https://twitter.com/hampus_s" target="_blank">
                   @hampus_s
                 </a>
