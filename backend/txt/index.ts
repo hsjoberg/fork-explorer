@@ -1,4 +1,4 @@
-import { bech32 } from "https://esm.sh/bech32";
+import { bech32 } from "https://esm.sh/bech32?esnext";
 
 import config from "../../config/config.ts";
 import { getBlocks } from "../blocks/index.ts";

@@ -1,4 +1,4 @@
-import { Router } from "https://deno.land/x/oak@v7.5.0/mod.ts";
+import { Router } from "https://deno.land/x/oak@v10.5.1/mod.ts";
 
 import { GetBlocks } from "./blocks.ts";
 import { GetPeriod } from "./period.ts";
@@ -20,7 +20,7 @@ router.get("/invoice/callback", LnurlPayRequestCallback);
 
 router.get("/getblockchaininfo", GetBlockchainInfo);
 
-router.get<{ height: string }>("/getblockhash/:height", GetBlockHash);
+router.get<any, { height: string }>("/getblockhash/:height", GetBlockHash);
 
 router.get("/getblockcount", GetBlockCount);
 

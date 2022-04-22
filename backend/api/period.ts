@@ -1,7 +1,7 @@
-import { RouterMiddleware } from "https://deno.land/x/oak@v7.5.0/mod.ts";
+import { RouterMiddleware } from "https://deno.land/x/oak@v10.5.1/mod.ts";
 import { exists } from "https://deno.land/std@0.101.0/fs/mod.ts";
 
-export const GetPeriod: RouterMiddleware = async (context) => {
+export const GetPeriod: RouterMiddleware<any, any, any> = async (context) => {
   try {
     const period = Number.parseInt(context.params.period || "");
     if (Number.isNaN(period)) {

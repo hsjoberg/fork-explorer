@@ -1,6 +1,7 @@
 .DS_Store
 .vscode
-.aleph
+.ultra
+vendorMap.json
 
 dist
 config/config.ts

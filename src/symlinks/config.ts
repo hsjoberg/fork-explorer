@@ -1,0 +1,163 @@
+import React from "react";
+
+interface Config {
+  // Whether to load real data or fake
+  mode: "real" | "fake" | "fake-frontend";
+
+  // Configuration related to the API server
+  server: {
+    // The server host or listening IP
+    host: string;
+    // The server listening port
+    port: number;
+  };
+
+  // Configuration for bitcoind's JSON-RPC server
+  bitcoinRpc: {
+    // Server host IP or domain.
+    server: string;
+    // Username credentials.
+    user: string;
+    // Password credentials.
+    password: string;
+  };
+
+  // Information about the softfork in question should be added here.
+  // Things inside here will most likely be used and shown on the webpage.
+  fork: {
+    // The common name of this softfork.
+    name: string;
+    // Information about this softfork, each array item is rendered as a paragraph.
+    info: string[];
+    // The BIP9 version bit as defined in the softfork's BIP.
+    versionBit: number;
+    // Threshold for the softfork to be locked in
+    threshold: number;
+    // Status of the softfork
+    status: "pre" | "started" | "locked_in" | "active";
+    // Block height the softfork gets activated
+    activationHeight: number;
+    // Show a countdown timer until the softfork is activated.
+    // Only available when the `status` is `locked_in`.
+    showActivationCountdown: boolean;
+    // Show celebration confetti on the site
+    showCelebrationConfetti: boolean;
+  };
+
+  // Configuration specifically for the frontend site
+  frontend: {
+    // How often to auto-refresh, in seconds. Set to null to disable
+    autoRefreshInterval: number | null;
+    // Twitter handle, this is for the Twitter link preview
+    twitterHandle: string;
+    // Celebratory video to display once lock-in is reached
+    celebrate?: {
+      type: string;
+      url: string;
+    };
+    // Content related to the About page
+    about?: {
+      // Information about the softfork, it's allowed to use
+      // React components here.
+      // Use the Online Babel JSX Transpiler to create React components: https://babeljs.io/repl
+      softfork?: {
+        info?: React.ReactNode[];
+      };
+      // Information related to the current deployment method being
+      // used for this softfork (i.e BIP9, Speedy Trial etc)
+      method?: {
+        title: React.ReactNode;
+        info: React.ReactNode[];
+      };
+    };
+    // Sponsors of this project
+    sponsors?: {
+      title: string;
+      url: string;
+      imageUri: string;
+    }[];
+  };
+
+  // Donation configuration, right now only supports lnd
+  donation?: {
+    // Backend type, currently only supports lnd
+    type: "lnd";
+    // Data for the backend
+    data: {
+      // REST server
+      server: string;
+      // Path to tls.cert
+      cert: string;
+      // Path to invoice.macaroon
+      macaroon: string;
+      // Lightning Node URI <pubkey>@<ip:port>
+      lightningNodeUri?: string;
+    };
+    // URL to the LNURL-pay endpoint
+    lnurlPayUrl: string;
+  };
+}
+
+const config: Config = {
+  mode: "fake-frontend",
+
+  server: {
+    host: "127.0.0.1",
+    port: 8080,
+  },
+
+  bitcoinRpc: {
+    server: "http://127.0.0.1:8332",
+    user: "",
+    password: "",
+  },
+
+  fork: {
+    name: "Taproot",
+    info: [],
+    versionBit: 2,
+    threshold: 1815,
+    status: "started",
+    activationHeight: 709632,
+    showActivationCountdown: true,
+    showCelebrationConfetti: false,
+  },
+
+  frontend: {
+    autoRefreshInterval: 120,
+    twitterHandle: "",
+    // celebrate?: {
+    //   type: "video";
+    //   url: "path";
+    // };
+    about: {
+      softfork: {
+        info: [
+          React.createElement(React.Fragment, null, "Info about the Taproot softfork goes here"),
+          React.createElement(React.Fragment, null, "Info about the Taproot softfork goes here"),
+        ],
+      },
+      method: {
+        title: "Title of the softfork deployment method used (BIP9, Speedy Trial etc)",
+        info: [
+          React.createElement(React.Fragment, null, "Info about the deployment method goes here"),
+          React.createElement(React.Fragment, null, "Info about the deployment method goes here"),
+        ],
+      },
+    },
+    sponsors: [],
+  },
+
+  donation: {
+    type: "lnd",
+    data: {
+      server: "https://127.0.0.1:8080",
+      cert: "/path/to/tls.cert",
+      macaroon: "/path/to/invoice.macaroon",
+      lightningNodeUri: "pubkey@ip:port",
+    },
+    lnurlPayUrl: "https://domain.com/invoice",
+  },
+};
+
+export default config;

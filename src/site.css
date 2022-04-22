@@ -1,0 +1,57 @@
+html,
+body,
+#__aleph {
+  min-height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+  background-color: #242424;
+}
+
+/* GitHib corner button */
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 560ms ease-in-out;
+}
+@keyframes octocat-wave {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  20%,
+  60% {
+    transform: rotate(-25deg);
+  }
+  40%,
+  80% {
+    transform: rotate(10deg);
+  }
+}
+@media (max-width: 500px) {
+  .github-corner:hover .octo-arm {
+    animation: none;
+  }
+  .github-corner .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+  }
+}
+.github-corner-svg {
+  fill: #e5eaea;
+  color: #242424;
+  position: absolute;
+  top: 0;
+  border: 0;
+  right: 0;
+}
+
+/* Hack for fixing the 404 page */
+#__aleph > div > p > code,
+#__aleph > div > p > small,
+#__aleph > div > p > span {
+  color: #f0f0f0 !important;
+}
+
+svg {
+  overflow: visible;
+}

@@ -1,6 +1,6 @@
-import { RouterMiddleware } from "https://deno.land/x/oak@v7.5.0/mod.ts";
+import { RouterMiddleware } from "https://deno.land/x/oak@v10.5.1/mod.ts";
 
-export const GetPeriods: RouterMiddleware = async (context) => {
+export const GetPeriods: RouterMiddleware<any, any, any> = async (context) => {
   try {
     const files: number[] = [];
     for await (const file of Deno.readDir(Deno.cwd() + "/data/periods/")) {

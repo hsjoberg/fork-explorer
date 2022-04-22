@@ -1,4 +1,4 @@
-import { RouterMiddleware } from "https://deno.land/x/oak@v7.5.0/mod.ts";
+import { RouterMiddleware } from "https://deno.land/x/oak@v10.5.1/mod.ts";
 import { exec, OutputMode } from "https://deno.land/x/exec/mod.ts";
 import { ensureFile } from "https://deno.land/std@0.101.0/fs/mod.ts";
 import { sha256 } from "https://denopkg.com/chiefbiiko/sha256/mod.ts";
@@ -16,7 +16,7 @@ await ensureFile("./lnurlpay.json");
 const lnurlPayComments: LnurlPayComment[] = JSON.parse((await Deno.readTextFile("./lnurlpay.json")) || "[]");
 const responseMetadata = JSON.stringify([["text/plain", "Donation to taproot.watch"]]);
 
-export const LnurlPayRequest: RouterMiddleware = (context) => {
+export const LnurlPayRequest: RouterMiddleware<any, any, any> = (context) => {
   if (!config.donation) {
     context.response.status = 400;
     context.response.body = JSON.stringify({
@@ -36,7 +36,7 @@ export const LnurlPayRequest: RouterMiddleware = (context) => {
   });
 };
 
-export const LnurlPayRequestCallback: RouterMiddleware = async (context) => {
+export const LnurlPayRequestCallback: RouterMiddleware<any, any, any> = async (context) => {
   if (!config.donation) {
     context.response.status = 400;
     context.response.body = JSON.stringify({
