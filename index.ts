@@ -32,7 +32,16 @@ app.use(async (context, next) => {
   }
 });
 
-app.use(ultraHandler);
+app.use(async (context) => {
+  if (
+    ![".js", ".css", ".json", ".ico", "png", ".mp4"].some((extension) =>
+      context.request.url.pathname.endsWith(extension)
+    )
+  ) {
+    await pageviews();
+  }
+  return ultraHandler(context);
+});
 
 app.addEventListener("listen", ({ hostname, port, secure }) => {
   const host = hostname ?? "localhost";
