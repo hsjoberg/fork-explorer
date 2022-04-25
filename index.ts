@@ -19,9 +19,11 @@ app.use(async (context, next) => {
 
   if (
     accepts &&
-    // (accepts.length === 1 && accepts[0] === "*/*") ||
-    // accepts.includes("text/plain") ||
-    context.request.url.pathname === "/index.txt"
+    ((accepts.length === 1 &&
+      accepts[0] === "*/*" &&
+      /* ultra hack: */ !context.request.url.pathname.toLowerCase().endsWith(".js")) ||
+      accepts.includes("text/plain") ||
+      context.request.url.pathname === "/index.txt")
   ) {
     await pageviewsTxt();
     context.response.body = homeTXT();
