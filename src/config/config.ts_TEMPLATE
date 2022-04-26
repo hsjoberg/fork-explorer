@@ -101,7 +101,7 @@ interface Config {
 }
 
 const config: Config = {
-  serverRoot: "http://localhost",
+  serverRoot: "http://localhost:8080",
 
   mode: "real",
 
