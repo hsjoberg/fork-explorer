@@ -1,4 +1,4 @@
-import { action, Action, thunk, Thunk } from "https://esm.sh/easy-peasy@5.0.4";
+import { action, Action, thunk, Thunk } from "easy-peasy";
 
 export enum Theme {
   "default" = "default",
